@@ -1,0 +1,142 @@
+[
+	{
+        "id": 1,
+        "frame": "http://localhost/vivu/lib/interactive/images/photomaker/frame/suoinuocnong.jpg",
+        "detail": [
+            {
+                "id": 1,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame11.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame11-example.jpg",
+                "x": 720,
+                "y": 110
+            }, {
+                "id": 2,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame12.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame12-example.jpg",
+
+                 "x": 714,
+                "y": 110
+            }, {
+                "id": 3,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame13.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame13-example.jpg",
+
+                 "x": 727,
+                "y": 100
+            }
+
+        ]
+    }, {
+        "id": 2,
+        "frame": "http://localhost/vivu/lib/interactive/images/photomaker/frame/suoinuocnong.jpg",
+        "detail": [{
+                "id": 1,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame21.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame21-example.jpg",
+
+                "x": 327,
+                "y": 107
+            }, {
+                "id": 2,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame22.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame22-example.jpg",
+
+                "x": 324,
+                "y": 110
+            }, {
+                "id": 3,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame23.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame23-example.jpg",
+
+                "x": 360,
+                "y": 105
+            }
+
+        ]
+    }, {
+        "id": 3,
+        "frame": "http://localhost/vivu/lib/interactive/images/photomaker/frame/suoinuocnong.jpg",
+        "detail": [{
+                "id": 1,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame31.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame31-example.jpg",
+
+                "x": 693,
+                "y": 110
+            }, {
+                "id": 2,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame32.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame32-example.jpg",
+
+                "x": 693,
+                "y": 110
+            }, {
+                "id": 3,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame33.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame33-example.jpg",
+
+                "x": 728,
+                "y": 105
+            }
+
+        ]
+    }, {
+        "id": 4,
+        "frame": "http://localhost/vivu/lib/interactive/images/photomaker/frame/suoinuocnong.jpg",
+        "detail": [{
+                "id": 1,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame41.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame41-example.jpg",
+
+                "x": 640,
+                "y": 110
+            }, {
+                "id": 2,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame42.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame42-example.jpg",
+
+                "x": 630,
+                "y": 100
+            }, {
+                "id": 3,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame43.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame43-example.jpg",
+
+                "x": 660,
+                "y": 110
+            }
+
+        ]
+    },
+
+    {
+        "id": 5,
+        "frame": "http://localhost/vivu/lib/interactive/images/photomaker/frame/suoinuocnong.jpg",
+        "detail": [{
+                "id": 1,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame51.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame51-example.jpg",
+
+                "x": 640,
+                "y": 110
+            }, {
+                "id": 2,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame52.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame52-example.jpg",
+
+                "x": 630,
+                "y": 103
+            }, {
+                "id": 3,
+                "image": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame53.png",
+                "image_example": "http://localhost/vivu/lib/interactive/images/photomaker/frame/frame53-example.jpg",
+
+                "x": 660,
+                "y": 105
+            }
+
+        ]
+    }
+
+
+]
