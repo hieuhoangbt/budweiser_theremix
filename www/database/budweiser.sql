@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-12-07 08:30:04
+Date: 2016-12-07 10:54:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,12 +31,12 @@ CREATE TABLE `jigsaw_assets` (
   UNIQUE KEY `idx_asset_name` (`name`),
   KEY `idx_lft_rgt` (`lft`,`rgt`),
   KEY `idx_parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jigsaw_assets
 -- ----------------------------
-INSERT INTO jigsaw_assets VALUES ('1', '0', '0', '103', '0', 'root.1', 'Root Asset', '{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}');
+INSERT INTO jigsaw_assets VALUES ('1', '0', '0', '105', '0', 'root.1', 'Root Asset', '{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}');
 INSERT INTO jigsaw_assets VALUES ('2', '1', '1', '2', '1', 'com_admin', 'com_admin', '{}');
 INSERT INTO jigsaw_assets VALUES ('3', '1', '3', '6', '1', 'com_banners', 'com_banners', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}');
 INSERT INTO jigsaw_assets VALUES ('4', '1', '7', '8', '1', 'com_cache', 'com_cache', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}');
@@ -88,6 +88,7 @@ INSERT INTO jigsaw_assets VALUES ('51', '18', '66', '67', '2', 'com_modules.modu
 INSERT INTO jigsaw_assets VALUES ('52', '18', '68', '69', '2', 'com_modules.module.79', 'Multilanguage status', '{\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}');
 INSERT INTO jigsaw_assets VALUES ('53', '18', '70', '71', '2', 'com_modules.module.86', 'Joomla Version', '{\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}');
 INSERT INTO jigsaw_assets VALUES ('54', '16', '36', '37', '2', 'com_menus.menu.1', 'Main Menu', '{}');
+INSERT INTO jigsaw_assets VALUES ('55', '1', '103', '104', '1', 'com_budweiser_theremix', 'com_budweiser_theremix', '{}');
 
 -- ----------------------------
 -- Table structure for `jigsaw_associations`
@@ -202,6 +203,80 @@ CREATE TABLE `jigsaw_banner_tracks` (
 -- ----------------------------
 -- Records of jigsaw_banner_tracks
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `jigsaw_budweiser_theremix_celebrity`
+-- ----------------------------
+DROP TABLE IF EXISTS `jigsaw_budweiser_theremix_celebrity`;
+CREATE TABLE `jigsaw_budweiser_theremix_celebrity` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ordering` int(11) NOT NULL,
+  `state` tinyint(1) NOT NULL DEFAULT '1',
+  `checked_out` int(11) NOT NULL,
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of jigsaw_budweiser_theremix_celebrity
+-- ----------------------------
+INSERT INTO jigsaw_budweiser_theremix_celebrity VALUES ('1', '0', '1', '0', '0000-00-00 00:00:00', '0', '0', 'Hồ ngọc hà', 'dgdfhfgjhfjf');
+
+-- ----------------------------
+-- Table structure for `jigsaw_budweiser_theremix_frame`
+-- ----------------------------
+DROP TABLE IF EXISTS `jigsaw_budweiser_theremix_frame`;
+CREATE TABLE `jigsaw_budweiser_theremix_frame` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ordering` int(11) NOT NULL,
+  `state` tinyint(1) NOT NULL DEFAULT '1',
+  `checked_out` int(11) NOT NULL,
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `celebrity_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of jigsaw_budweiser_theremix_frame
+-- ----------------------------
+INSERT INTO jigsaw_budweiser_theremix_frame VALUES ('1', '1', '1', '0', '0000-00-00 00:00:00', '126', '126', '1', '1', 'images/15085647_616795178528407_625038474606721871_n.jpg', '2016-12-07 10:46:36', '0000-00-00 00:00:00');
+
+-- ----------------------------
+-- Table structure for `jigsaw_budweiser_theremix_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `jigsaw_budweiser_theremix_user`;
+CREATE TABLE `jigsaw_budweiser_theremix_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ordering` int(11) NOT NULL,
+  `state` tinyint(1) NOT NULL DEFAULT '1',
+  `checked_out` int(11) NOT NULL,
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `fullname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `scope_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` int(1) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of jigsaw_budweiser_theremix_user
+-- ----------------------------
+INSERT INTO jigsaw_budweiser_theremix_user VALUES ('1', '0', '1', '0', '0000-00-00 00:00:00', '0', '0', 'Nguyễn văn tí', 'gút văn boi', '25445758678678', '1', 'teo@gmail.com', '2016-12-07 10:45:24', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for `jigsaw_categories`
@@ -434,7 +509,7 @@ CREATE TABLE `jigsaw_content_types` (
   `content_history_options` varchar(5120) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'JSON string for com_contenthistory options',
   PRIMARY KEY (`type_id`),
   KEY `idx_alias` (`type_alias`(100))
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jigsaw_content_types
@@ -452,6 +527,7 @@ INSERT INTO jigsaw_content_types VALUES ('10', 'Banners Category', 'com_banners.
 INSERT INTO jigsaw_content_types VALUES ('11', 'Banner Client', 'com_banners.client', '{\"special\":{\"dbtable\":\"#__banner_clients\",\"key\":\"id\",\"type\":\"Client\",\"prefix\":\"BannersTable\"}}', '', '', '', '{\"formFile\":\"administrator\\/components\\/com_banners\\/models\\/forms\\/client.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\"], \"ignoreChanges\":[\"checked_out\", \"checked_out_time\"], \"convertToInt\":[], \"displayLookup\":[]}');
 INSERT INTO jigsaw_content_types VALUES ('12', 'User Notes', 'com_users.note', '{\"special\":{\"dbtable\":\"#__user_notes\",\"key\":\"id\",\"type\":\"Note\",\"prefix\":\"UsersTable\"}}', '', '', '', '{\"formFile\":\"administrator\\/components\\/com_users\\/models\\/forms\\/note.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\", \"publish_up\", \"publish_down\"],\"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\"], \"convertToInt\":[\"publish_up\", \"publish_down\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}, {\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}]}');
 INSERT INTO jigsaw_content_types VALUES ('13', 'User Notes Category', 'com_users.category', '{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}', '', '{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"], \"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}');
+INSERT INTO jigsaw_content_types VALUES ('10000', 'Celebrity', 'com_budweiser_theremix.celebrity', '{\"special\":{\"dbtable\":\"#__budweiser_theremix_celebrity\",\"key\":\"id\",\"type\":\"Celebrity\",\"prefix\":\"Budweiser_theremixTable\"}}', '', '', '', '{\"formFile\":\"administrator/components/com_budweiser_theremix/models/forms/celebrity.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\",\"params\",\"language\"], \"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\"], \"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"group_id\",\"targetTable\":\"#__usergroups\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}]}');
 
 -- ----------------------------
 -- Table structure for `jigsaw_core_log_searches`
@@ -492,7 +568,7 @@ CREATE TABLE `jigsaw_extensions` (
   KEY `element_clientid` (`element`,`client_id`),
   KEY `element_folder_clientid` (`element`,`folder`,`client_id`),
   KEY `extension` (`type`,`element`,`folder`,`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jigsaw_extensions
@@ -528,7 +604,7 @@ INSERT INTO jigsaw_extensions VALUES ('30', 'com_contenthistory', 'component', '
 INSERT INTO jigsaw_extensions VALUES ('31', 'com_ajax', 'component', 'com_ajax', '', '1', '1', '1', '1', '{\"name\":\"com_ajax\",\"type\":\"component\",\"creationDate\":\"August 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"COM_AJAX_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"ajax\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('32', 'com_postinstall', 'component', 'com_postinstall', '', '1', '1', '1', '1', '{\"name\":\"com_postinstall\",\"type\":\"component\",\"creationDate\":\"September 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"COM_POSTINSTALL_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('102', 'LIB_PHPUTF8', 'library', 'phputf8', '', '0', '1', '1', '1', '{\"name\":\"LIB_PHPUTF8\",\"type\":\"library\",\"creationDate\":\"2006\",\"author\":\"Harry Fuecks\",\"copyright\":\"Copyright various authors\",\"authorEmail\":\"hfuecks@gmail.com\",\"authorUrl\":\"http:\\/\\/sourceforge.net\\/projects\\/phputf8\",\"version\":\"0.5\",\"description\":\"LIB_PHPUTF8_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"phputf8\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
-INSERT INTO jigsaw_extensions VALUES ('103', 'LIB_JOOMLA', 'library', 'joomla', '', '0', '1', '1', '1', '{\"name\":\"LIB_JOOMLA\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"https:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO jigsaw_extensions VALUES ('103', 'LIB_JOOMLA', 'library', 'joomla', '', '0', '1', '1', '1', '{\"name\":\"LIB_JOOMLA\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"https:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '{\"mediaversion\":\"59ea323d283aac0f0b0374e97608b10e\"}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('104', 'LIB_IDNA', 'library', 'idna_convert', '', '0', '1', '1', '1', '{\"name\":\"LIB_IDNA\",\"type\":\"library\",\"creationDate\":\"2004\",\"author\":\"phlyLabs\",\"copyright\":\"2004-2011 phlyLabs Berlin, http:\\/\\/phlylabs.de\",\"authorEmail\":\"phlymail@phlylabs.de\",\"authorUrl\":\"http:\\/\\/phlylabs.de\",\"version\":\"0.8.0\",\"description\":\"LIB_IDNA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"idna_convert\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('105', 'FOF', 'library', 'fof', '', '0', '1', '1', '1', '{\"name\":\"FOF\",\"type\":\"library\",\"creationDate\":\"2015-04-22 13:15:32\",\"author\":\"Nicholas K. Dionysopoulos \\/ Akeeba Ltd\",\"copyright\":\"(C)2011-2015 Nicholas K. Dionysopoulos\",\"authorEmail\":\"nicholas@akeebabackup.com\",\"authorUrl\":\"https:\\/\\/www.akeebabackup.com\",\"version\":\"2.4.3\",\"description\":\"LIB_FOF_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"fof\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('106', 'LIB_PHPASS', 'library', 'phpass', '', '0', '1', '1', '1', '{\"name\":\"LIB_PHPASS\",\"type\":\"library\",\"creationDate\":\"2004-2006\",\"author\":\"Solar Designer\",\"copyright\":\"\",\"authorEmail\":\"solar@openwall.com\",\"authorUrl\":\"http:\\/\\/www.openwall.com\\/phpass\\/\",\"version\":\"0.3\",\"description\":\"LIB_PHPASS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"phpass\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
@@ -621,9 +697,9 @@ INSERT INTO jigsaw_extensions VALUES ('448', 'plg_twofactorauth_totp', 'plugin',
 INSERT INTO jigsaw_extensions VALUES ('449', 'plg_authentication_cookie', 'plugin', 'cookie', 'authentication', '0', '1', '1', '0', '{\"name\":\"plg_authentication_cookie\",\"type\":\"plugin\",\"creationDate\":\"July 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_AUTH_COOKIE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"cookie\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('450', 'plg_twofactorauth_yubikey', 'plugin', 'yubikey', 'twofactorauth', '0', '0', '1', '0', '{\"name\":\"plg_twofactorauth_yubikey\",\"type\":\"plugin\",\"creationDate\":\"September 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"PLG_TWOFACTORAUTH_YUBIKEY_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"yubikey\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('451', 'plg_search_tags', 'plugin', 'tags', 'search', '0', '1', '1', '0', '{\"name\":\"plg_search_tags\",\"type\":\"plugin\",\"creationDate\":\"March 2014\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_TAGS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"tags\"}', '{\"search_limit\":\"50\",\"show_tagged_items\":\"1\"}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
-INSERT INTO jigsaw_extensions VALUES ('452', 'plg_system_updatenotification', 'plugin', 'updatenotification', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_updatenotification\",\"type\":\"plugin\",\"creationDate\":\"May 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_UPDATENOTIFICATION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"updatenotification\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO jigsaw_extensions VALUES ('452', 'plg_system_updatenotification', 'plugin', 'updatenotification', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_updatenotification\",\"type\":\"plugin\",\"creationDate\":\"May 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_UPDATENOTIFICATION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"updatenotification\"}', '{\"lastrun\":1481077794}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('453', 'plg_editors-xtd_module', 'plugin', 'module', 'editors-xtd', '0', '1', '1', '0', '{\"name\":\"plg_editors-xtd_module\",\"type\":\"plugin\",\"creationDate\":\"October 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_MODULE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"module\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
-INSERT INTO jigsaw_extensions VALUES ('454', 'plg_system_stats', 'plugin', 'stats', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_stats\",\"type\":\"plugin\",\"creationDate\":\"November 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_STATS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"stats\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO jigsaw_extensions VALUES ('454', 'plg_system_stats', 'plugin', 'stats', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_stats\",\"type\":\"plugin\",\"creationDate\":\"November 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_STATS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"stats\"}', '{\"mode\":3,\"lastrun\":1481077962,\"unique_id\":\"a9b3316b24bff9284da8fb7ea15227b0ee257800\",\"interval\":12}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('455', 'plg_installer_packageinstaller', 'plugin', 'packageinstaller', 'installer', '0', '1', '1', '1', '{\"name\":\"plg_installer_packageinstaller\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_PACKAGEINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"packageinstaller\"}', '', '', '', '0', '0000-00-00 00:00:00', '1', '0');
 INSERT INTO jigsaw_extensions VALUES ('456', 'PLG_INSTALLER_FOLDERINSTALLER', 'plugin', 'folderinstaller', 'installer', '0', '1', '1', '1', '{\"name\":\"PLG_INSTALLER_FOLDERINSTALLER\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_FOLDERINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"folderinstaller\"}', '', '', '', '0', '0000-00-00 00:00:00', '2', '0');
 INSERT INTO jigsaw_extensions VALUES ('457', 'PLG_INSTALLER_URLINSTALLER', 'plugin', 'urlinstaller', 'installer', '0', '1', '1', '1', '{\"name\":\"PLG_INSTALLER_URLINSTALLER\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_URLINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"urlinstaller\"}', '', '', '', '0', '0000-00-00 00:00:00', '3', '0');
@@ -635,6 +711,8 @@ INSERT INTO jigsaw_extensions VALUES ('600', 'English (en-GB)', 'language', 'en-
 INSERT INTO jigsaw_extensions VALUES ('601', 'English (en-GB)', 'language', 'en-GB', '', '1', '1', '1', '1', '{\"name\":\"English (en-GB)\",\"type\":\"language\",\"creationDate\":\"October 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.4\",\"description\":\"en-GB administrator language\",\"group\":\"\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('700', 'files_joomla', 'file', 'joomla', '', '0', '1', '1', '1', '{\"name\":\"files_joomla\",\"type\":\"file\",\"creationDate\":\"October 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2016 Open Source Matters. All rights reserved\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.4\",\"description\":\"FILES_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('802', 'English (en-GB) Language Pack', 'package', 'pkg_en-GB', '', '0', '1', '1', '1', '{\"name\":\"English (en-GB) Language Pack\",\"type\":\"package\",\"creationDate\":\"October 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.4.1\",\"description\":\"en-GB language pack\",\"group\":\"\",\"filename\":\"pkg_en-GB\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO jigsaw_extensions VALUES ('10000', 'com_budweiser_theremix', 'component', 'com_budweiser_theremix', '', '1', '1', '0', '0', '{\"name\":\"com_budweiser_theremix\",\"type\":\"component\",\"creationDate\":\"2016-12-07\",\"author\":\"anh\",\"copyright\":\"2016 anh\",\"authorEmail\":\"xuananh1059@gmail.com\",\"authorUrl\":\"\",\"version\":\"CVS: 1.0.0\",\"description\":\"\",\"group\":\"\",\"filename\":\"budweiser_theremix\"}', '{\"save_history\":\"0\"}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO jigsaw_extensions VALUES ('10001', 'Budweiser The Remix', 'template', 'budweisertheremix', '', '0', '1', '1', '0', '{\"name\":\"Budweiser The Remix\",\"type\":\"template\",\"creationDate\":\"2016-12-07\",\"author\":\"XuanAnh\",\"copyright\":\"XuanAnh 2016\",\"authorEmail\":\"xuananh1059@gmail.com\",\"authorUrl\":\"http:\\/\\/www.example.com\",\"version\":\"1.0.0\",\"description\":\"Budweiser The Remix Template\",\"group\":\"\",\"filename\":\"templateDetails\"}', '{}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 
 -- ----------------------------
 -- Table structure for `jigsaw_finder_filters`
@@ -1295,12 +1373,12 @@ CREATE TABLE `jigsaw_menu` (
   KEY `idx_alias` (`alias`(100)),
   KEY `idx_path` (`path`(100)),
   KEY `idx_language` (`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jigsaw_menu
 -- ----------------------------
-INSERT INTO jigsaw_menu VALUES ('1', '', 'Menu_Item_Root', 'root', '', '', '', '', '1', '0', '0', '0', '0', '0000-00-00 00:00:00', '0', '0', '', '0', '', '0', '43', '0', '*', '0');
+INSERT INTO jigsaw_menu VALUES ('1', '', 'Menu_Item_Root', 'root', '', '', '', '', '1', '0', '0', '0', '0', '0000-00-00 00:00:00', '0', '0', '', '0', '', '0', '47', '0', '*', '0');
 INSERT INTO jigsaw_menu VALUES ('2', 'menu', 'com_banners', 'Banners', '', 'Banners', 'index.php?option=com_banners', 'component', '0', '1', '1', '4', '0', '0000-00-00 00:00:00', '0', '0', 'class:banners', '0', '', '1', '10', '0', '*', '1');
 INSERT INTO jigsaw_menu VALUES ('3', 'menu', 'com_banners', 'Banners', '', 'Banners/Banners', 'index.php?option=com_banners', 'component', '0', '2', '2', '4', '0', '0000-00-00 00:00:00', '0', '0', 'class:banners', '0', '', '2', '3', '0', '*', '1');
 INSERT INTO jigsaw_menu VALUES ('4', 'menu', 'com_banners_categories', 'Categories', '', 'Banners/Categories', 'index.php?option=com_categories&extension=com_banners', 'component', '0', '2', '2', '6', '0', '0000-00-00 00:00:00', '0', '0', 'class:banners-cat', '0', '', '4', '5', '0', '*', '1');
@@ -1321,6 +1399,8 @@ INSERT INTO jigsaw_menu VALUES ('19', 'menu', 'com_joomlaupdate', 'Joomla! Updat
 INSERT INTO jigsaw_menu VALUES ('20', 'main', 'com_tags', 'Tags', '', 'Tags', 'index.php?option=com_tags', 'component', '0', '1', '1', '29', '0', '0000-00-00 00:00:00', '0', '1', 'class:tags', '0', '', '37', '38', '0', '', '1');
 INSERT INTO jigsaw_menu VALUES ('21', 'main', 'com_postinstall', 'Post-installation messages', '', 'Post-installation messages', 'index.php?option=com_postinstall', 'component', '0', '1', '1', '32', '0', '0000-00-00 00:00:00', '0', '1', 'class:postinstall', '0', '', '39', '40', '0', '*', '1');
 INSERT INTO jigsaw_menu VALUES ('101', 'mainmenu', 'Home', 'home', '', 'home', 'index.php?option=com_content&view=featured', 'component', '1', '1', '1', '22', '0', '0000-00-00 00:00:00', '0', '1', '', '0', '{\"featured_categories\":[\"\"],\"layout_type\":\"blog\",\"num_leading_articles\":\"1\",\"num_intro_articles\":\"3\",\"num_columns\":\"3\",\"num_links\":\"0\",\"multi_column_order\":\"1\",\"orderby_pri\":\"\",\"orderby_sec\":\"front\",\"order_date\":\"\",\"show_pagination\":\"2\",\"show_pagination_results\":\"1\",\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_readmore\":\"\",\"show_readmore_title\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"show_feed_link\":\"1\",\"feed_summary\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":1,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}', '41', '42', '1', '*', '0');
+INSERT INTO jigsaw_menu VALUES ('102', 'main', 'COM_BUDWEISER_THEREMIX', 'com-budweiser-theremix', '', 'com-budweiser-theremix', 'index.php?option=com_budweiser_theremix', 'component', '0', '1', '1', '10000', '0', '0000-00-00 00:00:00', '0', '1', 'media/com_budweiser_theremix/images/s_com_budweiser_theremix.png', '0', '{}', '43', '46', '0', '', '1');
+INSERT INTO jigsaw_menu VALUES ('103', 'main', 'COM_BUDWEISER_THEREMIX_TITLE_CELEBRITYS', 'com-budweiser-theremix-title-celebritys', '', 'com-budweiser-theremix/com-budweiser-theremix-title-celebritys', 'index.php?option=com_budweiser_theremix&view=celebritys', 'component', '0', '102', '2', '10000', '0', '0000-00-00 00:00:00', '0', '1', 'media/com_budweiser_theremix/images/s_celebritys.png', '0', '{}', '44', '45', '0', '', '1');
 
 -- ----------------------------
 -- Table structure for `jigsaw_menu_types`
@@ -1611,6 +1691,7 @@ CREATE TABLE `jigsaw_session` (
 -- ----------------------------
 -- Records of jigsaw_session
 -- ----------------------------
+INSERT INTO jigsaw_session VALUES ('8od55neovucqu4qr9akpmho4a6', '1', '0', '1481082841', 'joomla|s:1612:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo1OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aTo0MDtzOjU6InRva2VuIjtzOjMyOiJ4NEE5RHBQS0U1ODN1T0hlWkJPQkRWbmhkbG0ySnVaMyI7czo1OiJ0aW1lciI7Tzo4OiJzdGRDbGFzcyI6Mzp7czo1OiJzdGFydCI7aToxNDgxMDgwOTI3O3M6NDoibGFzdCI7aToxNDgxMDgyODQxO3M6Mzoibm93IjtpOjE0ODEwODI4NDE7fX1zOjg6InJlZ2lzdHJ5IjtPOjI0OiJKb29tbGFcUmVnaXN0cnlcUmVnaXN0cnkiOjM6e3M6NzoiACoAZGF0YSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoyMjoiY29tX2J1ZHdlaXNlcl90aGVyZW1peCI7Tzo4OiJzdGRDbGFzcyI6NDp7czoxMDoiY2VsZWJyaXR5cyI7Tzo4OiJzdGRDbGFzcyI6MTp7czo4OiJvcmRlcmNvbCI7czo2OiJhLm5hbWUiO31zOjY6ImZyYW1lcyI7Tzo4OiJzdGRDbGFzcyI6MTp7czo4OiJvcmRlcmNvbCI7czo0OiJhLmlkIjt9czo0OiJlZGl0IjtPOjg6InN0ZENsYXNzIjoxOntzOjU6ImZyYW1lIjtPOjg6InN0ZENsYXNzIjoxOntzOjQ6ImRhdGEiO047fX1zOjU6InVzZXJzIjtPOjg6InN0ZENsYXNzIjoxOntzOjg6Im9yZGVyY29sIjtzOjEwOiJhLmZ1bGxuYW1lIjt9fXM6MTM6ImNvbV9pbnN0YWxsZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NzoibWVzc2FnZSI7czowOiIiO3M6MTc6ImV4dGVuc2lvbl9tZXNzYWdlIjtzOjA6IiI7czoxMjoicmVkaXJlY3RfdXJsIjtOO319czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MTtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjU6IkpVc2VyIjoxOntzOjI6ImlkIjtzOjM6IjEyNiI7fXM6OToiY29tX21lZGlhIjtPOjg6InN0ZENsYXNzIjoxOntzOjEwOiJyZXR1cm5fdXJsIjtzOjEyODoiaW5kZXgucGhwP29wdGlvbj1jb21fbWVkaWEmdmlldz1pbWFnZXMmdG1wbD1jb21wb25lbnQmZmllbGRpZD1qZm9ybV9pbWFnZSZlX25hbWU9JmFzc2V0PWNvbV9idWR3ZWlzZXJfdGhlcmVtaXgmYXV0aG9yPWNyZWF0ZWRfYnkiO31zOjExOiJhcHBsaWNhdGlvbiI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJxdWV1ZSI7Tjt9fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', '126', 'sysadmin');
 
 -- ----------------------------
 -- Table structure for `jigsaw_tags`
@@ -1676,15 +1757,16 @@ CREATE TABLE `jigsaw_template_styles` (
   PRIMARY KEY (`id`),
   KEY `idx_template` (`template`),
   KEY `idx_home` (`home`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jigsaw_template_styles
 -- ----------------------------
 INSERT INTO jigsaw_template_styles VALUES ('4', 'beez3', '0', '0', 'Beez3 - Default', '{\"wrapperSmall\":\"53\",\"wrapperLarge\":\"72\",\"logo\":\"images\\/joomla_black.png\",\"sitetitle\":\"Joomla!\",\"sitedescription\":\"Open Source Content Management\",\"navposition\":\"left\",\"templatecolor\":\"personal\",\"html5\":\"0\"}');
 INSERT INTO jigsaw_template_styles VALUES ('5', 'hathor', '1', '0', 'Hathor - Default', '{\"showSiteName\":\"0\",\"colourChoice\":\"\",\"boldText\":\"0\"}');
-INSERT INTO jigsaw_template_styles VALUES ('7', 'protostar', '0', '1', 'protostar - Default', '{\"templateColor\":\"\",\"logoFile\":\"\",\"googleFont\":\"1\",\"googleFontName\":\"Open+Sans\",\"fluidContainer\":\"0\"}');
+INSERT INTO jigsaw_template_styles VALUES ('7', 'protostar', '0', '0', 'protostar - Default', '{\"templateColor\":\"\",\"logoFile\":\"\",\"googleFont\":\"1\",\"googleFontName\":\"Open+Sans\",\"fluidContainer\":\"0\"}');
 INSERT INTO jigsaw_template_styles VALUES ('8', 'isis', '1', '1', 'isis - Default', '{\"templateColor\":\"\",\"logoFile\":\"\"}');
+INSERT INTO jigsaw_template_styles VALUES ('9', 'budweisertheremix', '0', '1', 'Budweiser The Remix - Default', '{}');
 
 -- ----------------------------
 -- Table structure for `jigsaw_ucm_base`
@@ -1805,11 +1887,15 @@ CREATE TABLE `jigsaw_updates` (
   `infourl` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_query` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT '',
   PRIMARY KEY (`update_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available Updates';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available Updates';
 
 -- ----------------------------
 -- Records of jigsaw_updates
 -- ----------------------------
+INSERT INTO jigsaw_updates VALUES ('1', '3', '0', 'German AT', '', 'pkg_de-AT', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/de-AT_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('2', '3', '0', 'German LI', '', 'pkg_de-LI', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/de-LI_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('3', '3', '0', 'German LU', '', 'pkg_de-LU', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/de-LU_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('4', '3', '0', 'English NZ', '', 'pkg_en-NZ', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/en-NZ_details.xml', '', '');
 
 -- ----------------------------
 -- Table structure for `jigsaw_update_sites`
@@ -1829,10 +1915,10 @@ CREATE TABLE `jigsaw_update_sites` (
 -- ----------------------------
 -- Records of jigsaw_update_sites
 -- ----------------------------
-INSERT INTO jigsaw_update_sites VALUES ('1', 'Joomla! Core', 'collection', 'https://update.joomla.org/core/list.xml', '1', '0', '');
-INSERT INTO jigsaw_update_sites VALUES ('2', 'Joomla! Extension Directory', 'collection', 'https://update.joomla.org/jed/list.xml', '1', '0', '');
-INSERT INTO jigsaw_update_sites VALUES ('3', 'Accredited Joomla! Translations', 'collection', 'https://update.joomla.org/language/translationlist_3.xml', '1', '0', '');
-INSERT INTO jigsaw_update_sites VALUES ('4', 'Joomla! Update Component Update Site', 'extension', 'https://update.joomla.org/core/extensions/com_joomlaupdate.xml', '1', '0', '');
+INSERT INTO jigsaw_update_sites VALUES ('1', 'Joomla! Core', 'collection', 'https://update.joomla.org/core/list.xml', '1', '1481077856', '');
+INSERT INTO jigsaw_update_sites VALUES ('2', 'Joomla! Extension Directory', 'collection', 'https://update.joomla.org/jed/list.xml', '1', '1481077856', '');
+INSERT INTO jigsaw_update_sites VALUES ('3', 'Accredited Joomla! Translations', 'collection', 'https://update.joomla.org/language/translationlist_3.xml', '1', '1481077856', '');
+INSERT INTO jigsaw_update_sites VALUES ('4', 'Joomla! Update Component Update Site', 'extension', 'https://update.joomla.org/core/extensions/com_joomlaupdate.xml', '1', '1481077856', '');
 
 -- ----------------------------
 -- Table structure for `jigsaw_update_sites_extensions`
@@ -1913,7 +1999,7 @@ CREATE TABLE `jigsaw_users` (
 -- ----------------------------
 -- Records of jigsaw_users
 -- ----------------------------
-INSERT INTO jigsaw_users VALUES ('126', 'Super User', 'sysadmin', 'xuananh1059@gmail.com', '$2y$10$mu2rGI5nCA31W23uBuOwcez76otU3FNKce8tK1SVsnAWWsUtZOjpq', '0', '1', '2016-12-07 01:28:51', '0000-00-00 00:00:00', '0', '', '0000-00-00 00:00:00', '0', '', '', '0');
+INSERT INTO jigsaw_users VALUES ('126', 'Super User', 'sysadmin', 'xuananh1059@gmail.com', '$2y$10$mu2rGI5nCA31W23uBuOwcez76otU3FNKce8tK1SVsnAWWsUtZOjpq', '0', '1', '2016-12-07 01:28:51', '2016-12-07 03:22:07', '0', '', '0000-00-00 00:00:00', '0', '', '', '0');
 
 -- ----------------------------
 -- Table structure for `jigsaw_user_keys`
