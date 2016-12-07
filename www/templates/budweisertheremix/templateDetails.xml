@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="template">
+    <name>Budweiser The Remix</name>
+    <creationDate>2016-12-07</creationDate>
+    <author>XuanAnh</author>
+    <authorEmail>xuananh1059@gmail.com</authorEmail>
+    <authorUrl>http://www.example.com</authorUrl>
+    <copyright>XuanAnh 2016</copyright>
+    <license>GNU/GPL</license>
+    <version>1.0.0</version>
+    <description>Budweiser The Remix Template</description>
+    <files>
+        <filename>index.php</filename>
+		<filename>error.php</filename>
+        <filename>templateDetails.xml</filename>
+        <filename>index.html</filename>
+    </files>
+    <positions>
+        <position>position-bud</position>
+    </positions>
+</extension>
