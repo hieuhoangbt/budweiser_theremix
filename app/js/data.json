@@ -1,11 +1,9 @@
 [
 	{
-        "frame": ["imagesframe1.png","frame2.png"],
+        "frame": ["images/frame1.png","images/frame2.png"],
         "model": [
                     {"id": 1, "video": "media/big_buck_bunny.mp4", "image": "celebrity1.png"},
-                    {"id": 2, "video": "media/big_buck_bunny.mp4", "image": "celebrity2.png"},
-                    {"id": 3, "video": "media/big_buck_bunny.mp4", "image": "celebrity3.png"},
-                    {"id": 4, "video": "media/big_buck_bunny.mp4", "image": "celebrity4.png"}
+                    {"id": 2, "video": "media/dizzy.mp4", "image": "celebrity2.png"}
                   ]
     }
 

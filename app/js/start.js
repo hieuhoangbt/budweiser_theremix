@@ -7,6 +7,29 @@ var Tool = function (options) {
 
     this.canvas.renderAll();
 };
+Tool.prototype.addVideo = function (video) {
+    
+}
+Tool.prototype.snapCamera = function (video, callback) {
+    var errorCallback = function(e) {
+        console.log('device not support camera!', e);
+        callback();
+    };
+    navigator.getUserMedia  = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia;
+    if (navigator.getUserMedia) {
+        var video = $(video);
+        navigator.getUserMedia({audio: false, video: true}, function(stream) {
+            video.src = window.URL.createObjectURL(stream);
+            console.log(video);
+        }, errorCallback);
+    } else {
+        $(video).src = ''; // fallback.
+
+    }
+}
 
 Tool.prototype.addPicture = function () {
     var self = this;
@@ -146,7 +169,11 @@ window.onload = function () {
         "async": true,
         success: function (data) {
             console.log("data here!", JSON.stringify(data, null, 2));
-
+            var tool = new Tool({});
+            tool.snapCamera("#capturing", function () {
+                $('.link-snap').addClass('disable');
+                alert('device not support camera!');
+            });
         }
     };
     $.ajax(ajaxSettings);
