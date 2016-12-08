@@ -4,7 +4,10 @@ var Tool = function (options) {
     this.name = 'budweiser theremix';
     this.version = '1.0';
     this.canvas = new fabric.Canvas('tool-canvas');
-
+    this.ratio = {width: 600, height: 315};
+    this.canvas.setWidth(this.ratio.width);
+    this.canvas.setHeight(this.ratio.height);
+    this.typePicture = true;
     this.canvas.renderAll();
 };
 Tool.prototype.addVideo = function (video) {
@@ -31,33 +34,25 @@ Tool.prototype.snapCamera = function (video, callback) {
     }
 }
 
-Tool.prototype.addPicture = function () {
+Tool.prototype.addPicture = function (src, type) {
     var self = this;
     var canvas = self.canvas;
-    console.log(self.ratio);
-    // clear picture old
-    var src_img = self.typeImage == FRAME ? self.img.src : self.picture.src;
-    var slected_img = self.typeImage == FRAME ? false : true;
-    var width_img = self.typeImage == PICTURE ? self.picture.width : self.ratio.width;
-    var height_img = self.typeImage == PICTURE ? self.picture.height : self.ratio.height;
-    var top_img = self.typeImage == PICTURE ? self.picture.top : 0;
-    var left_img = self.typeImage == PICTURE ? self.picture.left : 0;
 
-    fabric.util.loadImage(src_img, function (img) {
+    fabric.util.loadImage(src, function (img) {
         var object = new fabric.Image(img);
-        object.selectable = self.typeImage == FRAME ? false : true;
+        object.selectable =  true;
         object.set({
-            top: top_img,
-            left: left_img,
-            width: width_img,
-            height: height_img,
+            top: 0,
+            left: 0,
+            width: 300,
+            height: 200,
             borderColor: 'red',
             cornerColor: 'green',
             cornerSize: 0,
             allowTouchScrolling: true,
-            evented: slected_img,
+            evented: false,
             borderColor         : 'rgba(255,255,255,1)',
-                    padding: 3,
+            padding: 3,
             centeredRotation: true,
             centeredScaling: true,
             transparentCorners: false
@@ -65,10 +60,7 @@ Tool.prototype.addPicture = function () {
         // canvas.add(object);
         canvas.insertAt(object, 0);
         canvas.renderAll();
-        if (self.typeImage == PICTURE) {
-            self.objPicture = object;
 
-        }
     });
 }
 Tool.prototype.fileRead = function (_event, pos) {
@@ -168,8 +160,14 @@ window.onload = function () {
          },*/
         "async": true,
         success: function (data) {
-            console.log("data here!", JSON.stringify(data, null, 2));
+            console.log("data here!", JSON.stringify(data[0].frame[0], null, 2));
+            var frame_first = data[0].frame[0];
+            var frame_second = data[0].frame[1];
+            var FRAME = true;
             var tool = new Tool({});
+            // add frame
+            tool.addPicture(frame_first,FRAME);
+
             tool.snapCamera("#capturing", function () {
                 $('.link-snap').addClass('disable');
                 alert('device not support camera!');

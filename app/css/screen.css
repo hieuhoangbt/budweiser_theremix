@@ -184,6 +184,14 @@ body {
   pointer-events: none;
   display: none;
 }
+.change-controll {
+  display: inline-block;
+
+}
+.controll-frame {
+  width: 100%;
+  clear: both;
+}
 /**/
 @media (max-width:1920px) {
 
