@@ -13,19 +13,8 @@
     <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
     <field name="created_by" type="createdby" default="0" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_CREATED_BY" description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_CREATED_BY" hidden="true" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_CREATED_BY"/>
     <field name="modified_by" type="modifiedby" default="0" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_MODIFIED_BY" description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_MODIFIED_BY" hidden="true" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_MODIFIED_BY"/>
-    <field name="celebrity_id" required="true" type="sql" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_CELEBRITY_ID"
-           description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_CELEBRITY_ID"
-           hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_CELEBRITY_ID"
-           query = "SELECT id, name from #__budweiser_theremix_celebrity"
-           key_field = "id" value_field = "name" filter="safehtml" />
-    <field name="user_id" required="true" type="sql" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_USER_ID"
-           description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_USER_ID"
-           hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_USER_ID"
-           query = "SELECT id, fullname from #__budweiser_theremix_user"
-           key_field = "id" value_field = "fullname" filter="safehtml"/>
+    <field name="name" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_NAME" description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_NAME" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_NAME"/>
     <field name="image" type="media" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_IMAGE" description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_IMAGE" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_IMAGE"/>
-    <field name="created_at" default="0000-00-00 00:00:00" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_CREATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_CREATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_CREATED_AT"/>
-    <field name="updated_at" default="0000-00-00 00:00:00" type="calendar" class="inputbox" filter="safehtml" format="%Y-%m-%d %H:%M:%S" label="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_UPDATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_FRAME_UPDATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_FRAME_UPDATED_AT"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

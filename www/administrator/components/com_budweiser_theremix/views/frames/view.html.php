@@ -157,11 +157,8 @@ class Budweiser_theremixViewFrames extends JViewLegacy
 			'a.`id`' => JText::_('JGRID_HEADING_ID'),
 			'a.`ordering`' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.`state`' => JText::_('JSTATUS'),
-			'a.`celebrity_id`' => JText::_('COM_BUDWEISER_THEREMIX_FRAMES_CELEBRITY_ID'),
-			'a.`user_id`' => JText::_('COM_BUDWEISER_THEREMIX_FRAMES_USER_ID'),
+			'a.`name`' => JText::_('COM_BUDWEISER_THEREMIX_FRAMES_NAME'),
 			'a.`image`' => JText::_('COM_BUDWEISER_THEREMIX_FRAMES_IMAGE'),
-			'a.`created_at`' => JText::_('COM_BUDWEISER_THEREMIX_FRAMES_CREATED_AT'),
-			'a.`updated_at`' => JText::_('COM_BUDWEISER_THEREMIX_FRAMES_UPDATED_AT'),
 		);
 	}
 }

@@ -26,7 +26,7 @@ class Budweiser_theremixControllerCelebrity extends JControllerForm
 	 */
 	public function __construct()
 	{
-		$this->view_list = 'celebritys';
+		$this->view_list = 'celebrities';
 		parent::__construct();
 	}
 }

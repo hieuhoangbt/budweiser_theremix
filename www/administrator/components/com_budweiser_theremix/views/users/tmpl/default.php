@@ -276,7 +276,7 @@ if (!empty($this->extra_sidebar))
 					<a href="<?php echo 'https://facebook.com/'.$item->scope_id; ?>"/><?php echo $item->scope_id ?></a>
 				</td>				<td>
 
-					<?php echo $item->gender; ?>
+					<?php echo ($item->gender==1)?"Nam":"Nữ"; ?>
 				</td>				<td>
 
 					<?php echo $item->email; ?>

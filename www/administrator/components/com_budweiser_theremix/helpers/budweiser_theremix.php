@@ -27,9 +27,9 @@ class Budweiser_theremixHelpersBudweiser_theremix
 	public static function addSubmenu($vName = '')
 	{
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BUDWEISER_THEREMIX_TITLE_CELEBRITYS'),
-			'index.php?option=com_budweiser_theremix&view=celebritys',
-			$vName == 'celebritys'
+			JText::_('COM_BUDWEISER_THEREMIX_TITLE_CELEBRITIES'),
+			'index.php?option=com_budweiser_theremix&view=celebrities',
+			$vName == 'celebrities'
 		);
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BUDWEISER_THEREMIX_TITLE_USERS'),
@@ -40,6 +40,11 @@ class Budweiser_theremixHelpersBudweiser_theremix
 			JText::_('COM_BUDWEISER_THEREMIX_TITLE_FRAMES'),
 			'index.php?option=com_budweiser_theremix&view=frames',
 			$vName == 'frames'
+		);
+		JHtmlSidebar::addEntry(
+			JText::_('COM_BUDWEISER_THEREMIX_TITLE_RESULTS'),
+			'index.php?option=com_budweiser_theremix&view=results',
+			$vName == 'results'
 		);
 
 	}
@@ -114,6 +119,15 @@ class Budweiser_theremixHelper extends Budweiser_theremixHelpersBudweiser_therem
         $query = $db->getQuery(true);
         $query->select('name');
         $query->from('#__budweiser_theremix_celebrity');
+        $query->where('state=1 and id=' . $db->quote($id));
+        $db->setQuery($query);
+        return $db->loadResult();
+    }
+    public static function getFrameNameFromId($id){
+        $db = & JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select('name');
+        $query->from('#__budweiser_theremix_frame');
         $query->where('state=1 and id=' . $db->quote($id));
         $db->setQuery($query);
         return $db->loadResult();
