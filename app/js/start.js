@@ -1,3 +1,4 @@
+"use strict";
 /*TOOL Maker*/
 var Tool = function (options) {
     this.name = 'budweiser theremix';
@@ -123,7 +124,6 @@ Tool.prototype.selectedObject = function () {
     });
 }
 
-
 function actionPage() {
 
 }
@@ -131,7 +131,7 @@ function actionPage() {
 /*Ready document Window*/
 
 window.onload = function () {
-    BudWeiser.baseUrl = 'http://localhost/budweiser';
+
     BudWeiser.beforeStart();
     /*Action Page init*/
     actionPage();
