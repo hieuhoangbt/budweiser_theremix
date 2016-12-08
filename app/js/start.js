@@ -137,7 +137,19 @@ window.onload = function () {
     actionPage();
 
     /*Ajax Tool*/
-    console.log(BudWeiser);
+    var ajaxSettings = {
+        "url": BudWeiser.baseUrl,
+        "type": "post",
+        /*data: {
+         cat_id: id_frame
+         },*/
+        "async": true,
+        success: function (data) {
+            console.log("data here!", JSON.stringify(data, null, 2));
+
+        }
+    };
+    $.ajax(ajaxSettings);
 
 };
 
