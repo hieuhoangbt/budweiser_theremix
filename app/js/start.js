@@ -1,4 +1,12 @@
 "use strict";
+window.cancelRequestAnimFrame = (function(){
+    return 	window.cancelAnimationFrame ||
+        window.webkitCancelRequestAnimationFrame ||
+        window.mozCancelRequestAnimationFrame ||
+        window.oCancelRequestAnimationFrame ||
+        window.msCancelRequestAnimationFrame ||
+        clearTimeout
+})();
 /*TOOL Maker*/
 var Tool = function (options) {
     this.name = 'budweiser theremix';
@@ -7,11 +15,27 @@ var Tool = function (options) {
     this.ratio = {width: 600, height: 315};
     this.canvas.setWidth(this.ratio.width);
     this.canvas.setHeight(this.ratio.height);
+    this.videoFrame = {};
     this.typePicture = true;
-    this.canvas.renderAll();
+    // this.canvas.renderAll();
 };
 Tool.prototype.addVideo = function (video) {
-    
+    var self = this;
+    var videoFrame = new fabric.Image(video);
+    self.canvas.add(videoFrame);
+    videoFrame.getElement().play();
+    console.log(fabric);
+    var request;
+    var render = function() {
+        self.canvas.renderAll();
+        request = fabric.util.requestAnimFrame(render);
+
+    }
+
+    // video.play();
+    // fabric.util.requestAnimFrame(render);
+
+
 }
 Tool.prototype.snapCamera = function (video, callback) {
     var errorCallback = function(e) {
@@ -138,7 +162,12 @@ Tool.prototype.selectedObject = function () {
         // return obj;
     });
 }
-
+Tool.prototype.AnimFrame = function (canvas) {
+    fabric.util.requestAnimFrame(function render() {
+        canvas.renderAll();
+        fabric.util.requestAnimFrame(render);
+    });
+}
 function actionPage() {
 
 }
@@ -167,6 +196,9 @@ window.onload = function () {
             var tool = new Tool({});
             // add frame
             tool.addPicture(frame_first,FRAME);
+            // add video
+            var video_frame = document.getElementById('video_frame');
+            tool.addVideo(video_frame);
 
             tool.snapCamera("#capturing", function () {
                 $('.link-snap').addClass('disable');
