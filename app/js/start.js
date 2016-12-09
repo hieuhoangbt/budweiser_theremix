@@ -1,12 +1,4 @@
-"use strict";
-window.cancelRequestAnimFrame = (function(){
-    return 	window.cancelAnimationFrame ||
-        window.webkitCancelRequestAnimationFrame ||
-        window.mozCancelRequestAnimationFrame ||
-        window.oCancelRequestAnimationFrame ||
-        window.msCancelRequestAnimationFrame ||
-        clearTimeout
-})();
+// "use strict";
 /*TOOL Maker*/
 var Tool = function (options) {
     this.name = 'budweiser theremix';
@@ -15,11 +7,13 @@ var Tool = function (options) {
     this.ratio = {width: 600, height: 315};
     this.canvas.setWidth(this.ratio.width);
     this.canvas.setHeight(this.ratio.height);
+    this.pictureFile = {};
     this.videoFrame = {};
-    this.typePicture = true;
+    this.imagesUp = {};
+    this.typePicture = {frame: 0, model: 1, file: 2};
     // this.canvas.renderAll();
 };
-Tool.prototype.addVideo = function (video) {
+Tool.prototype.addVideo = function (video,end) {
     var self = this;
     var videoFrame = new fabric.Image(video, {
         top: 0,
@@ -31,24 +25,29 @@ Tool.prototype.addVideo = function (video) {
     videoFrame.selectable =  false;
     self.canvas.add(videoFrame);
     videoFrame.getElement().play();
-
-    console.log(videoFrame);
+    videoFrame.getElement().onended = function() {
+        if(typeof end == "function") {
+            // end video
+            end();
+        }
+    };
+    self.canvas.insertAt(videoFrame, 0);
     var request;
     var render = function() {
         self.canvas.renderAll();
         request = fabric.util.requestAnimFrame(render);
     }
 
-    video.play();
+    // video.play();
     fabric.util.requestAnimFrame(render);
 
 
 }
 
-Tool.prototype.snapCamera = function (video, callback) {
+Tool.prototype.snapCamera = function (video, err) {
     var errorCallback = function(e) {
         console.log('device not support camera!', e);
-        callback();
+        err();
     };
     navigator.getUserMedia  = navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
@@ -58,7 +57,7 @@ Tool.prototype.snapCamera = function (video, callback) {
         var video = $(video);
         navigator.getUserMedia({audio: false, video: true}, function(stream) {
             video.src = window.URL.createObjectURL(stream);
-            console.log(video);
+            video.play();
         }, errorCallback);
     } else {
         $(video).src = ''; // fallback.
@@ -69,33 +68,40 @@ Tool.prototype.snapCamera = function (video, callback) {
 Tool.prototype.addPicture = function (src, type) {
     var self = this;
     var canvas = self.canvas;
+    var evented = type == self.typePicture.file ? false : false;
+    var insertFront = type == self.typePicture.file || self.typePicture.model ? true : false;
 
     fabric.util.loadImage(src, function (img) {
         var object = new fabric.Image(img);
-        object.selectable =  true;
+        object.selectable =  false;
         object.set({
             top: 0,
             left: 0,
-            width: 300,
-            height: 200,
-            borderColor: 'red',
-            cornerColor: 'green',
+            /*width: 300,
+            height: 200,*/
             cornerSize: 0,
             allowTouchScrolling: true,
             evented: false,
-            borderColor         : 'rgba(255,255,255,1)',
             padding: 3,
             centeredRotation: true,
             centeredScaling: true,
             transparentCorners: false
         });
-        // canvas.add(object);
-        canvas.insertAt(object, 0);
+        if(type == self.typePicture.file) {
+            self.imagesUp = object;
+        }
+        if(type == self.typePicture.model) {
+            canvas.insertAt(object, 0);
+        }else {
+            canvas.add(object);
+        }
+        // canvas.insertAt(object, 0);
         canvas.renderAll();
+
 
     });
 }
-Tool.prototype.fileRead = function (_event, pos) {
+Tool.prototype.fileRead = function (_event, pos, sucess) {
     var self = this;
     var imgUpload = new Image();
 
@@ -109,25 +115,21 @@ Tool.prototype.fileRead = function (_event, pos) {
             var picFile = event.target;
             imgUpload.onload = function () {
                 var fitimg = self.fitImageOn(imgUpload, self.canvas.width, self.canvas.height);
-                self.picture.width = fitimg.width;
-                self.picture.height = fitimg.height;
-                self.picture.width = fitimg.width;
-                self.picture.height = fitimg.height;
-                self.picture.top = pos.top;
-                self.picture.left = pos.left - fitimg.width;
-                self.typeImage = PICTURE;
-                self.addPicture();
+                self.pictureFile.width = fitimg.width;
+                self.pictureFile.height = fitimg.height;
+                self.pictureFile.top = pos.top;
+                self.pictureFile.left = pos.left - fitimg.width;
+                var type_file = 2;
+                self.canvas.remove(self.imagesUp);
+                self.addPicture(self.pictureFile.src, type_file);
                 self.canvas.renderAll();
-
+                if(typeof sucess == "function") {
+                    sucess();
+                }
             }
             imgUpload.src = picFile.result;
-            self.picture.src = imgUpload.src;
+            self.pictureFile.src = imgUpload.src;
 
-            // hidden title
-            $('.img_title._pos, .img_title._success').addClass('hidd');
-            $('.img_title._after').removeClass('hidd');
-            $('.controll-maker').removeClass('hidd');
-            $('.btn-upload').addClass('confirm').text('chấp nhận');
         });
 
         picReader.readAsDataURL(file);
@@ -170,12 +172,7 @@ Tool.prototype.selectedObject = function () {
         // return obj;
     });
 }
-Tool.prototype.AnimFrame = function (canvas) {
-    fabric.util.requestAnimFrame(function render() {
-        canvas.renderAll();
-        fabric.util.requestAnimFrame(render);
-    });
-}
+
 
 function actionPage() {
 
@@ -190,29 +187,78 @@ window.onload = function () {
     actionPage();
 
     /*Ajax Tool*/
+    var baseUrl = BudWeiser.baseUrl;
+    var id_Model = 2;
+    var id_Frame = 1;
     var ajaxSettings = {
-        "url": BudWeiser.baseUrl,
+        "url": baseUrl+'js/data.json',
         "type": "post",
-        /*data: {
-         cat_id: id_frame
-         },*/
         "async": true,
         success: function (data) {
-            console.log("data here!", JSON.stringify(data[0].frame[0], null, 2));
-            var frame_first = data[0].frame[0];
-            var frame_second = data[0].frame[1];
-            var FRAME = true;
+            var frames =  data[0].frame;
+            var getFrameById = function (id, frames) {
+                for(var i = 0; i < frames.length; i++) {
+                    if(frames[i].id == id) {
+                        return frames[i];
+                    }
+                }
+            }
+            var frame_detail = getFrameById(id_Frame, frames);
+            var src_frame = baseUrl+frame_detail.image;
+
+            var models =  data[0].models;
+            var getModelById = function(id, models) {
+                for(var i = 0; i < models.length; i++) {
+                    if(models[i].id == id) {
+                        return models[i];
+                    }
+                }
+            }
+            var model_detail = getModelById(id_Model, models);
+            var FRAME = 0;
+
+
+
             var tool = new Tool({});
-            // add frame
-            tool.addPicture(frame_first,FRAME);
+
             // add video
             var video_frame = document.getElementById('video_frame');
-            tool.addVideo(video_frame);
+            video_frame.src = model_detail.video;
+            video_frame.onloadedmetadata = function() {
+                // add load frame
+                tool.addPicture(src_frame,FRAME);
 
-            tool.snapCamera("#capturing", function () {
-                $('.link-snap').addClass('disable');
-                alert('device not support camera!');
+                // add video model
+                tool.addVideo(video_frame, function () {
+                    tool.snapCamera("#capturing", function () {
+                        $('.controll').show();
+                        $('.link-snap').addClass('disable');
+                        $('.link-file').removeClass('disable');
+                        // add frame model
+                        var src_model = baseUrl+model_detail.image;
+                        var model_type = 1;
+                        tool.addPicture(src_model,model_type);
+                    });
+                });
+            };
+
+            // add picture file
+            $('#file_upload').on('change', function (event) {
+                /*Add Upload Picture*/
+                var x = 0;
+                var y = 0;
+                var pos = {top: y, left: x};
+                var _event = event;
+                tool.fileRead(_event, pos, function () {
+                    $('.link-file span').text('Đổi ảnh');
+                });
+
             });
+            $('.dow').on('click', function () {
+                var base64 = tool.canvas.toDataURL("image/jpeg", 0.5);
+                window.open(base64);
+                console.log(base64);
+            })
         }
     };
     $.ajax(ajaxSettings);
