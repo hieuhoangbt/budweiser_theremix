@@ -189,7 +189,7 @@ window.onload = function () {
     /*Ajax Tool*/
     var baseUrl = BudWeiser.baseUrl;
     var id_Model = 2;
-    var id_Frame = 1;
+    var id_Frame = 2;
     var ajaxSettings = {
         "url": baseUrl+'js/data.json',
         "type": "post",
