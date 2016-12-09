@@ -21,22 +21,30 @@ var Tool = function (options) {
 };
 Tool.prototype.addVideo = function (video) {
     var self = this;
-    var videoFrame = new fabric.Image(video);
+    var videoFrame = new fabric.Image(video, {
+        top: 0,
+        left: 0,
+        width: $(video).width(),
+        height: $(video).height()
+
+    });
+    videoFrame.selectable =  false;
     self.canvas.add(videoFrame);
     videoFrame.getElement().play();
-    console.log(fabric);
+
+    console.log(videoFrame);
     var request;
     var render = function() {
         self.canvas.renderAll();
         request = fabric.util.requestAnimFrame(render);
-
     }
 
-    // video.play();
-    // fabric.util.requestAnimFrame(render);
+    video.play();
+    fabric.util.requestAnimFrame(render);
 
 
 }
+
 Tool.prototype.snapCamera = function (video, callback) {
     var errorCallback = function(e) {
         console.log('device not support camera!', e);
@@ -168,6 +176,7 @@ Tool.prototype.AnimFrame = function (canvas) {
         fabric.util.requestAnimFrame(render);
     });
 }
+
 function actionPage() {
 
 }
