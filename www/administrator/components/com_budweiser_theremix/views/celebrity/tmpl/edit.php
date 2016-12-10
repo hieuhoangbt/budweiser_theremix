@@ -62,7 +62,11 @@ $document->addStyleSheet(JUri::root() . 'media/com_budweiser_theremix/css/form.c
 
 				<?php echo $this->form->renderField('created_by'); ?>
 				<?php echo $this->form->renderField('modified_by'); ?>				<?php echo $this->form->renderField('name'); ?>
-				<?php echo $this->form->renderField('image'); ?>
+				<?php echo $this->form->renderField('image_jpeg'); ?>
+                                <?php echo $this->form->renderField('image_png'); ?>
+                                <?php echo $this->form->renderField('video'); ?>
+				<?php //echo $this->form->renderField('created_at'); ?>
+				<?php //echo $this->form->renderField('updated_at'); ?>
 
 
 					<?php if ($this->state->params->get('save_history', 1)) : ?>
