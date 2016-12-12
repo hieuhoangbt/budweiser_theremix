@@ -144,6 +144,8 @@ class Budweiser_theremixViewResults extends JViewLegacy
 			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
 
 		);
+        if ($this->items)
+            JToolBarHelper::custom('results.export2excel', 'download.png', 'publish_f2.png', 'Export Excel', false);
 	}
 
 	/**

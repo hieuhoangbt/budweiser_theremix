@@ -16,9 +16,11 @@
     <field name="name" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_NAME" description="COM_BUDWEISER_THEREMIX_FORM_DESC_CELEBRITY_NAME" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_NAME"/>
     <field name="image_jpeg" type="media" required="true" label="Image jpeg" description="Image jpeg" hint="Image jpeg"/>
     <field name="image_png" type="media" required="true" label="Image png" description="Image png" hint="Image png"/>
-    <field name="video" type="media" required="true" label="Video" description="Video" hint="Video"/>
-    <field name="created_at" default="0000-00-00 00:00:00" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_CREATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_CELEBRITY_CREATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_CREATED_AT"/>
-    <field name="updated_at" default="0000-00-00 00:00:00" type="calendar" class="inputbox" filter="safehtml" format="%Y-%m-%d %H:%M:%S" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_UPDATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_CELEBRITY_UPDATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_UPDATED_AT"/>
+      <field name="video" type="hidden" label="Video"
+             description="Video"
+             hint="Video" accept="video/mp4"/>
+    <field name="created_at" default="0000-00-00 00:00:00" label="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_CREATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_CELEBRITY_CREATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_CREATED_AT"/>
+    <field name="updated_at" default="0000-00-00 00:00:00" type="calendar" class="inputbox" filter="safehtml" format="%Y-%m-%d %H:%M:%S" label="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_UPDATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_CELEBRITY_UPDATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_CELEBRITY_UPDATED_AT"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

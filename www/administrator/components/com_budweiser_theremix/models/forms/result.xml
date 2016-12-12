@@ -24,14 +24,14 @@
            description="COM_BUDWEISER_THEREMIX_FORM_DESC_RESULT_CELEBRITY_ID" 
            hint="COM_BUDWEISER_THEREMIX_FORM_LBL_RESULT_CELEBRITY_ID"
         query="SELECT id, name FROM #__budweiser_theremix_celebrity where state=1"
-            key_field="id"
+            key_field="name"
             value_field="name"
     />
     <field name="frame_id" type="sql" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_RESULT_FRAME_ID" 
            description="COM_BUDWEISER_THEREMIX_FORM_DESC_RESULT_FRAME_ID" 
            hint="COM_BUDWEISER_THEREMIX_FORM_LBL_RESULT_FRAME_ID"
     query="SELECT id, name FROM #__budweiser_theremix_frame where state=1"
-            key_field="id"
+            key_field="name"
             value_field="name"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
