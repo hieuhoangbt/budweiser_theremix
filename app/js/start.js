@@ -1,5 +1,13 @@
-// "use strict";
+/* globals Variables*/
+var ROOT_URL = 'http://localhost/budweiser_theremix/app/';
+var PATH_DATA = 'js/data.json';
+var Model_Index = 1;
+var Frame_Index = 1;
+var Watermark_Index = 0;
+var base64 = '';
+var hasCamera = true;
 /*TOOL Maker*/
+
 var Tool = function (options) {
     this.name = 'budweiser theremix';
     this.version = '1.0';
@@ -8,10 +16,8 @@ var Tool = function (options) {
     this.canvas.setWidth(this.ratio.width);
     this.canvas.setHeight(this.ratio.height);
     this.pictureFile = {};
-    this.videoFrame = {};
     this.imagesUp = {};
     this.typePicture = {frame: 0, model: 1, file: 2};
-    // this.canvas.renderAll();
 };
 Tool.prototype.addVideo = function (video,end) {
     var self = this;
@@ -23,28 +29,39 @@ Tool.prototype.addVideo = function (video,end) {
 
     });
     videoFrame.selectable =  false;
-    self.canvas.add(videoFrame);
+    // self.canvas.add(videoFrame);
+    self.canvas.insertAt(videoFrame, 0);
     videoFrame.getElement().play();
+    var stop_end = false;
     videoFrame.getElement().onended = function() {
-        if(typeof end == "function") {
+        if(end && typeof end == "function") {
             // end video
+            stop_end = true;
             end();
+
         }
     };
-    self.canvas.insertAt(videoFrame, 0);
     var request;
     var render = function() {
         self.canvas.renderAll();
-        request = fabric.util.requestAnimFrame(render);
+        if( stop_end == true) {
+            fabric.util.cancelAnimationFrame(render);
+        }else {
+            request = fabric.util.requestAnimFrame(render);
+        }
+
+        console.log('playing video...');
     }
 
     // video.play();
     fabric.util.requestAnimFrame(render);
 
 
+
 }
 
-Tool.prototype.snapCamera = function (video, err) {
+Tool.prototype.snapCamera = function (video, camera, err) {
+    var self = this;
     var errorCallback = function(e) {
         console.log('device not support camera!', e);
         err();
@@ -54,10 +71,18 @@ Tool.prototype.snapCamera = function (video, err) {
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia;
     if (navigator.getUserMedia) {
-        var video = $(video);
-        navigator.getUserMedia({audio: false, video: true}, function(stream) {
-            video.src = window.URL.createObjectURL(stream);
-            video.play();
+        // var video = $(video);
+        navigator.getUserMedia({audio: true, video: true}, function(stream) {
+            if(camera && typeof camera == "function") {
+                camera();
+            }
+            var video_elm = document.querySelector(video);
+            video_elm.src = window.URL.createObjectURL(stream);
+            video_elm.onloadedmetadata = function(e) {
+                // Ready to go. Do some stuff.
+                self.addVideo(video_elm);
+
+            };
         }, errorCallback);
     } else {
         $(video).src = ''; // fallback.
@@ -172,7 +197,24 @@ Tool.prototype.selectedObject = function () {
         // return obj;
     });
 }
+Tool.prototype.getBase64 = function (success) {
+    var request, end = false, base64 = '';
+    var self= this;
+    base64 = self.canvas.toDataURL("image/jpeg", 0.5);
+    var renderBase64 = function() {
+        if( base64 != '') {
+            fabric.util.cancelAnimationFrame(renderBase64);
+            if(success && typeof success == "function") {
+                success(base64);
+            }
+            return base64;
+        }else {
+            request = fabric.util.requestAnimFrame(renderBase64);
+        }
 
+    }
+    fabric.util.requestAnimFrame(renderBase64);
+}
 
 function actionPage() {
 
@@ -185,84 +227,90 @@ window.onload = function () {
     BudWeiser.beforeStart();
     /*Action Page init*/
     actionPage();
+    var video_frame = document.getElementById('video_frame');
 
     /*Ajax Tool*/
-    var baseUrl = BudWeiser.baseUrl;
-    var id_Model = 2;
-    var id_Frame = 2;
+
     var ajaxSettings = {
-        "url": baseUrl+'js/data.json',
+        "url": ROOT_URL+PATH_DATA,
         "type": "post",
         "async": true,
         success: function (data) {
-            var frames =  data[0].frame;
-            var getFrameById = function (id, frames) {
-                for(var i = 0; i < frames.length; i++) {
-                    if(frames[i].id == id) {
-                        return frames[i];
-                    }
-                }
-            }
-            var frame_detail = getFrameById(id_Frame, frames);
-            var src_frame = baseUrl+frame_detail.image;
+            /*get data json ajax*/
+            BudWeiser.getDataBeforeAjax();
+            /**/
+            var FRAMES =  data[0].frame;
+            var MODELS =  data[0].models;
+            var WATERMARK = data[0].watermark;
 
-            var models =  data[0].models;
-            var getModelById = function(id, models) {
-                for(var i = 0; i < models.length; i++) {
-                    if(models[i].id == id) {
-                        return models[i];
-                    }
-                }
-            }
-            var model_detail = getModelById(id_Model, models);
-            var FRAME = 0;
-
-
-
-            var tool = new Tool({});
-
-            // add video
-            var video_frame = document.getElementById('video_frame');
+            var frame_detail = FRAMES[Frame_Index];
+            var src_frame = frame_detail.image;
+            var model_detail = MODELS[Model_Index] ;
+            var src_model = model_detail.image;
             video_frame.src = model_detail.video;
-            video_frame.onloadedmetadata = function() {
-                // add load frame
-                tool.addPicture(src_frame,FRAME);
+            var watermark = WATERMARK[Watermark_Index];
+            var src_watermark = watermark.image;
 
-                // add video model
-                tool.addVideo(video_frame, function () {
-                    tool.snapCamera("#capturing", function () {
-                        $('.controll').show();
-                        $('.link-snap').addClass('disable');
-                        $('.link-file').removeClass('disable');
-                        // add frame model
-                        var src_model = baseUrl+model_detail.image;
-                        var model_type = 1;
-                        tool.addPicture(src_model,model_type);
-                    });
-                });
+            var addFrame = 0;
+            var addModel = 1;
+            // new Tool
+            var TOOL = new Tool({});
+
+            // add video model
+            var endVideoModel = function () {
+                $('.controll').show();
+            }
+            video_frame.onloadedmetadata = function() {
+                TOOL.addVideo(video_frame, endVideoModel);
             };
 
-            // add picture file
+            // live stream camera
+            var CameraNotSupport = function () {
+                hasCamera = false;
+                // add frame model
+                TOOL.addPicture(src_model, addModel);
+                $('.link-snap').addClass('disable');
+                $('.link-file').removeClass('disable');
+            }
+            var capturingStream = function() {
+                hasCamera = true;
+                $('.link-snap').removeClass('disable');
+                $('.link-file').addClass('disable');
+            }
+            TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
+
+            // add load frame: logo
+            TOOL.addPicture(src_frame,addFrame);
+
+
+            // add picture file when camera not exits
             $('#file_upload').on('change', function (event) {
+                /*before submit upload file*/
+                BudWeiser.beforeUploadFile();
                 /*Add Upload Picture*/
                 var x = 0;
                 var y = 0;
                 var pos = {top: y, left: x};
                 var _event = event;
-                tool.fileRead(_event, pos, function () {
+                TOOL.fileRead(_event, pos, function () {
                     $('.link-file span').text('Đổi ảnh');
                 });
 
             });
-            $('.dow').on('click', function () {
-                var base64 = tool.canvas.toDataURL("image/jpeg", 0.5);
-                window.open(base64);
-                console.log(base64);
+
+            // get base64 images
+            $('.dow, .link-snap').on('click', function () {
+                BudWeiser.beforeGetBase64();
+                TOOL.getBase64(function (data_image) {
+                    base64 = data_image;
+                    BudWeiser.afterGetBase64();
+                    window.open(base64);
+                });
+
+
             })
         }
     };
     $.ajax(ajaxSettings);
 
 };
-
-

@@ -153,6 +153,8 @@ body {
 #tool-canvas {
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 .controll {
   text-align: center;
@@ -205,8 +207,29 @@ body {
     opacity: 0;
 }
 .capturing-frame {
-
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
+.capturing-frame video {
+  width: 100%;
+  height: 100%;
+}
+.canvas-snap {
+  width: 600px;
+  height: 315px;
+  clear: both;
+  border: solid 1px blue;
+}
+.canvas-snap canvas {
+  width: 100%;
+  height: 100%;
+}
+
 /**/
 @media (max-width:1920px) {
 

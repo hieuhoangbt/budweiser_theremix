@@ -2,8 +2,11 @@
 
 /** define module **/
 var BudWeiser = window.BudWeiser || {};
-BudWeiser.baseUrl = 'http://localhost/budweiser_theremix/app/'; /*default*/
+
 BudWeiser.beforeStart = function(){};
-BudWeiser.beforeSubmitFormAjax = function(){};
+BudWeiser.getDataBeforeAjax = function() {};
+BudWeiser.beforeUploadFile = function() {};
+BudWeiser.beforeGetBase64 = function(){};
+BudWeiser.afterGetBase64 = function(){};
 
 /*...Other action*/

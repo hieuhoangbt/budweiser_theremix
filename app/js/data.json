@@ -1,12 +1,13 @@
 [
 	{
         "frame": [
-                    {"id": 1, "image": "images/frame1.png"},
-                    {"id": 2, "image": "images/frame2.png" }
+                    {"id": 1, "image": "http://localhost/budweiser_theremix/app/images/frame1.png"},
+                    {"id": 2, "image": "http://localhost/budweiser_theremix/app/images/frame2.png" }
         ],
+        "watermark": [{"id": 0, "image": "http://localhost/budweiser_theremix/app/images/wtm1.png"}],
         "models": [
-                    {"id": 1, "video": "media/big_buck_bunny.mp4", "image": "images/celebrity1.png"},
-                    {"id": 2, "video": "media/dizzy.mp4", "image": "images/celebrity2.png"}
+                    {"id": 1, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celebrity1.png"},
+                    {"id": 2, "video": "http://localhost/budweiser_theremix/app/media/dizzy.mp4", "image": "http://localhost/budweiser_theremix/app/images/celebrity2.png"}
                   ]
     }
 
