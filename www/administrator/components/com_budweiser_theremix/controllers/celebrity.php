@@ -87,7 +87,7 @@ class Budweiser_theremixControllerCelebrity extends JControllerForm
         $id = $items->get('id');
         $formdata = JRequest::getVar('jform', null, 'post', 'array');
         $file = JRequest::getVar('video_file', null, 'files', 'array');
-        if (!empty($file)) {
+        if (!empty($file['tmp_name'])) {
             $mime = mime_content_type($file['tmp_name']);
             jimport('joomla.filesystem.file');
             $filename = $this->getAlias(uniqid() . "_" . JFile::makeSafe($file['name']));
@@ -120,6 +120,7 @@ class Budweiser_theremixControllerCelebrity extends JControllerForm
             }
         }
     }
+    
     public function deleteVideoUrl()
     {
         $id = JRequest::getInt("id");
