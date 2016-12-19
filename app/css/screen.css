@@ -142,12 +142,15 @@ input, input:focus, input:active, textarea, textarea:focus, textarea:active {
 body {
 
 }
+#page {
+  overflow: hidden;
+}
 /*TOOLS*/
 .frame-wrapper {
   border: solid 1px red;
-  width: 600px;
-  height: 315px;
-  margin: 20px auto;
+  /*width: 600px;
+  height: 315px;*/
+  margin: 0px auto 20px auto;
     position: relative;
 }
 #tool-canvas {

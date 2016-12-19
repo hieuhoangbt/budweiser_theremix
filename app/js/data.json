@@ -1,8 +1,8 @@
 [
 	{
         "frame": [
-                    {"id": 1, "image": "http://localhost/budweiser_theremix/app/images/frame1.png"},
-                    {"id": 2, "image": "http://localhost/budweiser_theremix/app/images/frame2.png" }
+                    {"id": 1, "image": "http://localhost/budweiser_theremix/app/images/frame.png"},
+                    {"id": 2, "image": "http://localhost/budweiser_theremix/app/images/frame.png" }
         ],
         "watermark": [{"id": 0, "image": "http://localhost/budweiser_theremix/app/images/wtm1.png"}],
         "models": [
