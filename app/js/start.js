@@ -1,12 +1,13 @@
 /* globals Variables*/
-var ROOT_URL = 'http://localhost/budweiser_theremix/app/';
-var PATH_DATA = 'js/data.json';
-var Model_Index = 1;
-var Frame_Index = 1;
+var ROOT_URL        = 'http://localhost/budweiser_theremix/app/';
+var PATH_DATA       = 'js/data.json';
+var Model_Index     = 1;
+var Frame_Index     = 1;
 var Watermark_Index = 0;
-var base64 = '';
-var hasCamera = true;
-var playerName = '';
+var base64          = '';
+var hasCamera       = true;
+var hasTag          = '#TEMTHIEUBAOTRAM';
+var playerName      = 'DUC VIET';
 
 /*TOOL Maker*/
 
@@ -14,7 +15,7 @@ var Tool = function (options) {
     this.name = 'budweiser theremix';
     this.version = '1.0';
     this.canvas = new fabric.Canvas('tool-canvas');
-    this.max = {width: 1920, height: 1080};
+    this.max = {width: 1142, height: 599};
     this.ratioW = this.max.width / this.max.height;
     this.ratio = {width: 600, height: 315};
 
@@ -22,7 +23,8 @@ var Tool = function (options) {
     this.imagesUp = {};
     this.groupItem = new fabric.Group();
     this.typePicture = {frame: 0, model: 1, file: 2};
-    this.renderCanvas();
+    this.typeVideo = {model: 0, capturing: 1};
+    this.renderCanvas(this.max.width);
 };
 Tool.prototype.renderCanvas = function (width) {
     width = width || window.innerWidth;
@@ -31,11 +33,13 @@ Tool.prototype.renderCanvas = function (width) {
     this.canvas.setHeight(w_height);
     this.canvas.renderAll();
 }
-Tool.prototype.addVideo = function (video,end) {
+Tool.prototype.addVideo = function (video, end, type) {
     var self = this;
+    var _left = type == self.typeVideo.model ? 0 : self.canvas.width - $(video).width();
+    var _top = 0;
     var videoFrame = new fabric.Image(video, {
-        top: 0,
-        left: 0,
+        top: _top,
+        left: _left,
         width: $(video).width(),
         height: $(video).height()
 
@@ -53,21 +57,19 @@ Tool.prototype.addVideo = function (video,end) {
 
         }
     };
-    var request;
+
     var render = function() {
         self.canvas.renderAll();
         if( stop_end == true) {
             fabric.util.cancelAnimationFrame(render);
         }else {
-            request = fabric.util.requestAnimFrame(render);
+            fabric.util.requestAnimFrame(render);
         }
 
     }
 
     // video.play();
     fabric.util.requestAnimFrame(render);
-
-
 
 }
 
@@ -91,7 +93,8 @@ Tool.prototype.snapCamera = function (video, camera, err) {
             video_elm.src = window.URL.createObjectURL(stream);
             video_elm.onloadedmetadata = function(e) {
                 // Ready to go. Do some stuff.
-                self.addVideo(video_elm);
+
+                self.addVideo(video_elm, self.typeVideo.capturing);
 
             };
         }, errorCallback);
@@ -101,7 +104,7 @@ Tool.prototype.snapCamera = function (video, camera, err) {
     }
 }
 
-Tool.prototype.addPicture = function (src, type) {
+Tool.prototype.addPicture = function (src, type, end) {
     var self = this;
     var canvas = self.canvas;
     var evented = type == self.typePicture.file ? false : false;
@@ -131,6 +134,9 @@ Tool.prototype.addPicture = function (src, type) {
         }else {
             object.set({width: self.canvas.width, height: self.canvas.height});
             canvas.add(object);
+            if( end && typeof end == "function") {
+                end();
+            }
         }
         // canvas.insertAt(object, 0);
         canvas.renderAll();
@@ -198,6 +204,41 @@ Tool.prototype.fitImageOn = function (imageObj, canvasWidth, canvasHeight) {
         height: renderableHeight
     };
 }
+Tool.prototype.addText = function (hastag, playerName) {
+    var self = this;
+    var config_hastag       = {
+        fontFamily: 'arial',
+        fontSize: 18,
+        top: 0,
+        left: 0,
+        fill: '#ffffff',
+        color: 'blue',
+        textAlign : "right",
+        fontWeight: 'bold'
+    };
+    var config_playerName   = {
+        fontFamily: 'arial',
+        fontSize: 24,
+        top: 0,
+        left: 0,
+        fill: '#ffffff',
+        color: 'blue',
+        textAlign : "right",
+        fontWeight: 'bold'
+    };
+    var title_hastag = new fabric.Text(hastag, config_hastag);
+    var title_player = new fabric.Text(playerName, config_playerName);
+    title_player.set({
+       left :  self.canvas.width - title_player.width - 80,
+       top: self.canvas.height - title_player.height - 10
+    });
+    title_hastag.set({
+        left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
+        top: self.canvas.height - title_hastag.height - 10
+    })
+    this.canvas.add(title_hastag, title_player);
+    this.canvas.renderAll();
+}
 
 Tool.prototype.selectedObject = function () {
     var self = this;
@@ -208,10 +249,12 @@ Tool.prototype.selectedObject = function () {
 
     });
 }
-Tool.prototype.getBase64 = function (success) {
+Tool.prototype.getBase64 = function (process, success) {
     var request, end = false, base64 = '';
     var self= this;
     base64 = self.canvas.toDataURL("image/jpeg", 0.5);
+    /*Process*/
+    process();
     var renderBase64 = function() {
         if( base64 != '') {
             fabric.util.cancelAnimationFrame(renderBase64);
@@ -266,13 +309,14 @@ window.onload = function () {
             var addModel        = 1;
             // new Tool
             var TOOL            = new Tool({});
-
+            $('.controll .form-upload').width(TOOL.max.width);
+            $('.controll .form-upload').height(TOOL.max.height);
             // add video model
             var endVideoModel   = function () {
                 $('.controll').show();
             }
             video_frame.onloadedmetadata = function() {
-                TOOL.addVideo(video_frame, endVideoModel);
+                TOOL.addVideo(video_frame, endVideoModel, TOOL.typeVideo.model);
             };
 
             // live stream camera
@@ -290,8 +334,11 @@ window.onload = function () {
             }
             TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
 
-            // add load frame: logo
-            TOOL.addPicture(src_frame,addFrame);
+            // add load frame
+            TOOL.addPicture(src_frame,addFrame, function () {
+                // add hastag
+                TOOL.addText(hasTag, playerName);
+            });
 
 
             // add picture file when camera not exits
@@ -309,14 +356,35 @@ window.onload = function () {
 
             });
 
+
             // get base64 images
             $('.dow, .link-snap').on('click', function () {
                 BudWeiser.beforeGetBase64();
-                TOOL.getBase64(function (data_image) {
-                    base64 = data_image;
-                    BudWeiser.afterGetBase64();
-                    window.open(base64);
-                });
+                TOOL.getBase64(process, sucessBase);
+                function process() {
+                    $('.loadder').css('display','table');
+                }
+                function sucessBase(source) {
+                    $('.loadder').hide();
+                    base64 = source;
+                    var i = 4;
+                    var coundow_snap = setInterval(function () {
+                        i--;
+                        if(i == 0) {
+                            var img_output = new Image();
+                            img_output.onload = function() {
+                                $('.image-output').html(img_output);
+                            }
+                            img_output.src = base64;
+
+                            BudWeiser.afterGetBase64();
+                            i = 1;
+                            clearInterval(coundow_snap);
+                        }
+
+                        $('.timeCoundow').show().text(i);
+                    },1200);
+                }
 
 
             })
