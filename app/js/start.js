@@ -1,7 +1,7 @@
 /* globals Variables*/
 var ROOT_URL        = 'http://localhost/budweiser_theremix/app/';
 var PATH_DATA       = 'js/data.json';
-var Model_Index     = 8;
+var Model_Index     = 5;
 var Frame_Index     = 1;
 var Watermark_Index = 0;
 var base64          = '';
@@ -9,6 +9,7 @@ var hasCamera       = true;
 var hasTag          = '#TEMTHIEUBAOTRAM';
 var playerName      = 'DUC VIET';
 
+var objFrame;
 /*TOOL Maker*/
 
 var Tool = function (options) {
@@ -21,7 +22,6 @@ var Tool = function (options) {
 
     this.pictureFile = {};
     this.imagesUp = {};
-    this.groupItem = new fabric.Group();
     this.typePicture = {frame: 0, model: 1, file: 2};
     this.typeVideo = {model: 0, capturing: 1};
     this.renderCanvas(this.max.width);
@@ -35,7 +35,7 @@ Tool.prototype.renderCanvas = function (width) {
 }
 Tool.prototype.addVideo = function (video, end, type) {
     var self = this;
-    var _left = type == self.typeVideo.model ? 0 : self.canvas.width - $(video).width();
+    var _left = self.canvas.width / 2 - $(video).width() / 2;
     var _top = 0;
     var videoFrame = new fabric.Image(video, {
         top: _top,
@@ -44,7 +44,7 @@ Tool.prototype.addVideo = function (video, end, type) {
         height: $(video).height()
 
     });
-    videoFrame.selectable =  false;
+    videoFrame.selectable =  true;
     // self.canvas.add(videoFrame);
     self.canvas.insertAt(videoFrame, 0);
     videoFrame.getElement().play();
@@ -76,7 +76,7 @@ Tool.prototype.addVideo = function (video, end, type) {
 Tool.prototype.snapCamera = function (video, camera, err) {
     var self = this;
     var errorCallback = function(e) {
-        alert('device not support camera!', e);
+        alert('PC không hỗ trợ Camera! :( ');
         err();
     };
     navigator.getUserMedia  = navigator.getUserMedia ||
@@ -107,38 +107,39 @@ Tool.prototype.snapCamera = function (video, camera, err) {
 Tool.prototype.addPicture = function (src, type, end) {
     var self = this;
     var canvas = self.canvas;
-    var evented = type == self.typePicture.file ? false : false;
-    var insertFront = type == self.typePicture.file || self.typePicture.model ? true : false;
+
 
     fabric.util.loadImage(src, function (img) {
         var object = new fabric.Image(img);
-        object.selectable =  false;
-        if(type == self.typePicture.frame) {
-        }
+        object.selectable =  true;
         object.set({
             top: 0,
             left: 0,
-            cornerSize: 0,
-            allowTouchScrolling: true,
-            evented: false,
-            padding: 3,
-            centeredRotation: true,
             centeredScaling: true,
+            borderColor: 'red',
+            cornerColor: 'green',
+            cornerSize: 6,
+            allowTouchScrolling: true,
             transparentCorners: false
         });
         if(type == self.typePicture.file) {
+            object.set({
+               top: self.canvas.height / 2 - object.height / 2,
+               left: self.canvas.width / 2 - object.width / 2
+            });
+            canvas.insertAt(object, 0);
             self.imagesUp = object;
         }
         if(type == self.typePicture.model) {
             canvas.insertAt(object, 0);
-        }else {
+        }
+        if(type == self.typePicture.frame) {
             object.set({width: self.canvas.width, height: self.canvas.height});
             canvas.add(object);
             if( end && typeof end == "function") {
                 end();
             }
         }
-        // canvas.insertAt(object, 0);
         canvas.renderAll();
 
 
@@ -207,7 +208,7 @@ Tool.prototype.fitImageOn = function (imageObj, canvasWidth, canvasHeight) {
 Tool.prototype.addText = function (hastag, playerName) {
     var self = this;
     var config_hastag       = {
-        fontFamily: 'arial',
+        fontFamily: 'Bud_BoldVN',
         fontSize: 18,
         top: 0,
         left: 0,
@@ -217,7 +218,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         fontWeight: 'bold'
     };
     var config_playerName   = {
-        fontFamily: 'arial',
+        fontFamily: 'Bud_BoldVN',
         fontSize: 24,
         top: 0,
         left: 0,
@@ -248,17 +249,21 @@ Tool.prototype.selectedObject = function () {
         var obj = self.canvas.getActiveObject();
 
     });
+
 }
 Tool.prototype.getBase64 = function (process, success) {
     var request, end = false, base64 = '';
     var self= this;
     base64 = self.canvas.toDataURL("image/jpeg", 0.5);
-    /*Process*/
-    process();
+
     var renderBase64 = function() {
+        /*Process*/
+        process();
+
         if( base64 != '') {
             fabric.util.cancelAnimationFrame(renderBase64);
             if(success && typeof success == "function") {
+                /*Success*/
                 success(base64);
             }
             return base64;
@@ -311,19 +316,13 @@ window.onload = function () {
             var TOOL            = new Tool({});
             $('.controll .form-upload').width(TOOL.max.width);
             $('.controll .form-upload').height(TOOL.max.height);
-            // add video model
-            var endVideoModel   = function () {
-                $('.controll').show();
-            }
-            video_frame.onloadedmetadata = function() {
-                /*TOOL.addVideo(video_frame, endVideoModel, TOOL.typeVideo.model);*/
-            };
+
+            // add frame model
+            TOOL.addPicture(src_model, addModel);
 
             // live stream camera
             var CameraNotSupport = function () {
                 hasCamera = false;
-                // add frame model
-                TOOL.addPicture(src_model, addModel);
                 $('.link-snap').addClass('disable');
                 $('.link-file').removeClass('disable');
             }
@@ -338,6 +337,15 @@ window.onload = function () {
             TOOL.addPicture(src_frame,addFrame, function () {
                 // add hastag
                 TOOL.addText(hasTag, playerName);
+                var i = 0;
+                var it = setInterval(function () {
+                    i++;
+                    TOOL.canvas.renderAll();
+                    if(i == 5) {
+                        clearInterval(it);
+                    }
+                },1000)
+
             });
 
 
@@ -352,19 +360,83 @@ window.onload = function () {
                 var _event = event;
                 TOOL.fileRead(_event, pos, function () {
                     $('.link-file span').text('Đổi ảnh');
+                    zoomEdit();
                 });
 
             });
+            // Edit zoom In-Out image upload
 
+            function zoomEdit() {
+                $('.edit-controll').removeClass('disable');
+
+                // slider
+                $('#slider-zoom').slider({
+                    orientation: "vertical",
+                    slide: function( event, ui ) {
+                        zoomRatio(ui.value);
+                    }
+                });
+                function zoomRatio(precent) {
+                    var zoom = (precent / 100 ) * 1;
+                    if(zoom < 1) {
+                        zoom = 1 + zoom;
+                    }
+                    if(precent == 100) zoom = 2;
+
+                    console.log(zoom);
+                    TOOL.imagesUp.scale(zoom);
+                    TOOL.canvas.renderAll();
+                }
+                // controll edit
+                $('.zoom_in').on('click', function() {
+                    var current_zoom = $( "#slider-zoom" ).slider( "value");
+                    if(current_zoom == 100) {
+                        current_zoom = 100;
+                    }else {
+                        current_zoom++;
+                    }
+                    $( "#slider-zoom" ).slider( "value", current_zoom);
+                    zoomRatio(current_zoom);
+
+                })
+                $('.zoom_out').on('click', function() {
+                    var current_zoom = $( "#slider-zoom" ).slider( "value");
+                    if(current_zoom == 0) {
+                        current_zoom = 0;
+                    }else {
+                        current_zoom--;
+                    }
+                    $( "#slider-zoom" ).slider( "value", current_zoom);
+                    zoomRatio(current_zoom);
+
+                })
+
+                // confirm edit
+                $('.confirm_edit').on('click', function() {
+                    $('.link-file, .edit-controll, .link-snap-prev').addClass('disable');
+                    $('.link-snap').click();
+                })
+
+            }
+
+            // prev Snap camera Click
+            $('.link-snap-prev').on('click', function () {
+                $('.link-snap').removeClass('disable');
+                $('.link-after').addClass('disable');
+                $('.image-output').html('');
+                $('.timeCoundow').hide();
+            })
 
             // get base64 images
-            $('.dow, .link-snap').on('click', function () {
+            $('.link-snap').on('click', function () {
+
                 BudWeiser.beforeGetBase64();
                 TOOL.getBase64(process, sucessBase);
                 function process() {
                     $('.loadder').css('display','table');
                 }
                 function sucessBase(source) {
+                    $('.link-snap').addClass('disable');
                     $('.loadder').hide();
                     base64 = source;
                     var i = 4;
@@ -376,9 +448,10 @@ window.onload = function () {
                                 $('.image-output').html(img_output);
                             }
                             img_output.src = base64;
-
+                            $('.link-after').removeClass('disable');
                             BudWeiser.afterGetBase64();
                             i = 1;
+
                             clearInterval(coundow_snap);
                         }
 
@@ -387,7 +460,7 @@ window.onload = function () {
                 }
 
 
-            })
+            });
         }
     };
     $.ajax(ajaxSettings);
