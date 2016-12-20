@@ -39,4 +39,36 @@ class Budweiser_theremixController extends JControllerLegacy
 
 		return $this;
 	}
+    public function getAllCelebrity() {
+        $db = & JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select('id,name, image_jpeg');
+        $query->from('#__budweiser_theremix_celebrity');
+        $query->where('state=1');
+        $db->setQuery($query);
+        $result = $db->loadObject();
+        return (empty($result)) ? false : $result;
+    }
+
+    public function getDetailCelebrity() {
+        $db = & JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select('id,name, image_jpeg, image_png, video');
+        $query->from('#__budweiser_theremix_celebrity');
+        $query->where('state=1');
+        $db->setQuery($query);
+        $result = $db->loadObject();
+        return (empty($result)) ? false : $result;
+    }
+
+    public function getAllFrame() {
+        $db = & JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select('id,name, image');
+        $query->from('#__budweiser_theremix_frame');
+        $query->where('state=1');
+        $db->setQuery($query);
+        $result = $db->loadObject();
+        return (empty($result)) ? false : $result;
+    }
 }

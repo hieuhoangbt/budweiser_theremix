@@ -21,8 +21,6 @@
         <option value="2">Nữ</option>
     </field>
     <field name="email" required="true" label="COM_BUDWEISER_THEREMIX_FORM_LBL_USER_EMAIL" description="COM_BUDWEISER_THEREMIX_FORM_DESC_USER_EMAIL" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_USER_EMAIL"/>
-    <field name="created_at" default="0000-00-00 00:00:00" label="COM_BUDWEISER_THEREMIX_FORM_LBL_USER_CREATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_USER_CREATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_USER_CREATED_AT"/>
-    <field name="updated_at" default="0000-00-00 00:00:00" type="calendar" class="inputbox" filter="safehtml" format="%Y-%m-%d %H:%M:%S" label="COM_BUDWEISER_THEREMIX_FORM_LBL_USER_UPDATED_AT" description="COM_BUDWEISER_THEREMIX_FORM_DESC_USER_UPDATED_AT" hint="COM_BUDWEISER_THEREMIX_FORM_LBL_USER_UPDATED_AT"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

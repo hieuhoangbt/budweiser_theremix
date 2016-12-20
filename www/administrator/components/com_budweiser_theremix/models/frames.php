@@ -36,11 +36,8 @@ class Budweiser_theremixModelFrames extends JModelList
 				'state', 'a.`state`',
 				'created_by', 'a.`created_by`',
 				'modified_by', 'a.`modified_by`',
-				'celebrity_id', 'a.`celebrity_id`',
-				'user_id', 'a.`user_id`',
+				'name', 'a.`name`',
 				'image', 'a.`image`',
-				'created_at', 'a.`created_at`',
-				'updated_at', 'a.`updated_at`',
 			);
 		}
 
@@ -76,7 +73,7 @@ class Budweiser_theremixModelFrames extends JModelList
 		$this->setState('params', $params);
 
 		// List state information.
-		parent::populateState('a.id', 'asc');
+		parent::populateState('a.name', 'asc');
 	}
 
 	/**
@@ -158,7 +155,7 @@ class Budweiser_theremixModelFrames extends JModelList
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				
+				$query->where('( a.name LIKE ' . $search . ' )');
 			}
 		}
 

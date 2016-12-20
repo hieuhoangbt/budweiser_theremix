@@ -76,6 +76,9 @@ class Budweiser_theremixModelCelebrity extends JModelAdmin
 			)
 		);
 
+			if($form->getFieldAttribute('created_at', 'default') == 'NOW'){
+				$form->setFieldAttribute('created_at', 'default', date('Y-m-d H:i:s'));
+			}
 		if (empty($form))
 		{
 			return false;
