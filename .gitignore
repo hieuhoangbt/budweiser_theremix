@@ -544,3 +544,5 @@
 /joomla.xml
 /*.txt
 /robots.txt.dist
+/app/.idea
+/app/js/start_bk.js

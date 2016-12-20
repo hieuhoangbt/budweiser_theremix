@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>budweiser</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--css-->
+    <link href="css/screen.css" type="text/css" rel="stylesheet" />
+    <!--end-css-->
+    <!--javascript-->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/hook.js"></script>
+    <script type="text/javascript" src="js/fabric.min.js"></script>
+    <script type="text/javascript" src="js/filereader.js"></script>
+    <script type="text/javascript" src="js/start.js"></script>
+	
+    <!--end-javascript-->
+	
+</head>
+<body>
+    <div id="page">
+        <div class="content">
+            <div class="tool">
+                <div class="frame-wrapper">
+                    <canvas id="tool-canvas">
+                        Browers doesn't not support canvas html5
+                    </canvas>
+                    <div class="controll">
+                        <form class="form-upload" action="">
+                            <div class="timeCoundow">0</div>
+                            <div class="vetical-middle loadder">
+                                <div class="center-child">
+                                    <div class="loadding">&nbsp;</div>
+                                </div>
+                            </div>
+                            <div class="btn-form link-snap" direct="snap">
+                                <span>chụp ảnh</span>
+                                <!--<input class="input_file" id="file_snap" type="file">-->
+                            </div>
+                            <div class="btn-form link-file disable" direct="file">
+                                <span>Tải ảnh</span>
+                                <input class="input_file" id="file_upload" type="file">
+                            </div>
+                            <div class="image-output"></div>
+                        </form>
+                    </div>
+                    <div class="capturing-frame">
+                        <video id="capturing" autoplay></video>
+                    </div>
+
+                    <div class="video-frame">
+                        <video id="video_frame">
+                            <source src="">
+                        </video>
+                    </div>
+                    <!--<div class="btn-form dow"><span>dowload</span></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
