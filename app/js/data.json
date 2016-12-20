@@ -6,8 +6,18 @@
         ],
         "watermark": [{"id": 0, "image": "http://localhost/budweiser_theremix/app/images/wtm1.png"}],
         "models": [
-                    {"id": 1, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celebrity1.png"},
-                    {"id": 2, "video": "http://localhost/budweiser_theremix/app/media/dizzy.mp4", "image": "http://localhost/budweiser_theremix/app/images/celebrity2.png"}
+                    {"id": 1, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb1.png"},
+                    {"id": 2, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb2.png"},
+                    {"id": 3, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb3.png"},
+                    {"id": 4, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb4.png"},
+                    {"id": 5, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb5.png"},
+                    {"id": 6, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb6.png"},
+                    {"id": 7, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb7.png"},
+                    {"id": 8, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb8.png"},
+                    {"id": 9, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb9.png"},
+                    {"id": 10, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb10.png"},
+                    {"id": 11, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb11.png"},
+                    {"id": 12, "video": "http://localhost/budweiser_theremix/app/media/big_buck_bunny.mp4", "image": "http://localhost/budweiser_theremix/app/images/celeb/celeb12.png"}
                   ]
     }
 

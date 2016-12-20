@@ -1,7 +1,7 @@
 /* globals Variables*/
 var ROOT_URL        = 'http://localhost/budweiser_theremix/app/';
 var PATH_DATA       = 'js/data.json';
-var Model_Index     = 1;
+var Model_Index     = 8;
 var Frame_Index     = 1;
 var Watermark_Index = 0;
 var base64          = '';
@@ -316,7 +316,7 @@ window.onload = function () {
                 $('.controll').show();
             }
             video_frame.onloadedmetadata = function() {
-                TOOL.addVideo(video_frame, endVideoModel, TOOL.typeVideo.model);
+                /*TOOL.addVideo(video_frame, endVideoModel, TOOL.typeVideo.model);*/
             };
 
             // live stream camera
