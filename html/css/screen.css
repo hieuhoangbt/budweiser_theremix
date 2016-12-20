@@ -111,6 +111,7 @@ body {
 .logo {
 	width: 100%;
 	overflow: hidden;
+	padding-top: 70px;
 }
 .logoBud {
 	float: left;
@@ -199,6 +200,41 @@ body {
 	-ms-transform: scale(1.01);
 	transform: scale(1.01);
 }
+/* SINGER */
+.title h2 {
+	font-size: 68px;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	margin: 30px auto 50px;
+}
+.choose-singer {
+	text-align: center;
+	overflow: hidden;
+}
+.item-choose {
+	width: 284px;
+	/*float: left;*/
+	display: inline-block;
+	margin: 10px -15px;
+	position: relative;
+}
+.item-choose .shine {
+	-webkit-transform: skewX(-18deg);
+    transform: skewX(-18deg);
+    position: absolute;
+    bottom: 2px;
+    left: 36px;
+    width: 210px;
+    height: 222px;
+    z-index: 1;
+    overflow: hidden;
+}
+.item-choose .shine span {
+	width: 210px;
+    height: 222px;
+    display: block;
+}
 /* Shine */
 .hover-shine {
     position: relative;
@@ -214,8 +250,8 @@ body {
     height: 100%;
     background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
     background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
-    -webkit-transform: skewX(-25deg);
-    transform: skewX(-25deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
 }
 .hover-shine:hover::before {
     -webkit-animation: shine .75s;
