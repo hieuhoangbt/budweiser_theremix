@@ -93,6 +93,7 @@ body {
 }
 .bgWelcome {
 	background: url(../images/bgWelcome.jpg) no-repeat 50% 50%;
+	background-size: 100%;
 }
 .bgForm {
 	background: url(../images/bgForm.jpg) no-repeat 50% 50%;
@@ -112,12 +113,15 @@ body {
 	width: 100%;
 	overflow: hidden;
 	padding-top: 70px;
+	padding-top: 3.6vw;
 }
 .logoBud {
 	float: left;
+	width: 20vw;
 }
 .hoaam {
 	float: right;
+	width: 28.48vw;
 }
 .btn-join {
 	position: absolute;
@@ -149,13 +153,16 @@ body {
 /* FORM */
 .logo-hoaam {
 	padding-top: 40px;
+	padding-top: 2vw;
 }
 .logo-hoaam img {
 	margin: 0 auto;
 	display: block;
+	width: 28.48vw;
 }
 .form-submit {
 	max-width: 600px;
+	max-width: 31.25vw;
 	width: 100%;
 	position: absolute;
 	bottom: 50px;
@@ -175,49 +182,79 @@ body {
 	width: 100%;
 	color: #fff;
 	font-family: 'Bud_BoldVN';
-	font-size: 42px;
+	font-size: 2.18vw;
 	text-transform: uppercase;
 	text-align: center;
 }
 .form-submit .btn-start button {
 	width: 357px;
 	height: 129px;
-	margin: 50px auto 0;
+	margin: 2.6vw auto 0;
 	display: block;
 	border: none;
 	background: url(../images/btn_red.png) no-repeat 0 0;
+	background: none;
+	position: relative;
+	width: auto;
+	height: auto;
 	font-family: 'Bud_BoldVN';
 	font-size: 42px;
 	color: #ff0000;
 	cursor: pointer;
+	-webkit-transform: scale(0.9);
+	-ms-transform: scale(0.9);
+	transform: scale(0.9);
+	-webkit-transition: all 0.25s linear ;
+	-moz-transition: all 0.25s linear;
+	-ms-transition: all 0.25s linear ;
+	-o-transition: all 0.25s linear ;
+	transition: all 0.25s linear ;
+}
+.form-submit .btn-start button img {
+
+	z-index: 1;
+	width: 18.75vw;
+	max-width: none;
+}
+.form-submit .btn-start button span {
+	display: block;
+	position: relative;
+	z-index: 2;
+	font-size: 2.1875vw;
+	position: absolute;
+	top: 47%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+}
+.form-submit .btn-start button:hover {
+	color: #fff;
 	-webkit-transform: scale(1);
 	-ms-transform: scale(1);
 	transform: scale(1);
 }
-.form-submit .btn-start button:hover {
-	color: #fff;
-	-webkit-transform: scale(1.01);
-	-ms-transform: scale(1.01);
-	transform: scale(1.01);
-}
 /* SINGER */
 .title h2 {
-	font-size: 68px;
+	/*font-size: 68px;*/
+	font-size: 3.4vw;
 	color: #fff;
 	text-align: center;
 	text-transform: uppercase;
 	margin: 30px auto 50px;
+	margin: 1vw auto 2vw;
 }
 .choose-singer {
 	text-align: center;
 	overflow: hidden;
 }
 .item-choose {
-	width: 284px;
+	/*width: 284px;*/
+	width: 14.79vw;
 	/*float: left;*/
 	display: inline-block;
 	margin: 10px -15px;
 	position: relative;
+	overflow: hidden;
 }
 .item-choose .shine {
 	-webkit-transform: skewX(-18deg);
@@ -273,14 +310,37 @@ body {
 		margin: 0 75px;
 	}
 }
-@media screen and (max-width: 1366) {
+@media (max-width: 1366px) {
 	.wrapper {
 		margin: 0 65px;
 	}
-}
-@media screen and (max-width: 1280) {
+	.bgForm {
+		background-size: 100%;
+	}
+	.form-submit {
+		bottom: 0px;
+	}
+	.form-submit .btn-start button {
+		margin: 1.6vw auto 0;
+	}
+	.bgSinger {
+		background-size: 100%;
+	}
+	.item-choose {
+		margin: 10px -10px;
+	}
+
+	.btn-join {
+		bottom: 30px;
+		left: 47%;
+
+	}
+@media screen and (max-width: 1280px) {
 	.wrapper {
 		margin: 0 60px;
+	}
+	.form-submit {
+		bottom: 35px;
 	}
 }
 @media screen and (max-width: 810) {
