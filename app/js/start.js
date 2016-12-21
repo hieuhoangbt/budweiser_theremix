@@ -1,7 +1,7 @@
 /* globals Variables*/
 var ROOT_URL        = 'http://localhost/budweiser_theremix/app/';
 var PATH_DATA       = 'js/data.json';
-var Model_Index     = 5;
+var Model_Index     = 8;
 var Frame_Index     = 1;
 var Watermark_Index = 0;
 var base64          = '';
@@ -31,6 +31,7 @@ Tool.prototype.renderCanvas = function (width) {
     var w_height = width / this.ratioW;
     this.canvas.setWidth(width);
     this.canvas.setHeight(w_height);
+    this.canvas.selection = false;
     this.canvas.renderAll();
 }
 Tool.prototype.addVideo = function (video, end, type) {
@@ -76,7 +77,7 @@ Tool.prototype.addVideo = function (video, end, type) {
 Tool.prototype.snapCamera = function (video, camera, err) {
     var self = this;
     var errorCallback = function(e) {
-        alert('PC không hỗ trợ Camera! :( ');
+        // alert('PC không hỗ trợ Camera! :( ');
         err();
     };
     navigator.getUserMedia  = navigator.getUserMedia ||
@@ -93,9 +94,7 @@ Tool.prototype.snapCamera = function (video, camera, err) {
             video_elm.src = window.URL.createObjectURL(stream);
             video_elm.onloadedmetadata = function(e) {
                 // Ready to go. Do some stuff.
-
                 self.addVideo(video_elm, self.typeVideo.capturing);
-
             };
         }, errorCallback);
     } else {
@@ -107,42 +106,27 @@ Tool.prototype.snapCamera = function (video, camera, err) {
 Tool.prototype.addPicture = function (src, type, end) {
     var self = this;
     var canvas = self.canvas;
-
-
-    fabric.util.loadImage(src, function (img) {
-        var object = new fabric.Image(img);
-        object.selectable =  true;
-        object.set({
-            top: 0,
-            left: 0,
-            centeredScaling: true,
-            borderColor: 'red',
-            cornerColor: 'green',
-            cornerSize: 6,
-            allowTouchScrolling: true,
-            transparentCorners: false
-        });
+    fabric.Image.fromURL(src, function (img) {
         if(type == self.typePicture.file) {
-            object.set({
-               top: self.canvas.height / 2 - object.height / 2,
-               left: self.canvas.width / 2 - object.width / 2
+            img.set({
+               top: self.canvas.height / 2 - img.height / 2,
+               left: self.canvas.width / 2 - img.width / 2
             });
-            canvas.insertAt(object, 0);
-            self.imagesUp = object;
+            canvas.insertAt(img, 0);
+            self.imagesUp = img;
         }
         if(type == self.typePicture.model) {
-            canvas.insertAt(object, 0);
+            canvas.insertAt(img, 0);
         }
         if(type == self.typePicture.frame) {
-            object.set({width: self.canvas.width, height: self.canvas.height});
-            canvas.add(object);
+            img.set({width: self.canvas.width, height: self.canvas.height});
+            canvas.add(img);
             if( end && typeof end == "function") {
                 end();
             }
         }
+
         canvas.renderAll();
-
-
     });
 }
 Tool.prototype.fileRead = function (_event, pos, sucess) {
@@ -166,7 +150,6 @@ Tool.prototype.fileRead = function (_event, pos, sucess) {
                 var type_file = 2;
                 self.canvas.remove(self.imagesUp);
                 self.addPicture(self.pictureFile.src, type_file);
-                self.canvas.renderAll();
                 if(typeof sucess == "function") {
                     sucess();
                 }
@@ -208,7 +191,7 @@ Tool.prototype.fitImageOn = function (imageObj, canvasWidth, canvasHeight) {
 Tool.prototype.addText = function (hastag, playerName) {
     var self = this;
     var config_hastag       = {
-        fontFamily: 'Bud_BoldVN',
+        fontFamily: 'BudBold',
         fontSize: 18,
         top: 0,
         left: 0,
@@ -218,7 +201,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         fontWeight: 'bold'
     };
     var config_playerName   = {
-        fontFamily: 'Bud_BoldVN',
+        fontFamily: 'BudBold',
         fontSize: 24,
         top: 0,
         left: 0,
@@ -241,16 +224,6 @@ Tool.prototype.addText = function (hastag, playerName) {
     this.canvas.renderAll();
 }
 
-Tool.prototype.selectedObject = function () {
-    var self = this;
-
-    self.canvas.on('object:selected', function (e) {
-        self.drag = true;
-        var obj = self.canvas.getActiveObject();
-
-    });
-
-}
 Tool.prototype.getBase64 = function (process, success) {
     var request, end = false, base64 = '';
     var self= this;
@@ -306,7 +279,7 @@ window.onload = function () {
             var src_frame       = frame_detail.image;
             var model_detail    = MODELS[Model_Index] ;
             var src_model       = model_detail.image;
-            video_frame.src     = model_detail.video;
+
             var watermark       = WATERMARK[Watermark_Index];
             var src_watermark   = watermark.image;
 
@@ -383,7 +356,6 @@ window.onload = function () {
                     }
                     if(precent == 100) zoom = 2;
 
-                    console.log(zoom);
                     TOOL.imagesUp.scale(zoom);
                     TOOL.canvas.renderAll();
                 }
