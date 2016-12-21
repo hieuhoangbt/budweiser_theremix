@@ -22,31 +22,6 @@ class Budweiser_theremixControllerUser extends Budweiser_theremixController {
         return $model;
     }
 
-    public function saveLoginFB() {
-        /*         *
-         * Save info login facebook
-         * */
-        $model = $this->getModel();
-        $id = JRequest::getVar('scope_id');
-        $email = JRequest::getVar('email');
-        $fullname = JRequest::getVar('name');
-        $gender = JRequest::getVar('gender');
-        $check = $model->checkUserExist($email);
-        if (empty($check)) {
-            $result = $model->saveInfoLoginFB($fullname, $email, $gender, $id);
-            if (!empty($result)) {
-                $sess = JFactory::getSession();
-                $sess->set('user_id', $result);
-            }
-        } else {
-            $sess = JFactory::getSession();
-            $sess->set('user_id', $check->id);
-            $result = true;
-        }
-
-        echo json_encode($result);
-        exit;
-    }
 
 
 

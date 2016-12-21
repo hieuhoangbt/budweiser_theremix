@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-12-21 09:38:47
+Date: 2016-12-21 14:31:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -278,7 +278,7 @@ CREATE TABLE `jigsaw_budweiser_theremix_result` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `celebrity_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -289,7 +289,7 @@ CREATE TABLE `jigsaw_budweiser_theremix_result` (
 -- ----------------------------
 -- Records of jigsaw_budweiser_theremix_result
 -- ----------------------------
-INSERT INTO jigsaw_budweiser_theremix_result VALUES ('1', '1', '1', '0', '0000-00-00 00:00:00', '126', '126', 'Hồ ngọc hà', '1', 'images/15085647_616795178528407_625038474606721871_n.jpg', '2016-12-12 10:40:38', '0000-00-00 00:00:00', 'frame 1');
+INSERT INTO jigsaw_budweiser_theremix_result VALUES ('1', '1', '1', '0', '0000-00-00 00:00:00', '126', '126', 'Hồ ngọc hà', 'nguyễn văn tèo', 'images/15085647_616795178528407_625038474606721871_n.jpg', '2016-12-21 14:28:04', '0000-00-00 00:00:00', 'frame 1');
 
 -- ----------------------------
 -- Table structure for `jigsaw_budweiser_theremix_user`
@@ -737,7 +737,7 @@ INSERT INTO jigsaw_extensions VALUES ('448', 'plg_twofactorauth_totp', 'plugin',
 INSERT INTO jigsaw_extensions VALUES ('449', 'plg_authentication_cookie', 'plugin', 'cookie', 'authentication', '0', '1', '1', '0', '{\"name\":\"plg_authentication_cookie\",\"type\":\"plugin\",\"creationDate\":\"July 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_AUTH_COOKIE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"cookie\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('450', 'plg_twofactorauth_yubikey', 'plugin', 'yubikey', 'twofactorauth', '0', '0', '1', '0', '{\"name\":\"plg_twofactorauth_yubikey\",\"type\":\"plugin\",\"creationDate\":\"September 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"PLG_TWOFACTORAUTH_YUBIKEY_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"yubikey\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('451', 'plg_search_tags', 'plugin', 'tags', 'search', '0', '1', '1', '0', '{\"name\":\"plg_search_tags\",\"type\":\"plugin\",\"creationDate\":\"March 2014\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_TAGS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"tags\"}', '{\"search_limit\":\"50\",\"show_tagged_items\":\"1\"}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
-INSERT INTO jigsaw_extensions VALUES ('452', 'plg_system_updatenotification', 'plugin', 'updatenotification', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_updatenotification\",\"type\":\"plugin\",\"creationDate\":\"May 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_UPDATENOTIFICATION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"updatenotification\"}', '{\"lastrun\":1482204948}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO jigsaw_extensions VALUES ('452', 'plg_system_updatenotification', 'plugin', 'updatenotification', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_updatenotification\",\"type\":\"plugin\",\"creationDate\":\"May 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_UPDATENOTIFICATION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"updatenotification\"}', '{\"lastrun\":1482305197}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('453', 'plg_editors-xtd_module', 'plugin', 'module', 'editors-xtd', '0', '1', '1', '0', '{\"name\":\"plg_editors-xtd_module\",\"type\":\"plugin\",\"creationDate\":\"October 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_MODULE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"module\"}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('454', 'plg_system_stats', 'plugin', 'stats', 'system', '0', '1', '1', '0', '{\"name\":\"plg_system_stats\",\"type\":\"plugin\",\"creationDate\":\"November 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_STATS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"stats\"}', '{\"mode\":3,\"lastrun\":1481077962,\"unique_id\":\"a9b3316b24bff9284da8fb7ea15227b0ee257800\",\"interval\":12}', '', '', '0', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO jigsaw_extensions VALUES ('455', 'plg_installer_packageinstaller', 'plugin', 'packageinstaller', 'installer', '0', '1', '1', '1', '{\"name\":\"plg_installer_packageinstaller\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_PACKAGEINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"packageinstaller\"}', '', '', '', '0', '0000-00-00 00:00:00', '1', '0');
@@ -1733,7 +1733,7 @@ CREATE TABLE `jigsaw_session` (
 -- ----------------------------
 -- Records of jigsaw_session
 -- ----------------------------
-INSERT INTO jigsaw_session VALUES ('cq854bmsnamsd1004d19ntq632', '1', '0', '1482205583', 'joomla|s:1612:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo1OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToxMDk7czo1OiJ0aW1lciI7Tzo4OiJzdGRDbGFzcyI6Mzp7czo1OiJzdGFydCI7aToxNDgyMjA0OTQ3O3M6NDoibGFzdCI7aToxNDgyMjA1NTgwO3M6Mzoibm93IjtpOjE0ODIyMDU1ODM7fXM6NToidG9rZW4iO3M6MzI6InA2T05qZVNWdm5xMlVPVkdHUXM3ZFY4UEc4YmU1dFZtIjt9czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjI6e3M6MTM6ImNvbV9pbnN0YWxsZXIiO086ODoic3RkQ2xhc3MiOjI6e3M6NzoibWVzc2FnZSI7czowOiIiO3M6MTc6ImV4dGVuc2lvbl9tZXNzYWdlIjtzOjA6IiI7fXM6MjI6ImNvbV9idWR3ZWlzZXJfdGhlcmVtaXgiO086ODoic3RkQ2xhc3MiOjQ6e3M6MTE6ImNlbGVicml0aWVzIjtPOjg6InN0ZENsYXNzIjoxOntzOjg6Im9yZGVyY29sIjtzOjY6ImEubmFtZSI7fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo5OiJjZWxlYnJpdHkiO086ODoic3RkQ2xhc3MiOjI6e3M6MjoiaWQiO2E6MDp7fXM6NDoiZGF0YSI7Tjt9fXM6NjoiZnJhbWVzIjtPOjg6InN0ZENsYXNzIjoxOntzOjg6Im9yZGVyY29sIjtzOjY6ImEubmFtZSI7fXM6NzoicmVzdWx0cyI7Tzo4OiJzdGRDbGFzcyI6MTp7czo4OiJvcmRlcmNvbCI7czo0OiJhLmlkIjt9fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjoxO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086NToiSlVzZXIiOjE6e3M6MjoiaWQiO3M6MzoiMTI2Ijt9czo5OiJjb21fbWVkaWEiO086ODoic3RkQ2xhc3MiOjE6e3M6MTA6InJldHVybl91cmwiO3M6MTMyOiJpbmRleC5waHA/b3B0aW9uPWNvbV9tZWRpYSZ2aWV3PWltYWdlcyZ0bXBsPWNvbXBvbmVudCZmaWVsZGlkPWpmb3JtX2ltYWdlX3BuZyZlX25hbWU9JmFzc2V0PWNvbV9idWR3ZWlzZXJfdGhlcmVtaXgmYXV0aG9yPWNyZWF0ZWRfYnkiO31zOjExOiJhcHBsaWNhdGlvbiI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJxdWV1ZSI7Tjt9fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', '126', 'sysadmin');
+INSERT INTO jigsaw_session VALUES ('l35omdn0ir76qk7r1goci7da22', '1', '0', '1482305443', 'joomla|s:1160:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToxMztzOjU6InRpbWVyIjtPOjg6InN0ZENsYXNzIjozOntzOjU6InN0YXJ0IjtpOjE0ODIzMDUxOTY7czo0OiJsYXN0IjtpOjE0ODIzMDU0NDA7czozOiJub3ciO2k6MTQ4MjMwNTQ0Mjt9czo1OiJ0b2tlbiI7czozMjoiaXVXSDdKUHQ2OWJVVlRvbU9pYUZSUXlVR29MeFR0VDEiO31zOjg6InJlZ2lzdHJ5IjtPOjI0OiJKb29tbGFcUmVnaXN0cnlcUmVnaXN0cnkiOjM6e3M6NzoiACoAZGF0YSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMzoiY29tX2luc3RhbGxlciI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo3OiJtZXNzYWdlIjtzOjA6IiI7czoxNzoiZXh0ZW5zaW9uX21lc3NhZ2UiO3M6MDoiIjt9czoyMjoiY29tX2J1ZHdlaXNlcl90aGVyZW1peCI7Tzo4OiJzdGRDbGFzcyI6Mzp7czoxMToiY2VsZWJyaXRpZXMiO086ODoic3RkQ2xhc3MiOjE6e3M6ODoib3JkZXJjb2wiO3M6NjoiYS5uYW1lIjt9czo3OiJyZXN1bHRzIjtPOjg6InN0ZENsYXNzIjoxOntzOjg6Im9yZGVyY29sIjtzOjQ6ImEuaWQiO31zOjY6ImZyYW1lcyI7Tzo4OiJzdGRDbGFzcyI6MTp7czo4OiJvcmRlcmNvbCI7czo2OiJhLm5hbWUiO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjE7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fXM6NDoidXNlciI7Tzo1OiJKVXNlciI6MTp7czoyOiJpZCI7czozOiIxMjYiO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', '126', 'sysadmin');
 
 -- ----------------------------
 -- Table structure for `jigsaw_tags`
@@ -1929,34 +1929,29 @@ CREATE TABLE `jigsaw_updates` (
   `infourl` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_query` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT '',
   PRIMARY KEY (`update_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available Updates';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available Updates';
 
 -- ----------------------------
 -- Records of jigsaw_updates
 -- ----------------------------
-INSERT INTO jigsaw_updates VALUES ('1', '3', '0', 'Bosnian', '', 'pkg_bs-BA', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/bs-BA_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('2', '3', '0', 'Serbian Cyrillic', '', 'pkg_sr-RS', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/sr-RS_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('3', '3', '0', 'Vietnamese', '', 'pkg_vi-VN', 'package', '', '0', '3.2.1.1', '', 'https://update.joomla.org/language/details3/vi-VN_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('4', '3', '0', 'Bahasa Indonesia', '', 'pkg_id-ID', 'package', '', '0', '3.6.2.1', '', 'https://update.joomla.org/language/details3/id-ID_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('5', '3', '0', 'Finnish', '', 'pkg_fi-FI', 'package', '', '0', '3.6.2.1', '', 'https://update.joomla.org/language/details3/fi-FI_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('6', '3', '0', 'Swahili', '', 'pkg_sw-KE', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/sw-KE_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('7', '3', '0', 'Montenegrin', '', 'pkg_srp-ME', 'package', '', '0', '3.3.1.1', '', 'https://update.joomla.org/language/details3/srp-ME_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('8', '3', '0', 'English CA', '', 'pkg_en-CA', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/en-CA_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('9', '3', '0', 'French CA', '', 'pkg_fr-CA', 'package', '', '0', '3.5.1.2', '', 'https://update.joomla.org/language/details3/fr-CA_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('10', '3', '0', 'Welsh', '', 'pkg_cy-GB', 'package', '', '0', '3.3.0.2', '', 'https://update.joomla.org/language/details3/cy-GB_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('11', '3', '0', 'Sinhala', '', 'pkg_si-LK', 'package', '', '0', '3.3.1.1', '', 'https://update.joomla.org/language/details3/si-LK_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('12', '3', '0', 'Dari Persian', '', 'pkg_prs-AF', 'package', '', '0', '3.4.4.1', '', 'https://update.joomla.org/language/details3/prs-AF_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('13', '3', '0', 'Turkmen', '', 'pkg_tk-TM', 'package', '', '0', '3.5.0.2', '', 'https://update.joomla.org/language/details3/tk-TM_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('14', '3', '0', 'Irish', '', 'pkg_ga-IE', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/ga-IE_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('15', '1', '700', 'Joomla', '', 'joomla', 'file', '', '0', '3.6.5', '', 'https://update.joomla.org/core/sts/extension_sts.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('16', '3', '0', 'Dzongkha', '', 'pkg_dz-BT', 'package', '', '0', '3.6.2.1', '', 'https://update.joomla.org/language/details3/dz-BT_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('17', '3', '0', 'Slovenian', '', 'pkg_sl-SI', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/sl-SI_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('18', '3', '0', 'Spanish CO', '', 'pkg_es-CO', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/es-CO_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('19', '3', '0', 'German CH', '', 'pkg_de-CH', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-CH_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('20', '3', '0', 'German AT', '', 'pkg_de-AT', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-AT_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('21', '3', '0', 'German LI', '', 'pkg_de-LI', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-LI_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('22', '3', '0', 'German LU', '', 'pkg_de-LU', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-LU_details.xml', '', '');
-INSERT INTO jigsaw_updates VALUES ('23', '3', '0', 'English NZ', '', 'pkg_en-NZ', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/en-NZ_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('1', '3', '0', 'Swahili', '', 'pkg_sw-KE', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/sw-KE_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('2', '3', '0', 'Montenegrin', '', 'pkg_srp-ME', 'package', '', '0', '3.3.1.1', '', 'https://update.joomla.org/language/details3/srp-ME_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('3', '3', '0', 'English CA', '', 'pkg_en-CA', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/en-CA_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('4', '3', '0', 'French CA', '', 'pkg_fr-CA', 'package', '', '0', '3.5.1.2', '', 'https://update.joomla.org/language/details3/fr-CA_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('5', '3', '0', 'Welsh', '', 'pkg_cy-GB', 'package', '', '0', '3.3.0.2', '', 'https://update.joomla.org/language/details3/cy-GB_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('6', '1', '700', 'Joomla', '', 'joomla', 'file', '', '0', '3.6.5', '', 'https://update.joomla.org/core/sts/extension_sts.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('7', '3', '0', 'Sinhala', '', 'pkg_si-LK', 'package', '', '0', '3.3.1.1', '', 'https://update.joomla.org/language/details3/si-LK_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('8', '3', '0', 'Dari Persian', '', 'pkg_prs-AF', 'package', '', '0', '3.4.4.1', '', 'https://update.joomla.org/language/details3/prs-AF_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('9', '3', '0', 'Turkmen', '', 'pkg_tk-TM', 'package', '', '0', '3.5.0.2', '', 'https://update.joomla.org/language/details3/tk-TM_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('10', '3', '0', 'Irish', '', 'pkg_ga-IE', 'package', '', '0', '3.6.4.1', '', 'https://update.joomla.org/language/details3/ga-IE_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('11', '3', '0', 'Dzongkha', '', 'pkg_dz-BT', 'package', '', '0', '3.6.2.1', '', 'https://update.joomla.org/language/details3/dz-BT_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('12', '3', '0', 'Slovenian', '', 'pkg_sl-SI', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/sl-SI_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('13', '3', '0', 'Spanish CO', '', 'pkg_es-CO', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/es-CO_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('14', '3', '0', 'German CH', '', 'pkg_de-CH', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-CH_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('15', '3', '0', 'German AT', '', 'pkg_de-AT', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-AT_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('16', '3', '0', 'German LI', '', 'pkg_de-LI', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-LI_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('17', '3', '0', 'German LU', '', 'pkg_de-LU', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/de-LU_details.xml', '', '');
+INSERT INTO jigsaw_updates VALUES ('18', '3', '0', 'English NZ', '', 'pkg_en-NZ', 'package', '', '0', '3.6.5.1', '', 'https://update.joomla.org/language/details3/en-NZ_details.xml', '', '');
 
 -- ----------------------------
 -- Table structure for `jigsaw_update_sites`
@@ -1976,10 +1971,10 @@ CREATE TABLE `jigsaw_update_sites` (
 -- ----------------------------
 -- Records of jigsaw_update_sites
 -- ----------------------------
-INSERT INTO jigsaw_update_sites VALUES ('1', 'Joomla! Core', 'collection', 'https://update.joomla.org/core/list.xml', '1', '1482204960', '');
-INSERT INTO jigsaw_update_sites VALUES ('2', 'Joomla! Extension Directory', 'collection', 'https://update.joomla.org/jed/list.xml', '1', '1482204960', '');
-INSERT INTO jigsaw_update_sites VALUES ('3', 'Accredited Joomla! Translations', 'collection', 'https://update.joomla.org/language/translationlist_3.xml', '1', '1482204960', '');
-INSERT INTO jigsaw_update_sites VALUES ('4', 'Joomla! Update Component Update Site', 'extension', 'https://update.joomla.org/core/extensions/com_joomlaupdate.xml', '1', '1482204960', '');
+INSERT INTO jigsaw_update_sites VALUES ('1', 'Joomla! Core', 'collection', 'https://update.joomla.org/core/list.xml', '1', '1482305208', '');
+INSERT INTO jigsaw_update_sites VALUES ('2', 'Joomla! Extension Directory', 'collection', 'https://update.joomla.org/jed/list.xml', '1', '1482305208', '');
+INSERT INTO jigsaw_update_sites VALUES ('3', 'Accredited Joomla! Translations', 'collection', 'https://update.joomla.org/language/translationlist_3.xml', '1', '1482305209', '');
+INSERT INTO jigsaw_update_sites VALUES ('4', 'Joomla! Update Component Update Site', 'extension', 'https://update.joomla.org/core/extensions/com_joomlaupdate.xml', '1', '1482305209', '');
 
 -- ----------------------------
 -- Table structure for `jigsaw_update_sites_extensions`
@@ -2060,7 +2055,7 @@ CREATE TABLE `jigsaw_users` (
 -- ----------------------------
 -- Records of jigsaw_users
 -- ----------------------------
-INSERT INTO jigsaw_users VALUES ('126', 'Super User', 'sysadmin', 'xuananh1059@gmail.com', '$2y$10$mu2rGI5nCA31W23uBuOwcez76otU3FNKce8tK1SVsnAWWsUtZOjpq', '0', '1', '2016-12-07 01:28:51', '2016-12-20 03:35:56', '0', '', '0000-00-00 00:00:00', '0', '', '', '0');
+INSERT INTO jigsaw_users VALUES ('126', 'Super User', 'sysadmin', 'xuananh1059@gmail.com', '$2y$10$mu2rGI5nCA31W23uBuOwcez76otU3FNKce8tK1SVsnAWWsUtZOjpq', '0', '1', '2016-12-07 01:28:51', '2016-12-21 07:26:44', '0', '', '0000-00-00 00:00:00', '0', '', '', '0');
 
 -- ----------------------------
 -- Table structure for `jigsaw_user_keys`

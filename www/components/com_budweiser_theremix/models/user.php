@@ -81,34 +81,6 @@ class Budweiser_theremixModelUser extends JModelList {
     public function getItems() {
         return parent::getItems();
     }
-    public function checkUserExist($email) {
-        /*         *
-         * Check user exits
-         * */
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select('id');
-        $query->from('#__budweiser_theremix_user');
-        $query->where('email = "' . $email . '" and state=1');
-        $db->setQuery($query);
-        $result = $db->loadObject();
-        return $result;
-    }
-
-    public function saveInfoLoginFB($fullname, $email, $gender, $scope_id) {
-        $db = JFactory::getDbo();
-        $now = date('Y-m-d H:i:s');
-        $query = $db->getQuery(true);
-        $columns = array('fullname', 'email', 'scope_id', 'gender', 'state', 'created_at');
-        $values = array($db->quote($fullname), $db->quote($email), $db->quote($scope_id), $db->quote($gender), 1, $db->quote($now));
-        $query
-            ->insert($db->quoteName('#__budweiser_theremix_user'))
-            ->columns($db->quoteName($columns))
-            ->values(implode(',', $values));
-        $db->setQuery($query);
-        $db->execute();
-        return $db->insertid();
-    }
 
 
 

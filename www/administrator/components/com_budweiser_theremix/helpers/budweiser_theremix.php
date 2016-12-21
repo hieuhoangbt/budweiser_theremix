@@ -32,11 +32,6 @@ class Budweiser_theremixHelpersBudweiser_theremix
 			$vName == 'celebrities'
 		);
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BUDWEISER_THEREMIX_TITLE_USERS'),
-			'index.php?option=com_budweiser_theremix&view=users',
-			$vName == 'users'
-		);
-		JHtmlSidebar::addEntry(
 			JText::_('COM_BUDWEISER_THEREMIX_TITLE_FRAMES'),
 			'index.php?option=com_budweiser_theremix&view=frames',
 			$vName == 'frames'
@@ -105,15 +100,6 @@ class Budweiser_theremixHelpersBudweiser_theremix
 
 class Budweiser_theremixHelper extends Budweiser_theremixHelpersBudweiser_theremix
 {
-    public static function getUserNameFromId($id){
-        $db = & JFactory::getDBO();
-        $query = $db->getQuery(true);
-        $query->select('fullname');
-        $query->from('#__budweiser_theremix_user');
-        $query->where('state=1 and id=' . $db->quote($id));
-        $db->setQuery($query);
-        return $db->loadResult();
-    }
     public static function getCelebrityFromId($id){
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
