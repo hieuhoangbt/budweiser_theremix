@@ -223,6 +223,39 @@ Tool.prototype.addText = function (hastag, playerName) {
     this.canvas.add(title_hastag, title_player);
     this.canvas.renderAll();
 }
+Tool.prototype.zoomIt = function(canvas, factor, success) {
+    canvas.setHeight(canvas.getHeight() * factor);
+    canvas.setWidth(canvas.getWidth() * factor);
+    if (canvas.backgroundImage) {
+        // Need to scale background images as well
+        var bi = canvas.backgroundImage;
+        bi.width = bi.width * factor; bi.height = bi.height * factor;
+    }
+    var objects = canvas.getObjects();
+    for (var i in objects) {
+        var scaleX = objects[i].scaleX;
+        var scaleY = objects[i].scaleY;
+        var left = objects[i].left;
+        var top = objects[i].top;
+
+        var tempScaleX = scaleX * factor;
+        var tempScaleY = scaleY * factor;
+        var tempLeft = left * factor;
+        var tempTop = top * factor;
+
+        objects[i].scaleX = tempScaleX;
+        objects[i].scaleY = tempScaleY;
+        objects[i].left = tempLeft;
+        objects[i].top = tempTop;
+
+        objects[i].setCoords();
+    }
+    canvas.renderAll();
+    canvas.calcOffset();
+    if(success &&  typeof success == "function") {
+        success();
+    }
+}
 
 Tool.prototype.getBase64 = function (process, success) {
     var request, end = false, base64 = '';
@@ -338,7 +371,6 @@ window.onload = function () {
 
             });
             // Edit zoom In-Out image upload
-
             function zoomEdit() {
                 $('.edit-controll').removeClass('disable');
 
@@ -398,6 +430,27 @@ window.onload = function () {
                 $('.image-output').html('');
                 $('.timeCoundow').hide();
             })
+
+            // scale canvas
+            scaleCanvas();
+
+            function scaleCanvas() {
+                var s = 0;
+                var timeScale = setInterval(function(){
+                    s++;
+                    if(s == 2) {
+                        TOOL.zoomIt(TOOL.canvas, 0.7, function () {
+                            $('.controll .form-upload').width(TOOL.canvas.width);
+                            $('.controll .form-upload').height(TOOL.canvas.height);
+                            var h_slider = (TOOL.canvas.height * 33 / 100);
+                            $('#slider-zoom').height(h_slider);
+                        });
+                        clearInterval(timeScale);
+                    }
+
+                },0);
+            }
+
 
             // get base64 images
             $('.link-snap').on('click', function () {

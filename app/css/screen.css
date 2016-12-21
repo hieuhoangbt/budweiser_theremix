@@ -167,10 +167,41 @@ body {
   overflow: hidden;
 }
 /*TOOLS*/
+.bg-tool {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background-image: url("../images/bg-tool.jpg");
+  background-repeat: no-repeat;
+
+}
+.img-top {
+  float: left;
+  width: 100%;
+  padding: 3vw 0px 2vw 0px;
+}
+.tool {
+  position: relative;
+}
+.logo-tool {
+  width: 20vw;
+  float: left;
+  margin-left: 4vw;
+}
+.slogan-tool {
+  width: 28.48vw;
+  float: right;
+  margin-right: 4vw;
+}
+
 .frame-wrapper {
   /*width: 600px;
   height: 315px;*/
   margin: 0px auto 20px auto;
+  float: left;
+  width: 100%;
     position: relative;
 }
 #tool-canvas {
