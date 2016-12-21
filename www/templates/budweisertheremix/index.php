@@ -28,11 +28,13 @@ $view = JRequest::getVar('view');
         <![endif]-->
     </head>
     <body>
+        <div class="bgFull"></div>
         <?php if($view=='home'){ ?>
-        <div class="bgFull"></div>
-        <div class="bgWelcome"></div>
+            <div class="bgWelcome"></div>
         <?php }else if($view=='form'){ ?>
-        <div class="bgFull"></div>
+            <div class="bgForm"></div>
+        <?php }else if($view=='celebrity'){ ?>
+            <div class="bgSinger"></div>
         <?php } ?>
         <div class="wrapper">
             <!--Component-->
