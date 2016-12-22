@@ -385,6 +385,7 @@ window.onload = function () {
                     $('.link-file span').text('Đổi ảnh');
                     var new_bg = $('.link-file .img-link').attr('change_src') ;
                     $('.link-file .img-link').attr('src', new_bg) ;
+                    $('.link-file').addClass('disable');
                     zoomEdit();
                 });
 
@@ -403,9 +404,9 @@ window.onload = function () {
                 function zoomRatio(precent, zoom_canvas) {
                     var maxZoom = 2;
                     var s_zoom = maxZoom - zoom_canvas;
-                    var spee_zoom = (100 / s_zoom);
+                    var spee_zoom = (s_zoom / 100);
 
-                    console.log('spee_zoom: ', spee_zoom);
+                    console.log('spee_zoom: ', spee_zoom, s_zoom);
                     var zoom = (precent / 100 ) * 1;
                     console.log(zoom);
                     if(zoom < 1) {
@@ -443,7 +444,8 @@ window.onload = function () {
                 // confirm edit
                 $('.confirm_edit').on('click', function() {
                     $('.link-file, .edit-controll').addClass('disable');
-                    $('.link-snap').click();
+                    $('.link-file').removeClass('disable');
+                    // $('.link-snap').click();
                 })
 
             }
