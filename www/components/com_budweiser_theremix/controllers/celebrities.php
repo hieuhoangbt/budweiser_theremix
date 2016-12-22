@@ -27,7 +27,6 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
         $app = JFactory::getApplication();
         $jinput = JFactory::getApplication()->input;
         $post = $jinput->get('jform', '', 'array');
-        //var_dump($post);die;
         $itemHome = Budweiser_theremixHelpersBudweiser_theremix::getItemId('home');
         $urlHome = JRoute::_('index.php?option=com_budweiser_theremix' . $itemHome);
         if(empty($post['username']) || empty($post['celeb_id'])){

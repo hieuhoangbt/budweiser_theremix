@@ -39,14 +39,29 @@ class Budweiser_theremixController extends JControllerLegacy
 
 		return $this;
 	}
-    public function getAllCelebrity() {
+        public function getAllData(){
+            $app = JFactory::getApplication();
+            $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/assets/tool/';
+            $frame=$this->getAllFrame();
+            $watermask=$tpath.'images/wtm1.png';
+            $celerities=$this->getAllCelebrity();
+            $array=array(
+                'frame'=>json_encode($frame),
+                'watermark'=>json_encode($watermask),
+                'models'=>json_encode($celerities)
+            );
+            echo json_encode($array);exit;
+           
+        }
+
+        public function getAllCelebrity() {
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('id,name, image_jpeg');
+        $query->select('id, image_jpeg as image');
         $query->from('#__budweiser_theremix_celebrity');
         $query->where('state=1');
         $db->setQuery($query);
-        $result = $db->loadObject();
+        $result = $db->loadObjectList();
         return (empty($result)) ? false : $result;
     }
 
@@ -57,18 +72,18 @@ class Budweiser_theremixController extends JControllerLegacy
         $query->from('#__budweiser_theremix_celebrity');
         $query->where('state=1');
         $db->setQuery($query);
-        $result = $db->loadObject();
+        $result = $db->loadObjectList();
         return (empty($result)) ? false : $result;
     }
 
     public function getAllFrame() {
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('id,name, image');
+        $query->select('id, image');
         $query->from('#__budweiser_theremix_frame');
         $query->where('state=1');
         $db->setQuery($query);
-        $result = $db->loadObject();
+        $result = $db->loadObjectList();
         return (empty($result)) ? false : $result;
     }
 }
