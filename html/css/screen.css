@@ -2,8 +2,8 @@
     font-family: 'Bud_BoldVN';
     src: url('../fonts/Bud_BoldVN.eot');
     src: url('../fonts/Bud_BoldVN.eot') format('embedded-opentype'),
-        url('../fonts/Bud_BoldVN.woff2') format('woff2'),
         url('../fonts/Bud_BoldVN.woff') format('woff'),
+        url('../fonts/Bud_BoldVN.woff2') format('woff2'),
         url('../fonts/Bud_BoldVN.ttf') format('truetype'),
         url('../fonts/Bud_BoldVN.svg#Bud_BoldVN') format('svg');
 }
@@ -272,19 +272,55 @@ body {
 	.wrapper {
 		margin: 0 75px;
 	}
+	.bgWelcome {
+		background: url(../images/bgWelcome_1600.jpg) no-repeat 50% 50%;
+	}
+	.bgForm {
+		background: url(../images/bgForm_1600.jpg) no-repeat 50% 50%;
+	}
+	.bgSinger {
+		background: url(../images/bgSinger_1600.jpg) no-repeat 50% 50%;
+	}
 }
 @media screen and (max-width: 1366) {
 	.wrapper {
 		margin: 0 65px;
+	}
+	.bgWelcome {
+		background: url(../images/bgWelcome_1366.jpg) no-repeat 50% 50%;
+	}
+	.bgForm {
+		background: url(../images/bgForm_1366.jpg) no-repeat 50% 50%;
+	}
+	.bgSinger {
+		background: url(../images/bgSinger_1366.jpg) no-repeat 50% 50%;
 	}
 }
 @media screen and (max-width: 1280) {
 	.wrapper {
 		margin: 0 60px;
 	}
+	.bgWelcome {
+		background: url(../images/bgWelcome_1280.jpg) no-repeat 50% 50%;
+	}
+	.bgForm {
+		background: url(../images/bgForm_1280.jpg) no-repeat 50% 50%;
+	}
+	.bgSinger {
+		background: url(../images/bgSinger_1280.jpg) no-repeat 50% 50%;
+	}
 }
 @media screen and (max-width: 810) {
 	.wrapper {
 		margin: 0 40px;
+	}
+	.bgWelcome {
+		background: url(../images/bgWelcome_810.jpg) no-repeat 50% 50%;
+	}
+	.bgForm {
+		background: url(../images/bgForm_810.jpg) no-repeat 50% 50%;
+	}
+	.bgSinger {
+		background: url(../images/bgSinger_810.jpg) no-repeat 50% 50%;
 	}
 }
