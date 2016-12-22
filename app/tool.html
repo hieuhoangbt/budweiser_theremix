@@ -9,12 +9,12 @@
     <!--end-css-->
     <!--javascript-->
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/fabric.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/hook.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/fabric.min.js"></script>
     <script type="text/javascript" src="js/filereader.js"></script>
     <script type="text/javascript" src="js/start.js"></script>
-	
+
     <!--end-javascript-->
 	
 </head>
@@ -25,14 +25,14 @@
             <div class="tool">
                 <div class="img-top">
                     <div class="logo-tool">
-                        <img src="images/logo-tool.png" alt="">
+                        <a href=""><img src="images/logo-tool.png" alt=""></a>
                     </div>
                     <div class="slogan-tool">
                         <img src="images/slogan-tool.png" alt="">
                     </div>
                 </div>
                 <div class="frame-wrapper">
-                    <canvas id="tool-canvas">
+                    <canvas id="canvas">
                         Browers doesn't not support canvas html5
                     </canvas>
                     <div class="controll">
@@ -58,8 +58,8 @@
                             </div>
                             <div class="btn-form link-file disable" direct="file">
                                 <span>Tải ảnh</span>
-                                <img class="img-link" src="images/bg_upload.png" change_src="images/bg_upload_change.png" alt=""/>
-                                <input class="input_file" id="file_upload" type="file"/>
+                                <img class="img-link" src="images/bg_upload.png" default_src="images/bg_upload.png" change_src="images/bg_upload_change.png" alt=""/>
+                                <input class="input_file" id="file_upload" name="file" type="file"/>
                             </div>
                             <div class="edit-controll disable">
                                 <p class="zoom-icon zoom_in"><img src="images/plus.png" alt=""/></p>
