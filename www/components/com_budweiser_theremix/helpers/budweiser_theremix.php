@@ -96,4 +96,19 @@ class Budweiser_theremixHelpersBudweiser_theremix
 
         return $permission;
     }
+    public static function getItemId($view) {
+        $component = JComponentHelper::getComponent('com_budweiser_theremix');
+        $menus = JApplication::getMenu('site', array());
+        $menu_items = $menus->getItems('component_id', $component->id);
+        $itemid = null;
+        if (isset($menu_items)) {
+            foreach ($menu_items as $menu_item) {
+                if ((@$menu_item->query['view'] == $view)) {
+                    $itemid = '&Itemid=' . $menu_item->id;
+                    break;
+                }
+            }
+        }
+        return $itemid;
+    }
 }

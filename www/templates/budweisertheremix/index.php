@@ -19,6 +19,18 @@ $view = JRequest::getVar('view');
         <title>Welcome</title>
         <!-- Bootstrap -->
         <link href="<?php echo $tpath; ?>assets/css/screen.css" rel="stylesheet">
+        <?php if ($view == 'tool') { ?>
+            <link href="<?php echo $tpath.'assets/tool/' ?>css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+            <link href="<?php echo $tpath.'assets/tool/' ?>css/screen.css" type="text/css" rel="stylesheet" />
+            <!--end-css-->
+            <!--javascript-->
+            <script type="text/javascript" src="<?php echo $tpath.'assets/tool/' ?>js/jquery.js"></script>
+            <script type="text/javascript" src="<?php echo $tpath.'assets/tool/' ?>js/fabric.min.js"></script>
+            <script type="text/javascript" src="<?php echo $tpath.'assets/tool/' ?>js/jquery-ui.js"></script>
+            <script type="text/javascript" src="<?php echo $tpath.'assets/tool/' ?>js/hook.js"></script>
+            <script type="text/javascript" src="<?php echo $tpath.'assets/tool/' ?>js/filereader.js"></script>
+            <script type="text/javascript" src="<?php echo $tpath.'assets/tool/' ?>js/start.js"></script>
+        <?php } ?>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -29,11 +41,11 @@ $view = JRequest::getVar('view');
     </head>
     <body>
         <div class="bgFull"></div>
-        <?php if($view=='home'){ ?>
+        <?php if ($view == 'home') { ?>
             <div class="bgWelcome"></div>
-        <?php }else if($view=='form'){ ?>
+        <?php } else if ($view == 'form') { ?>
             <div class="bgForm"></div>
-        <?php }else if($view=='celebrity'){ ?>
+        <?php } else if ($view == 'celebrity') { ?>
             <div class="bgSinger"></div>
         <?php } ?>
         <div class="wrapper">
