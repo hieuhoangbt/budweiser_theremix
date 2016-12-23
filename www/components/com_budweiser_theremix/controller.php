@@ -40,15 +40,11 @@ class Budweiser_theremixController extends JControllerLegacy
 		return $this;
 	}
         public function getAllData(){
-            $app = JFactory::getApplication();
-            $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/assets/tool/';
             $frame=$this->getAllFrame();
-            $watermask=$tpath.'images/wtm1.png';
             $celerities=$this->getAllCelebrity();
             $array=array(
-                'frame'=>json_encode($frame),
-                'watermark'=>json_encode($watermask),
-                'models'=>json_encode($celerities)
+                'frame'=>$frame,
+                'models'=>$celerities
             );
             echo json_encode($array);exit;
            
