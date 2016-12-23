@@ -204,19 +204,11 @@ body {
   width: 100%;
     position: relative;
 }
-#tool-canvas {
+#canvas {
   width: 100%;
   height: 100%;
-  position: relative;
-  z-index: 1;
-  -webkit-user-select: all !important;
-  user-select: all !important;
-  background-color: #dfe7e9;
 }
-canvas {
-  -webkit-user-select: all !important;
-  user-select: all !important;
-}
+
 .canvas-container {
   margin: 0 auto;
   -webkit-user-select: all !important;
@@ -501,7 +493,12 @@ canvas {
 
 }
 @media (max-width:1366px) {
-
+  .btn-form.link-file img {
+    width: 15vw;
+  }
+  .btn-form.link-file {
+    right: -10px;
+  }
 }
 @media (max-width:1280px) {
 

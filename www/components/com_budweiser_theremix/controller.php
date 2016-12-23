@@ -53,18 +53,7 @@ class Budweiser_theremixController extends JControllerLegacy
         public function getAllCelebrity() {
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('id, image_jpeg as image');
-        $query->from('#__budweiser_theremix_celebrity');
-        $query->where('state=1');
-        $db->setQuery($query);
-        $result = $db->loadObjectList();
-        return (empty($result)) ? false : $result;
-    }
-
-    public function getDetailCelebrity() {
-        $db = & JFactory::getDBO();
-        $query = $db->getQuery(true);
-        $query->select('id,name, image_jpeg, image_png, video');
+        $query->select('id, image_png as image');
         $query->from('#__budweiser_theremix_celebrity');
         $query->where('state=1');
         $db->setQuery($query);
@@ -81,5 +70,43 @@ class Budweiser_theremixController extends JControllerLegacy
         $db->setQuery($query);
         $result = $db->loadObjectList();
         return (empty($result)) ? false : $result;
+    }
+    public function saveImageResult()
+    {
+        JSession::checkToken() or die('Invalid Token');
+        $sess = JFactory::getSession();
+        $image = JRequest::getVar('base64_image');
+        $username=JRequest::getVar('username');
+        $celeb_id=JRequest::getInt('celeb_id');
+        $url_img=$this->saveImage($image);
+        $save=$this->updateImageResult($url_img,$celeb_id,$username);
+        $sess->clear("category_id");
+        echo json_encode(array('url_share'=>JUri::root().$url_img,'insert_id'=>$save));exit;
+
+    }
+    public function saveImage($base64_string) {
+        list($type, $data) = explode(';', $base64_string);
+        list(, $data) = explode(',', $data);
+        $data = base64_decode($data);
+        $filename = date('d_m_Y').'_'.uniqid() . '.png';
+        $imgpath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'result' . DIRECTORY_SEPARATOR . $filename;
+        file_put_contents($imgpath, $data);
+        $url = 'images/result/' . $filename;
+        return $url;
+        
+    }
+    public function saveUserSelfie($image_upload,$celeb_id,$username){
+        $db = JFactory::getDbo();
+        $now=date('Y-m-d H:i:s');
+        $query = $db->getQuery(true);
+        $columns = array('username','image','celebrity_id','state', 'created_at');
+        $values = array($db->quote($username),$db->quote($image_upload),$db->quote($celeb_id), 1, $db->quote($now));
+        $query
+            ->insert($db->quoteName('#__budweiser_theremix_result'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+        $db->setQuery($query);
+        $db->execute();
+        return $db->insertid();
     }
 }

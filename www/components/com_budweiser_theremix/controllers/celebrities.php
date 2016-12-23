@@ -38,7 +38,7 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
             $app->redirect($urlHome);
         }
         $itemTool = Budweiser_theremixHelpersBudweiser_theremix::getItemId('tool');
-        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix' . $itemTool);
+        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix'. $itemTool);
         $app->redirect($urlTool);
         
         

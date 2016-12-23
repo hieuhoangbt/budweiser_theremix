@@ -5,8 +5,14 @@ $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/';
 
 $itemForm = Budweiser_theremixHelpersBudweiser_theremix::getItemId('form');
 $urlForm = JRoute::_('index.php?option=com_budweiser_theremix' . $itemForm);
+
+$sess = JFactory::getSession();
+$error=$sess->get('error');
 ?>
 <div class="logo-hoaam"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt=""/></div>
+<?php if(!empty($error)){ ?>
+<h4><?php echo $error; ?></h4>
+<?php } ?>
 <div class="title"><h2>Chọn ca sỹ bạn yêu thích nhất</h2></div>
 <div class="choose-singer">
     <?php foreach ($this->celebrities as $key => $value) { ?>

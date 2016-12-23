@@ -46,7 +46,9 @@ $view = JRequest::getVar('view');
     </head>
     
     <body>
+        <?php if($view != 'tool'){ ?>
         <div class="bgFull"></div>
+        <?php } ?>
         <?php if ($view == 'home') { ?>
             <div class="bgWelcome"></div>
         <?php } else if ($view == 'form') { ?>
