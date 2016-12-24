@@ -38,11 +38,14 @@ Tool.prototype.addVideo = function (video, end, type) {
     var self = this;
     var _left = self.canvas.width / 2 - $(video).width() / 2;
     var _top = 0;
+    var ratio_video = $(video).width() / $(video).height();
+    var _width = self.canvas.width;
+    var _height = _width / ratio_video;
     var videoFrame = new fabric.Image(video, {
         top: _top,
         left: _left,
-        width: $(video).width(),
-        height: $(video).height()
+        width: _width,
+        height: _height
 
     });
     videoFrame.selectable = true;
