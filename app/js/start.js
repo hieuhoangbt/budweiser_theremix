@@ -278,7 +278,7 @@ Tool.prototype.zoomIt = function (canvas, factor, success) {
 }
 
 var getBase64 = function (canvas, process, success) {
-    var request, end = false, base64 = '';
+    var request, end = false;
     var base64 = canvas.toDataURL("image/jpeg", 0.5);
 
     var renderBase64 = function () {
@@ -425,6 +425,9 @@ window.onload = function () {
                 }
                 var capturingStream = function () {
                     hasCamera = true;
+					// show edit zoom
+					zoomEdit();
+					
                     $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
@@ -501,9 +504,14 @@ window.onload = function () {
 
                     // confirm edit
                     $('.confirm_edit').on('click', function () {
-                        $('.link-file, .edit-controll').addClass('disable');
-                        $('.link-file').removeClass('disable');
-                        // $('.link-snap').click();
+						$('.link-file, .edit-controll').addClass('disable');
+						if(hasCamera == false){
+							
+							$('.link-file').removeClass('disable');
+						}else {
+							
+						}
+                        
                     })
 
                 }
@@ -521,7 +529,7 @@ window.onload = function () {
                     $('.image-output').html('');
                     $('.link-after').addClass('disable');
                     if (hasCamera == true) {
-                        $('.link-snap').removeClass('disable');
+                        $('.link-snap, .edit-controll').removeClass('disable');
 
                     } else {
                         document.getElementById("change_img").reset();
@@ -543,7 +551,7 @@ window.onload = function () {
                     function sucessBase(source) {
                         $('.link-snap').addClass('disable');
                         $('.loadder').hide();
-                        base64 = source;
+                        var src_base64 = source;
                         var i = 4;
                         var coundow_snap = setInterval(function () {
                             i--;
@@ -556,9 +564,9 @@ window.onload = function () {
                                         imageFacebook(canvas)
                                     });
                                 }
-                                img_output.src = base64;
+                                img_output.src = src_base64;
                                 $('.link-after').removeClass('disable');
-                                BudWeiser.afterGetBase64();
+
                                 i = 1;
                                 clearInterval(coundow_snap);
                             }
@@ -594,10 +602,11 @@ window.onload = function () {
                         function () {
                             // process
                         },
-                        function (base64) {
+                        function (base_img) {
                             // complete
-                            var soucre_face = base64;
-
+                            var soucre_face = base_img;
+                            base64 = soucre_face;
+                            BudWeiser.afterGetBase64(base64);
                             $('.image-facebook').attr('src', soucre_face);
                         }
                     )
