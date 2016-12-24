@@ -96,4 +96,30 @@ class Budweiser_theremixHelpersBudweiser_theremix
 
         return $permission;
     }
+    public static function getItemId($view) {
+        $component = JComponentHelper::getComponent('com_budweiser_theremix');
+        $menus = JApplication::getMenu('site', array());
+        $menu_items = $menus->getItems('component_id', $component->id);
+        $itemid = null;
+        if (isset($menu_items)) {
+            foreach ($menu_items as $menu_item) {
+                if ((@$menu_item->query['view'] == $view)) {
+                    $itemid = '&Itemid=' . $menu_item->id;
+                    break;
+                }
+            }
+        }
+        return $itemid;
+    }
+    public static function getNameCeleb($id){
+        $db = & JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select('name');
+        $query->from('#__budweiser_theremix_celebrity');
+        $query->where('id='.$id);
+        $query->where('state=1');
+        $db->setQuery($query);
+        $result = $db->loadResult();
+        return (empty($result)) ? false : $result;
+    }
 }

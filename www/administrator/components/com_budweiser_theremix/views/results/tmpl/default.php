@@ -256,11 +256,11 @@ if (!empty($this->extra_sidebar)) {
 
                         </td>
                         <td>
-                            <?php $user = Budweiser_theremixHelper::getUserNameFromId($item->user_id); ?>
-                            <?php echo (!empty($user)) ? $user : ""; ?>
+                            <?php echo $item->username; ?>
                         </td>
                         <td>
-                            <?php echo $item->celebrity_id; ?>
+                            <?php $cele= Budweiser_theremixHelper::getCelebrityFromId($item->celebrity_id) ?>
+                            <?php echo (!empty($cele)?$cele:""); ?>
                         </td>
                         <td>
                             <?php echo $item->frame_id; ?>

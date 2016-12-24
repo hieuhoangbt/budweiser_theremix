@@ -189,9 +189,6 @@ if (!empty($this->extra_sidebar))
                                 <th class='left'>
 				<?php echo JHtml::_('grid.sort',  'Image png', 'a.`image_png`', $listDirn, $listOrder); ?>
 				</th>
-                                <th class='left'>
-				<?php echo JHtml::_('grid.sort',  'Video', 'a.`video`', $listDirn, $listOrder); ?>
-				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BUDWEISER_THEREMIX_CELEBRITIES_CREATED_AT', 'a.`created_at`', $listDirn, $listOrder); ?>
 				</th>
@@ -273,10 +270,6 @@ if (!empty($this->extra_sidebar))
                                 <td>
 
 					<img src="<?php echo JUri::root() . $this->escape($item->image_png); ?>" width="100" height="100" ?>
-				</td>
-                                <td>
-
-					<?php echo $item->video; ?>
 				</td>
                                 <td>
 

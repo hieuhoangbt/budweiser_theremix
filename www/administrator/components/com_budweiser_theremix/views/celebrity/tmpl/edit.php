@@ -66,26 +66,6 @@ $document->addStyleSheet(JUri::root() . 'media/com_budweiser_theremix/css/form.c
                     <?php echo $this->form->renderField('name'); ?>
                     <?php echo $this->form->renderField('image_jpeg'); ?>
                     <?php echo $this->form->renderField('image_png'); ?>
-                    <!--Video-->
-                    <div class="row-fluid">
-                        <div class="span10 form-horizontal">
-                            <fieldset class="adminform">
-                                <label>Video: </label>
-                                <?php echo $this->form->renderField('video'); ?>
-
-                                <?php if (!empty($this->item->video)) : ?>
-                                    <?php foreach ((array) $this->item->video as $fileSingle) : ?>
-                                        <?php if (!is_array($fileSingle)) : ?>
-                                            <a href="<?php echo JRoute::_(JUri::root() . $fileSingle, false); ?>"><?php echo $fileSingle; ?></a> | <a href="index.php?option=com_budweiser_theremix&task=celebrity.deleteVideoUrl&id=<?php echo $this->item->id; ?>">Delete</a> <br/>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <input type="file" name="video_file" />
-                                <?php endif; ?>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <!--End video-->
 
 
                     <?php if ($this->state->params->get('save_history', 1)) : ?>

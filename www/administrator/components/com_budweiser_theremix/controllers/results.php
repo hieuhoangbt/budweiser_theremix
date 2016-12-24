@@ -111,9 +111,8 @@ class Budweiser_theremixControllerResults extends JControllerAdmin
         do {
             $db = JFactory::getDbo();
             $query = $db->getQuery(true);
-            $query->select('a.*, b.fullname as user_name, b.email, b.gender, b.scope_id');
+            $query->select('a.*');
             $query->from('`#__budweiser_theremix_result` AS a');
-            $query->join('LEFT','`#__budweiser_theremix_user` AS b ON a.user_id=b.id');
             $query->order('a.id ASC');
             $query->where('a.state = 1');
 
@@ -133,8 +132,8 @@ class Budweiser_theremixControllerResults extends JControllerAdmin
                 $objPHPExcel->setActiveSheetIndex(0);
                 $worksheet = $objPHPExcel->getActiveSheet();
                 $row = 1; // 1-based index
-                $label_name = array('STT', 'Fullname', 'Gender','Email','Scope_id','Celebrity','Image', 'Created Date');
-                $field_name = array('stt', 'user_name', 'gender', 'email', 'scope_id', 'celebrity_id', 'image', 'created_at');
+                $label_name = array('STT', 'Username','Image', 'Created Date');
+                $field_name = array('stt', 'username', 'image', 'created_at');
                 if ($row == 1) {
                     $col = 0;
                     foreach ($label_name as $field) {
@@ -159,19 +158,9 @@ class Budweiser_theremixControllerResults extends JControllerAdmin
                 foreach ($field_name as $field) {
                     if ($field == 'stt') {
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $row - 1);
-                    } else if ($field == 'scope_id') {
-                        $scope="http://facebook.com/".$row_data->$field;
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $scope);
                     }else if ($field == 'image') {
                         $image=JUri::root().$row_data->$field;
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $image);
-                    } else if ($field == 'gender') {
-                        if ($row_data->$field == 1) {
-                            $gender = 'Nam';
-                        } else {
-                            $gender = 'Nữ';
-                        }
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $gender);
                     } else {
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $row_data->$field);
                     }

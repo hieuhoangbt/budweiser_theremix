@@ -7,6 +7,11 @@ $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/';
 //Get facebook app
 $params = JComponentHelper::getParams('com_budweiser_theremix');
 $appID = $params->get('facebook_app_id');
+$logo = $params->get('logo_budweiser');
+$slogan = $params->get('slogan');
+$title_share = $params->get('title_share');
+$desc_share = $params->get('desc_share');
+$hashtag = $params->get('hashtag');
 $view = JRequest::getVar('view');
 ?>
 
@@ -16,27 +21,82 @@ $view = JRequest::getVar('view');
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Welcome</title>
-        <!-- Bootstrap -->
-        <link href="<?php echo $tpath; ?>assets/css/screen.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body>
-        <?php if($view=='home'){ ?>
+    <jdoc:include type="head"/>
+    <!-- Bootstrap -->
+    <link href="<?php echo $tpath; ?>assets/css/screen.css" rel="stylesheet">
+    <link href="<?php echo $tpath . 'assets/tool/' ?>css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+
+    <!--end-css-->
+    <!--javascript-->
+    <?php if ($view == 'tool') { ?>
+        <link href="<?php echo $tpath . 'assets/tool/' ?>css/screen.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/fontloader.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/fabric.min.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery-ui.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/hook.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/filereader.js"></script>
+        <script src="<?php echo $tpath; ?>assets/js/start.h.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/start.js"></script>
+    <?php } ?>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var URL_ROOT = '<?php echo JURI::root(); ?>';
+        var TPATH = '<?php echo $tpath; ?>';
+        var SLOGAN = "<?php echo $slogan ?>";
+        var LOGO = "<?php echo $logo ?>";
+        var HASHTAG = "<?php echo $hashtag; ?>";
+        var TITLE_SHARE = "<?php echo $title_share; ?>";
+        var DESC_SHARE = "<?php echo $desc_share; ?>";
+    </script>
+</head>
+
+<body class="face">
+    <?php if ($view != 'tool' && $view != 'thanks') { ?>
         <div class="bgFull"></div>
+    <?php } ?>
+    <?php if ($view == 'home') { ?>
         <div class="bgWelcome"></div>
-        <?php }else if($view=='form'){ ?>
-        <div class="bgFull"></div>
-        <?php } ?>
+    <?php } else if ($view == 'form') { ?>
+        <div class="bgForm"></div>
+    <?php } else if ($view == 'celebrity') { ?>
+        <div class="bgSinger"></div>
+    <?php } ?>
+    <?php if ($view != 'thanks') { ?>
         <div class="wrapper">
             <!--Component-->
             <jdoc:include type="component"/>
         </div>
-    </body>
+    <?php } else { ?>
+    <jdoc:include type="component"/>
+<?php } ?>
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '<?php echo $appID; ?>',
+            xfbml: true,
+            version: 'v2.8'
+        });
+
+        FB.getLoginStatus(function (response) {
+            res_status = response;
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+</body>
 </html>
