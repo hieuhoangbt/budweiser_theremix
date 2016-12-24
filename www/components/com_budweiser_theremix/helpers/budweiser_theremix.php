@@ -111,4 +111,15 @@ class Budweiser_theremixHelpersBudweiser_theremix
         }
         return $itemid;
     }
+    public static function getNameCeleb($id){
+        $db = & JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select('name');
+        $query->from('#__budweiser_theremix_celebrity');
+        $query->where('id='.$id);
+        $query->where('state=1');
+        $db->setQuery($query);
+        $result = $db->loadResult();
+        return (empty($result)) ? false : $result;
+    }
 }

@@ -2,7 +2,7 @@
 var ROOT_URL = 'http://localhost/budweiser_theremix/app/';
 var PATH_DATA = 'js/data.json';
 var Model_Index = 8;
-var Frame_Index = 1;
+var Frame_Index = 0;
 var Watermark_Index = 0;
 var base64 = '';
 var hasCamera = true;
@@ -36,13 +36,16 @@ Tool.prototype.renderCanvas = function (width) {
 }
 Tool.prototype.addVideo = function (video, end, type) {
     var self = this;
-    var _left = self.canvas.width / 2 - $(video).width() / 2;
+    var _left = 0;
     var _top = 0;
+    var ratio_video = $(video).width() / $(video).height();
+    var _width = self.canvas.width;
+    var _height = _width / ratio_video;
     var videoFrame = new fabric.Image(video, {
         top: _top,
         left: _left,
-        width: $(video).width(),
-        height: $(video).height()
+        width: _width,
+        height: _height
 
     });
     videoFrame.selectable = true;
@@ -81,9 +84,9 @@ Tool.prototype.snapCamera = function (video, camera, err) {
         err();
     };
     navigator.getUserMedia = navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia;
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia;
     if (navigator.getUserMedia) {
         // var video = $(video);
         navigator.getUserMedia({audio: false, video: true}, function (stream) {
@@ -108,9 +111,14 @@ Tool.prototype.addPicture = function (src, type, end) {
     var canvas = self.canvas;
     fabric.Image.fromURL(src, function (img) {
         if (type == self.typePicture.file) {
+            var ratio_w = img.width / img.height;
+            var w_img = self.canvas.width;
+            var h_img = w_img / ratio_w;
             img.set({
-                top: self.canvas.height / 2 - img.height / 2,
-                left: self.canvas.width / 2 - img.width / 2,
+                width: w_img,
+                height: h_img,
+                top: 0,
+                left: 0,
                 evented: true,
                 selectable: true
             });
@@ -149,11 +157,13 @@ Tool.prototype.fileRead = function (_event, pos, sucess) {
         picReader.addEventListener("load", function (event) {
             var picFile = event.target;
             imgUpload.onload = function () {
+                var ratio_imageUp = imgUpload.width / imgUpload.height;
+
+                /*
                 var fitimg = self.fitImageOn(imgUpload, self.canvas.width, self.canvas.height);
                 self.pictureFile.width = fitimg.width;
                 self.pictureFile.height = fitimg.height;
-                self.pictureFile.top = pos.top;
-                self.pictureFile.left = pos.left - fitimg.width;
+                */
                 var type_file = 2;
                 self.canvas.remove(self.imagesUp);
                 self.addPicture(self.pictureFile.src, type_file);
@@ -229,7 +239,8 @@ Tool.prototype.addText = function (hastag, playerName) {
         left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
         top: self.canvas.height - title_hastag.height - 10
     })
-    this.canvas.add(title_hastag, title_player);
+    this.canvas.add(title_player);
+    this.canvas.add(title_hastag);
 }
 Tool.prototype.zoomIt = function (canvas, factor, success) {
     canvas.setHeight(canvas.getHeight() * factor);
@@ -266,10 +277,9 @@ Tool.prototype.zoomIt = function (canvas, factor, success) {
     }
 }
 
-Tool.prototype.getBase64 = function (process, success) {
-    var request, end = false, base64 = '';
-    var self = this;
-    base64 = self.canvas.toDataURL("image/jpeg", 0.5);
+var getBase64 = function (canvas, process, success) {
+    var request, end = false;
+    var base64 = canvas.toDataURL("image/jpeg", 0.5);
 
     var renderBase64 = function () {
         /*Process*/
@@ -290,8 +300,42 @@ Tool.prototype.getBase64 = function (process, success) {
     fabric.util.requestAnimFrame(renderBase64);
 }
 
-function actionPage() {
-
+function ImgLoader(sources, onProgressChanged, onCompleted) {
+    this.images = {};
+    var loadedImages = 0;
+    var totalImages = 0;
+    // get num of sources
+    if (onProgressChanged || onCompleted)
+        for (var src in sources) {
+            totalImages++;
+        }
+    var self = this;
+    for (var src in sources) {
+        this.images[src] = new Image();
+        this.images[src].onload = function () {
+            loadedImages++;
+            if (onProgressChanged) {
+                var percent = Math.floor((loadedImages / totalImages) * 100);
+                onProgressChanged(this, percent);
+            }
+            if (onCompleted && loadedImages >= totalImages)
+                onCompleted(self.images);
+        }
+        this.images[src].src = sources[src];
+    }
+}
+// Load font
+function loadFont(success) {
+    fontLoader = new FontLoader(['BudBold'], {
+        fontLoaded: function (font) {
+        },
+        complete: function (error) {
+            if (error == null && success && typeof success == "function") {
+                success();
+            }
+        }
+    }, 3000);
+    fontLoader.loadFonts();
 }
 
 /*Ready document Window*/
@@ -300,214 +344,274 @@ window.onload = function () {
 
     BudWeiser.beforeStart();
     /*Action Page init*/
-    actionPage();
+
     var video_frame = document.getElementById('video_frame');
 
     /*Ajax Tool*/
+
     var ajaxSettings = {
         "url": ROOT_URL + PATH_DATA,
         "type": "post",
         "async": true,
         success: function (data) {
+            var data = (typeof data == 'string') ? JSON.parse(data) : data;
+
             /*get data json ajax*/
-            BudWeiser.getDataBeforeAjax();
+            BudWeiser.getDataBeforeAjax(data.models);
             /**/
-            var FRAMES = data[0].frame;
-            var MODELS = data[0].models;
-            var WATERMARK = data[0].watermark;
+            var FRAMES = data.frame;
+            var MODELS = data.models;
 
             var frame_detail = FRAMES[Frame_Index];
             var src_frame = frame_detail.image;
             var model_detail = MODELS[Model_Index];
             var src_model = model_detail.image;
-
-            var watermark = WATERMARK[Watermark_Index];
-            var src_watermark = watermark.image;
-
             var addFrame = 0;
             var addModel = 1;
-            // new Tool
-            var TOOL = new Tool({});
-            $('.controll .form-upload').width(TOOL.max.width);
-            $('.controll .form-upload').height(TOOL.max.height);
-            // scale canvas
-            scaleCanvas();
-            function scaleCanvas() {
-                var s = 0;
-                var timeScale = setInterval(function () {
-                    s++;
-                    if (s == 2) {
-                        TOOL.zoomIt(TOOL.canvas, zoom_canvs, function () {
-                            $('.controll .form-upload').width(TOOL.canvas.width);
-                            $('.controll .form-upload').height(TOOL.canvas.height);
-                            var h_slider = (TOOL.canvas.height * 33 / 100);
-                            $('#slider-zoom').height(h_slider);
-                        });
-                        clearInterval(timeScale);
-                    }
-
-                }, 0);
-            }
-            // add frame model
-            TOOL.addPicture(src_model, addModel);
-
-            // live stream camera
-            var CameraNotSupport = function () {
-                hasCamera = false;
-                $('.link-snap').addClass('disable');
-                $('.link-file').removeClass('disable');
-            }
-            var capturingStream = function () {
-                hasCamera = true;
-                $('.link-snap').removeClass('disable');
-                $('.link-file').addClass('disable');
-            }
-            TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
-
-            // add load frame
-            TOOL.addPicture(src_frame, addFrame, function () {
-                // add hastag, playerName
-                TOOL.addText(hasTag, playerName);
-
-            });
 
 
-            // add picture file when camera not exits
-            $('#file_upload[name="file"]').on('change', function (event) {
-                /*before submit upload file*/
-                BudWeiser.beforeUploadFile();
-                /*Add Upload Picture*/
-                var x = 0;
-                var y = 0;
-                var pos = {top: y, left: x};
-                var _event = event;
-                TOOL.fileRead(_event, pos, function () {
-                    $('.link-file span').text('Đổi ảnh');
-                    var new_bg = $('.link-file .img-link').attr('change_src');
-                    $('.link-file .img-link').attr('src', new_bg);
-                    $('.link-file').addClass('disable');
-                    zoomEdit();
-                });
+            /*Load assets*/
+            var sources = {
+                img1: frame_detail.image,
+                img2: model_detail.image
 
-            });
-            // Edit zoom In-Out image upload
-            function zoomEdit() {
-                $('.edit-controll').removeClass('disable');
-                console.log(TOOL.imagesframe.getScaleX(), TOOL.imagesframe.getScaleY());
-                // slider
-                $('#slider-zoom').slider({
-                    orientation: "vertical",
-                    slide: function (event, ui) {
-                        zoomRatio(ui.value, zoom_canvs);
-                    }
-                });
-                function zoomRatio(precent, zoom_canvas) {
-                    var maxZoom = 2;
-                    var s_zoom = maxZoom - zoom_canvas;
-                    var spee_zoom = (s_zoom / 100);
+            };
+            var foo = new ImgLoader(sources,
+                function (image, percent) {
 
-                    console.log('spee_zoom: ', spee_zoom, s_zoom);
-                    var zoom = (precent / 100) * 1;
-                    console.log(zoom);
-                    if (zoom < 1) {
-                        zoom = 1 + zoom;
-                    }
-                    if (precent == 100)
-                        zoom = 2;
-
-                    TOOL.imagesframe.scale(zoom);
-                    TOOL.canvas.renderAll();
+                },
+                function (images) {
+                    // completed
+                    // load font
+                    loadFont(function () {
+                        // init fonts
+                        initTool();
+                    })
                 }
-                // controll edit
-                $('.zoom_in').on('click', function () {
-                    var current_zoom = $("#slider-zoom").slider("value");
-                    if (current_zoom == 100) {
-                        current_zoom = 100;
-                    } else {
-                        current_zoom++;
-                    }
-                    $("#slider-zoom").slider("value", current_zoom);
-                    zoomRatio(current_zoom, zoom_canvs);
+            );
 
-                })
-                $('.zoom_out').on('click', function () {
-                    var current_zoom = $("#slider-zoom").slider("value");
-                    if (current_zoom == 0) {
-                        current_zoom = 0;
-                    } else {
-                        current_zoom--;
-                    }
-                    $("#slider-zoom").slider("value", current_zoom);
-                    zoomRatio(current_zoom, zoom_canvs);
-
-                })
-
-                // confirm edit
-                $('.confirm_edit').on('click', function () {
-                    $('.link-file, .edit-controll').addClass('disable');
-                    $('.link-file').removeClass('disable');
-                    // $('.link-snap').click();
-                })
-
-            }
-
-            // prev Snap camera Click
-            $('.link-snap-prev').on('click', function () {
-                $('.timeCoundow').hide();
-                $('.image-output').html('');
-                $('.link-after').addClass('disable');
-                if (hasCamera == true) {
-                    $('.link-snap').removeClass('disable');
-
-                } else {
-                    $('.link-file').removeClass('disable');
-                    var new_bg = $('.link-file .img-link').attr('default_src');
-                    $('.link-file .img-link').attr('src', new_bg);
-                }
-            })
-
-
-            TOOL.canvas.on('object:added', function (options) {
-                if (options.target) {
-                    TOOL.canvas.calcOffset();
-                    TOOL.canvas.renderAll();
-                }
-            });
-
-
-            // get base64 images
-            $('.link-snap').on('click', function () {
-
-                BudWeiser.beforeGetBase64();
-                TOOL.getBase64(process, sucessBase);
-                function process() {
-                    $('.loadder').css('display', 'table');
-                }
-                function sucessBase(source) {
-                    $('.link-snap').addClass('disable');
-                    $('.loadder').hide();
-                    base64 = source;
-                    var i = 4;
-                    var coundow_snap = setInterval(function () {
-                        i--;
-                        if (i == 0) {
-                            var img_output = new Image();
-                            img_output.onload = function () {
-                                $('.image-output').html(img_output);
-                            }
-                            img_output.src = base64;
-                            $('.link-after').removeClass('disable');
-                            BudWeiser.afterGetBase64();
-                            i = 1;
-
-                            clearInterval(coundow_snap);
+            function initTool() {
+                // new Tool
+                var TOOL = new Tool({});
+                $('.controll .form-upload').width(TOOL.max.width);
+                $('.controll .form-upload').height(TOOL.max.height);
+                // scale canvas
+                scaleCanvas();
+                function scaleCanvas() {
+                    var s = 0;
+                    var timeScale = setInterval(function () {
+                        s++;
+                        if (s == 2) {
+                            TOOL.zoomIt(TOOL.canvas, zoom_canvs, function () {
+                                $('.controll .form-upload').width(TOOL.canvas.width);
+                                $('.controll .form-upload').height(TOOL.canvas.height);
+                                var h_slider = (TOOL.canvas.height * 33 / 100);
+                                $('#slider-zoom').height(h_slider);
+                            });
+                            clearInterval(timeScale);
                         }
 
-                        $('.timeCoundow').show().text(i);
-                    }, 1200);
+                    }, 0);
                 }
-            });
-            TOOL.canvas.renderAll();
+
+                // add frame model
+                TOOL.addPicture(src_model, addModel);
+
+                // live stream camera
+                var CameraNotSupport = function () {
+                    hasCamera = false;
+                    $('.link-snap').addClass('disable');
+                    $('.link-file').removeClass('disable');
+                }
+                var capturingStream = function () {
+                    hasCamera = true;
+					// show edit zoom
+					zoomEdit();
+					
+                    $('.link-snap').removeClass('disable');
+                    $('.link-file').addClass('disable');
+                }
+                TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
+
+                // add load frame
+                TOOL.addPicture(src_frame, addFrame, function () {
+                    // add hastag, playerName
+                    TOOL.addText(hasTag, playerName);
+
+
+                });
+
+
+
+                // add picture file when camera not exits
+                $('#file_upload').on('change', function (event) {
+                    /*before submit upload file*/
+                    BudWeiser.beforeUploadFile();
+                    /*Add Upload Picture*/
+                    var x = 0;
+                    var y = 0;
+                    var pos = {top: y, left: x};
+                    var _event = event;
+                    TOOL.fileRead(_event, pos, function () {
+                        $('.link-file span').text('Đổi ảnh');
+                        var new_bg = $('.link-file .up_file').attr('change_src');
+                        // $('.link-file .img-link').attr('src', new_bg) ;
+                        $('.snap_file').removeClass('disable');
+                        $('.link-file, .up_file').addClass('disable');
+                        zoomEdit();
+                    });
+
+                });
+                // Edit zoom In-Out image upload
+                function zoomEdit() {
+                    $('.edit-controll').removeClass('disable');
+                    // slider
+                    $('#slider-zoom').slider({
+                        orientation: "vertical",
+                        slide: function (event, ui) {
+                            zoomRatio(ui.value, zoom_canvs);
+                        }
+                    });
+                    function zoomRatio(precent, zoom_canvas) {
+                        var zoom = (precent / 100 ) + zoom_canvas;
+                        TOOL.imagesframe.scale(zoom);
+                        TOOL.canvas.renderAll();
+                    }
+
+                    // controll edit
+                    $('.zoom_in').on('click', function () {
+                        var current_zoom = $("#slider-zoom").slider("value");
+                        if (current_zoom == 100) {
+                            current_zoom = 100;
+                        } else {
+                            current_zoom++;
+                        }
+                        $("#slider-zoom").slider("value", current_zoom);
+                        zoomRatio(current_zoom, zoom_canvs);
+
+                    });
+                    $('.zoom_out').on('click', function () {
+                        var current_zoom = $("#slider-zoom").slider("value");
+                        if (current_zoom == 0) {
+                            current_zoom = 0;
+                        } else {
+                            current_zoom--;
+                        }
+                        $("#slider-zoom").slider("value", current_zoom);
+                        zoomRatio(current_zoom, zoom_canvs);
+
+                    });
+
+                    // confirm edit
+                    $('.confirm_edit').on('click', function () {
+						$('.link-file, .edit-controll').addClass('disable');
+						if(hasCamera == false){
+							
+							$('.link-file').removeClass('disable');
+						}else {
+							
+						}
+                        
+                    })
+
+                }
+
+                // snap image file
+                $('.img-link.snap_file').on('click', function () {
+                    $('.snap_file').addClass('disable');
+                    $('.link-snap').click();
+                })
+
+                // prev Snap camera Click
+                $('.link-snap-prev').on('click', function () {
+
+                    $('.timeCoundow').hide();
+                    $('.image-output').html('');
+                    $('.link-after').addClass('disable');
+                    if (hasCamera == true) {
+                        $('.link-snap, .edit-controll').removeClass('disable');
+
+                    } else {
+                        document.getElementById("change_img").reset();
+                        $('.link-file, .up_file').removeClass('disable');
+                        TOOL.canvas.remove(TOOL.imagesUp);
+                    }
+                })
+
+
+                // get base64 images
+                $('.link-snap').on('click', function () {
+
+                    BudWeiser.beforeGetBase64();
+                    getBase64(TOOL.canvas ,process, sucessBase);
+                    function process() {
+                        $('.loadder').css('display', 'table');
+                    }
+
+                    function sucessBase(source) {
+                        $('.link-snap').addClass('disable');
+                        $('.loadder').hide();
+                        var src_base64 = source;
+                        var i = 4;
+                        var coundow_snap = setInterval(function () {
+                            i--;
+                            if (i == 0) {
+                                var img_output = new Image();
+                                img_output.onload = function () {
+                                    $('.image-output').html(img_output);
+                                    // draw base 64
+                                    drawBase64(img_output, function (canvas) {
+                                        imageFacebook(canvas)
+                                    });
+                                }
+                                img_output.src = src_base64;
+                                $('.link-after').removeClass('disable');
+
+                                i = 1;
+                                clearInterval(coundow_snap);
+                            }
+                            $('.timeCoundow').show().text(i);
+                        }, 1200);
+                    }
+                });
+                function drawBase64(src_image, complete) {
+                    var canvas_base = new fabric.Canvas('canvas_base');
+                    canvas_base.setWidth(600);
+                    canvas_base.setHeight(315);
+                    fabric.Image.fromURL(src_image.src, function (img) {
+                        var ratio_w = img.width / img.height;
+                        var w_img = canvas_base.width;
+                        var h_img = w_img / ratio_w;
+                        img.set({
+                            width: w_img,
+                            height: h_img,
+                            top: 0,
+                            left: 0,
+                            evented: true,
+                            selectable: true
+                        });
+                        canvas_base.add(img);
+                        canvas_base.renderAll();
+                        if(complete && typeof complete == "function") {
+                            complete(canvas_base);
+                        }
+                    });
+                }
+                function imageFacebook(canvas) {
+                    getBase64(canvas,
+                        function () {
+                            // process
+                        },
+                        function (base_img) {
+                            // complete
+                            var soucre_face = base_img;
+                            base64 = soucre_face;
+                            BudWeiser.afterGetBase64(base64);
+                            $('.image-facebook').attr('src', soucre_face);
+                        }
+                    )
+                }
+            }
 
         }
     };

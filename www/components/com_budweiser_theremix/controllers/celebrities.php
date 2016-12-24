@@ -32,13 +32,13 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
         if(empty($post['username']) || empty($post['celeb_id'])){
             $app->redirect($urlHome);
         }
-        $insert_id=$this->saveResult($post['username'],$post['celeb_id']);
+        /*$insert_id=$this->saveResult($post['username'],$post['celeb_id']);
         if(empty($insert_id)){
             $sess->set('error', 'Có lỗi trong quá trình lưu dữ liệu.Vui lòng thử lại sau!');
             $app->redirect($urlHome);
-        }
+        }*/
         $itemTool = Budweiser_theremixHelpersBudweiser_theremix::getItemId('tool');
-        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix'. $itemTool);
+        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix'. $itemTool) . "?celeb=".$post['celeb_id']."&name=".$post['username'];
         $app->redirect($urlTool);
         
         

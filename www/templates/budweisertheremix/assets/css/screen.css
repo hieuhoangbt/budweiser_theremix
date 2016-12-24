@@ -73,191 +73,157 @@ html {
     height: 100%;
 }
 body {
-	font-family: 'Bud_BoldVN';
-	position: relative;
-	width: 100%;
-	min-height: 100%;
+    font-family: 'Bud_BoldVN';
+    position: relative;
+    width: 100%;
+    min-height: 100%;
 }
 .bgFull,
 .bgWelcome,
 .bgForm,
 .bgSinger {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background-size: 100% 100%;
-	z-index: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    z-index: 0;
 }
 .bgFull {
-	background: url(../images/bgFull.jpg) no-repeat 50% 50%;
+    background: url(../images/bgFull.jpg) no-repeat 50% 50%;
 }
 .bgWelcome {
-	background: url(../images/bgWelcome.jpg) no-repeat 50% 50%;
-	background-size: 100%;
+    background: url(../images/bgWelcome.jpg) no-repeat 50% 50%;
 }
 .bgForm {
-	background: url(../images/bgForm.jpg) no-repeat 50% 50%;
+    background: url(../images/bgForm.jpg) no-repeat 50% 50%;
 }
 .bgSinger {
-	background: url(../images/bgSinger.jpg) no-repeat 50% 50%;
+    background: url(../images/bgSinger.jpg) no-repeat 50% 50%;
 }
 .wrapper {
-	position: relative;
-	z-index: 1;
-	max-width: 1750px;
-	height: 100vh;
-	margin: 0 90px;
+    position: relative;
+    z-index: 1;
+    max-width: 1750px;
+    height: 100vh;
+    margin: 0 90px;
 }
 /* WELCOME */
 .logo {
-	width: 100%;
-	overflow: hidden;
-	padding-top: 70px;
-	padding-top: 3.6vw;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 3.6vw;
 }
 .logoBud {
-	float: left;
-	width: 20vw;
+    float: left;
+    width: 20vw;
 }
 .hoaam {
-	float: right;
-	width: 28.48vw;
+    float: right;
+    width: 28.48vw;
 }
 .btn-join {
-	position: absolute;
-	bottom: 50px;
-	left: 50%;
-	-webkit-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
-	transform: translateX(-50%);
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 .btn-join a {
-	width: 357px;
-	height: 129px;
-	background: url(../images/btn_red.png) no-repeat 0 0;
-	display: block;
-	color: #ff0000;
-	font-size: 42px;
-	text-align: center;
-	line-height: 129px;
-	-webkit-transform: scale(1);
-	-ms-transform: scale(1);
-	transform: scale(1);
+    width: 357px;
+    height: 129px;
+    background: url(../images/btn_red.png) no-repeat 0 0;
+    display: block;
+    color: #ff0000;
+    font-size: 42px;
+    text-align: center;
+    line-height: 129px;
 }
 .btn-join a:hover {
-	color: #fff;
-	-webkit-transform: scale(1.01);
-	-ms-transform: scale(1.01);
-	transform: scale(1.01);
+    color: #fff;
 }
 /* FORM */
 .logo-hoaam {
-	padding-top: 40px;
-	padding-top: 2vw;
+    padding-top: 40px;
+    padding-top: 2vw;
 }
 .logo-hoaam img {
-	margin: 0 auto;
-	display: block;
-	width: 28.48vw;
+    margin: 0 auto;
+    display: block;
+    width: 28.48vw;
 }
 .form-submit {
-	max-width: 600px;
-	max-width: 31.25vw;
-	width: 100%;
-	position: absolute;
-	bottom: 50px;
-	left: 50%;
-	-webkit-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
-	transform: translateX(-50%);
+    max-width: 600px;
+    max-width: 31.25vw;
+    width: 100%;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 .form-submit .form-group {
-	padding: 5px 15px;
-	border: 3px solid rgba(255,0,0,0.77);
-	border-radius: 10px;
-	background-color: rgba(0,0,0,.4);
-	box-shadow: 0 0 50px rgba(255,0,0,.7)
+    padding: 5px 15px;
+    border: 3px solid rgba(255,0,0,0.77);
+    border-radius: 10px;
+    background-color: rgba(0,0,0,.4);
+    box-shadow: 0 0 50px rgba(255,0,0,.7)
 }
 .form-submit .form-group input {
-	width: 100%;
-	color: #fff;
-	font-family: 'Bud_BoldVN';
-	font-size: 2.18vw;
-	text-transform: uppercase;
-	text-align: center;
+    width: 100%;
+    color: #fff;
+    font-family: 'Bud_BoldVN';
+    font-size: 2.18vw;
+    text-transform: uppercase;
+    text-align: center;
 }
 .form-submit .btn-start button {
-	width: 357px;
-	height: 129px;
-	margin: 2.6vw auto 0;
-	display: block;
-	border: none;
-	background: url(../images/btn_red.png) no-repeat 0 0;
-	background: none;
-	position: relative;
-	width: auto;
-	height: auto;
-	font-family: 'Bud_BoldVN';
-	font-size: 42px;
-	color: #ff0000;
-	cursor: pointer;
-	-webkit-transform: scale(0.9);
-	-ms-transform: scale(0.9);
-	transform: scale(0.9);
-	-webkit-transition: all 0.25s linear ;
-	-moz-transition: all 0.25s linear;
-	-ms-transition: all 0.25s linear ;
-	-o-transition: all 0.25s linear ;
-	transition: all 0.25s linear ;
-}
-.form-submit .btn-start button img {
-
-	z-index: 1;
-	width: 18.75vw;
-	max-width: none;
-}
-.form-submit .btn-start button span {
-	display: block;
-	position: relative;
-	z-index: 2;
-	font-size: 2.1875vw;
-	position: absolute;
-	top: 47%;
-	left: 50%;
-	-webkit-transform: translate(-50%,-50%);
-	transform: translate(-50%,-50%);
+    width: 357px;
+    height: 129px;
+    margin: 2.6vw auto 0;
+    display: block;
+    border: none;
+    background: url(../images/btn_red.png) no-repeat 0 0;
+    position: relative;
+    font-family: 'Bud_BoldVN';
+    font-size: 42px;
+    color: #ff0000;
+    cursor: pointer;
+    -webkit-transition: all 0.25s linear ;
+    -moz-transition: all 0.25s linear;
+    -ms-transition: all 0.25s linear ;
+    -o-transition: all 0.25s linear ;
+    transition: all 0.25s linear ;
 }
 .form-submit .btn-start button:hover {
-	color: #fff;
-	-webkit-transform: scale(1);
-	-ms-transform: scale(1);
-	transform: scale(1);
+    color: #fff;
 }
 /* SINGER */
 .title h2 {
-	/*font-size: 68px;*/
-	font-size: 3.4vw;
-	color: #fff;
-	text-align: center;
-	text-transform: uppercase;
-	margin: 30px auto 50px;
-	margin: 1vw auto 2vw;
+    /*font-size: 68px;*/
+    font-size: 3.4vw;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 30px auto 50px;
+    margin: 1vw auto 2vw;
 }
 .choose-singer {
-	text-align: center;
-	overflow: hidden;
+    text-align: center;
+    overflow: hidden;
 }
 .item-choose {
-	/*width: 284px;*/
-	width: 14.79vw;
-	/*float: left;*/
-	display: inline-block;
-	margin: 10px -15px;
-	position: relative;
-	overflow: hidden;
+    width: 284px;
+    /*width: 14.79vw;*/
+    /*float: left;*/
+    display: inline-block;
+    margin: 10px -15px;
+    position: relative;
+    overflow: hidden;
 }
 .item-choose .shine {
-	-webkit-transform: skewX(-18deg);
+    -webkit-transform: skewX(-18deg);
     transform: skewX(-18deg);
     position: absolute;
     bottom: 2px;
@@ -268,7 +234,7 @@ body {
     overflow: hidden;
 }
 .item-choose .shine span {
-	width: 210px;
+    width: 210px;
     height: 222px;
     display: block;
 }
@@ -304,47 +270,223 @@ body {
         left: 125%;
     }
 }
-
-@media screen and (max-width: 1600) {
-	.wrapper {
-		margin: 0 75px;
-	}
+/* LOADING */
+.bgLoading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,1);
+    z-index: 10;
+    display: none;
 }
-@media (max-width: 1366px) {
-	.wrapper {
-		margin: 0 65px;
-	}
-	.bgForm {
-		background-size: 100%;
-	}
-	.form-submit {
-		bottom: 0px;
-	}
-	.form-submit .btn-start button {
-		margin: 1.6vw auto 0;
-	}
-	.bgSinger {
-		background-size: 100%;
-	}
-	.item-choose {
-		margin: 10px -10px;
-	}
+.loading {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+.loader {
+    position: absolute;
+    opacity: .7;
+}
+.loader circle {
+    animation: draw 4s infinite ease-in-out;
+    transform-origin: center;
+    transform: rotate(-90deg);
+}
+.loader-2 circle,
+.loader-6 circle {
+    animation-delay: 1s;
+}
+.loader-7 circle {
+    animation-delay: 2s;
+}
+.loader-4 circle, 
+.loader-8 circle {
+    animation-delay: 3s;
+}
 
-	.btn-join {
-		bottom: 30px;
-		left: 47%;
-	}
+.loader-3 {
+    left: -150px;
+    transform: rotateY(180deg);
+}
+.loader-6,
+.loader-7,
+.loader-8 {
+    left: -150px;
+    transform: rotateX(180deg) rotateY(180deg);
+}
+.loader-5 circle {
+    opacity: .2;
+}
+@keyframes draw {
+    50% {
+        stroke-dashoffset: 0;
+        transform: scale(.5);
+    }
+}
+.bgWelcome.bgThank {
+    background: none;
+    height: 100vh;
+    overflow: hidden;
+}
+.bgWelcome.bgThank img {
+    display: block;
+    height: 100%;
+
+}
+.text-thank {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    left: 0px;
+}
+.text-thank img {
+    display: block;
+    width: 39vw;
+    margin: 0 auto;
+}
+@media screen and (max-width: 1600px) {
+    .wrapper {
+        margin: 0 75px;
+    }
+    .bgWelcome {
+        background: url(../images/bgWelcome_1600.jpg) no-repeat 50% 50%;
+    }
+    .bgForm {
+        background: url(../images/bgForm_1600.jpg) no-repeat 50% 50%;
+    }
+    .bgSinger {
+        background: url(../images/bgSinger_1600.jpg) no-repeat 50% 50%;
+    }
+    .item-choose {
+        width: 240px;
+    }
+    .item-choose .shine {
+        left: 26px;
+        width: 180px;
+        height: 195px;
+    }
+    .item-choose .shine span {
+        width: 180px;
+        height: 195px;
+    }
+}
+
+/*facebook*/
+.face {
+
+}
+.face .bgWelcome.bgThank img{
+    height: auto;
+}
+/*end-facebook*/
+@media (max-width: 1366px) {
+    .wrapper {
+        margin: 0 65px;
+    }
+    .form-submit {
+        bottom: 10px;
+    }
+    .form-submit .btn-start button {
+        margin: 1.6vw auto 0;
+    }
+    .btn-join {
+        bottom: 30px;
+    }
+    .bgWelcome {
+        background: url(../images/bgWelcome_1366.jpg) no-repeat 50% 50%;
+    }
+    .bgForm {
+        background: url(../images/bgForm_1366.jpg) no-repeat 50% 50%;
+    }
+    .bgSinger {
+        background: url(../images/bgSinger_1366.jpg) no-repeat 50% 50%;
+    }
+    .item-choose {
+        width: 200px;
+        margin: 10px -10px;
+    }
+    .item-choose .shine {
+        left: 26px;
+        width: 150px;
+        height: 165px;
+    }
+    .item-choose .shine span {
+        width: 150px;
+        height: 165px;
+    }
+    .form-submit .btn-start button,
+    .btn-join a {
+        width: 237px;
+        height: 89px;
+        background-size: contain;
+        font-size: 26px;
+        line-height: 89px;
+    }
+    .logo {
+        padding-top: 1.6vw;
+    }
 }
 @media screen and (max-width: 1280px) {
-	.wrapper {
-		margin: 0 60px;
-	}
-	.form-submit {
-		bottom: 35px;
-	}
+    .wrapper {
+        margin: 0 60px;
+    }
+    .form-submit {
+        bottom: 15px;
+    }
+    .bgWelcome {
+        background: url(../images/bgWelcome_1280.jpg) no-repeat 50% 50%;
+    }
+    .bgForm {
+        background: url(../images/bgForm_1280.jpg) no-repeat 50% 50%;
+    }
+    .bgSinger {
+        background: url(../images/bgSinger_1280.jpg) no-repeat 50% 50%;
+    }
+
 }
-@media screen and (max-width: 810) {
-	.wrapper {
-		margin: 0 40px;
-	}
+@media screen and (max-width: 810px) {
+    .wrapper {
+        margin: 0 40px;
+    }
+    .bgWelcome {
+        background: url(../images/bgWelcome_810.jpg) no-repeat 50% 50%;
+    }
+    .bgForm {
+        background: url(../images/bgForm_810.jpg) no-repeat 50% 50%;
+    }
+    .bgSinger {
+        background: url(../images/bgSinger_810.jpg) no-repeat 50% 50%;
+    }
+    .form-submit .btn-start button,
+    .btn-join a {
+        width: 187px;
+        height: 69px;
+        background-size: contain;
+        font-size: 20px;
+        line-height: 69px;
+    }
+    .item-choose {
+        margin: 10px -9px;
+    }
+    .item-choose {
+        width: 120px;
+    }
+    .item-choose .shine {
+        left: 16px;
+        width: 90px;
+        height: 95px;
+    }
+    .item-choose .shine span {
+        width: 90px;
+        height: 95px;
+    }
 }
