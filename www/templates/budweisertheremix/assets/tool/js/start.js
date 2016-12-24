@@ -1,13 +1,13 @@
 /* globals Variables*/
-var ROOT_URL        = 'http://localhost/budweiser_theremix/app/';
-var PATH_DATA       = 'js/data.json';
-var Model_Index     = 8;
-var Frame_Index     = 1;
+var ROOT_URL = 'http://localhost/budweiser_theremix/app/';
+var PATH_DATA = 'js/data.json';
+var Model_Index = 8;
+var Frame_Index = 1;
 var Watermark_Index = 0;
-var base64          = '';
-var hasCamera       = true;
-var hasTag          = '#TEMTHIEUBAOTRAM';
-var playerName      = 'DUC VIET';
+var base64 = '';
+var hasCamera = true;
+var hasTag = '#TEMTHIEUBAOTRAM';
+var playerName = 'DUC VIET';
 var zoom_canvs = 0.7;
 
 /*TOOL Maker*/
@@ -45,13 +45,13 @@ Tool.prototype.addVideo = function (video, end, type) {
         height: $(video).height()
 
     });
-    videoFrame.selectable =  true;
+    videoFrame.selectable = true;
     // self.canvas.add(videoFrame);
     self.canvas.insertAt(videoFrame, 0);
     videoFrame.getElement().play();
     var stop_end = false;
-    videoFrame.getElement().onended = function() {
-        if(end && typeof end == "function") {
+    videoFrame.getElement().onended = function () {
+        if (end && typeof end == "function") {
             // end video
             stop_end = true;
             end();
@@ -59,11 +59,11 @@ Tool.prototype.addVideo = function (video, end, type) {
         }
     };
 
-    var render = function() {
+    var render = function () {
         self.canvas.renderAll();
-        if( stop_end == true) {
+        if (stop_end == true) {
             fabric.util.cancelAnimationFrame(render);
-        }else {
+        } else {
             fabric.util.requestAnimFrame(render);
         }
 
@@ -76,23 +76,23 @@ Tool.prototype.addVideo = function (video, end, type) {
 
 Tool.prototype.snapCamera = function (video, camera, err) {
     var self = this;
-    var errorCallback = function(e) {
+    var errorCallback = function (e) {
         // alert('PC không hỗ trợ Camera! :( ');
         err();
     };
-    navigator.getUserMedia  = navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia;
+    navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
     if (navigator.getUserMedia) {
         // var video = $(video);
-        navigator.getUserMedia({audio: false, video: true}, function(stream) {
-            if(camera && typeof camera == "function") {
+        navigator.getUserMedia({audio: false, video: true}, function (stream) {
+            if (camera && typeof camera == "function") {
                 camera();
             }
             var video_elm = document.querySelector(video);
             video_elm.src = window.URL.createObjectURL(stream);
-            video_elm.onloadedmetadata = function(e) {
+            video_elm.onloadedmetadata = function (e) {
                 // Ready to go. Do some stuff.
                 self.addVideo(video_elm, self.typeVideo.capturing);
             };
@@ -107,10 +107,10 @@ Tool.prototype.addPicture = function (src, type, end) {
     var self = this;
     var canvas = self.canvas;
     fabric.Image.fromURL(src, function (img) {
-        if(type == self.typePicture.file) {
+        if (type == self.typePicture.file) {
             img.set({
-               top: self.canvas.height / 2 - img.height / 2,
-               left: self.canvas.width / 2 - img.width / 2,
+                top: self.canvas.height / 2 - img.height / 2,
+                left: self.canvas.width / 2 - img.width / 2,
                 evented: true,
                 selectable: true
             });
@@ -118,17 +118,17 @@ Tool.prototype.addPicture = function (src, type, end) {
             canvas.insertAt(img, 0);
 
         }
-        if(type == self.typePicture.model) {
+        if (type == self.typePicture.model) {
             img.set({evented: false, selectable: false});
             self.imagesframe = img;
             canvas.insertAt(img, 0);
 
         }
-        if(type == self.typePicture.frame) {
+        if (type == self.typePicture.frame) {
             img.set({width: self.canvas.width, height: self.canvas.height, evented: false});
-            img.selectable =  false;
+            img.selectable = false;
             canvas.add(img);
-            if( end && typeof end == "function") {
+            if (end && typeof end == "function") {
                 end();
             }
         }
@@ -157,7 +157,7 @@ Tool.prototype.fileRead = function (_event, pos, sucess) {
                 var type_file = 2;
                 self.canvas.remove(self.imagesUp);
                 self.addPicture(self.pictureFile.src, type_file);
-                if(typeof sucess == "function") {
+                if (typeof sucess == "function") {
                     sucess();
                 }
             }
@@ -197,33 +197,33 @@ Tool.prototype.fitImageOn = function (imageObj, canvasWidth, canvasHeight) {
 }
 Tool.prototype.addText = function (hastag, playerName) {
     var self = this;
-    var config_hastag       = {
+    var config_hastag = {
         fontFamily: 'BudBold',
         fontSize: 18,
         top: 0,
         left: 0,
         fill: '#ffffff',
         color: 'blue',
-        textAlign : "right",
+        textAlign: "right",
         evented: false,
         fontWeight: 'bold'
     };
-    var config_playerName   = {
+    var config_playerName = {
         fontFamily: 'BudBold',
         fontSize: 24,
         top: 0,
         left: 0,
         fill: '#ffffff',
         color: 'blue',
-        textAlign : "right",
+        textAlign: "right",
         fontWeight: 'bold',
         evented: false
     };
     var title_hastag = new fabric.Text(hastag, config_hastag);
     var title_player = new fabric.Text(playerName, config_playerName);
     title_player.set({
-       left :  self.canvas.width - title_player.width - 80,
-       top: self.canvas.height - title_player.height - 10
+        left: self.canvas.width - title_player.width - 80,
+        top: self.canvas.height - title_player.height - 10
     });
     title_hastag.set({
         left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
@@ -231,13 +231,14 @@ Tool.prototype.addText = function (hastag, playerName) {
     })
     this.canvas.add(title_hastag, title_player);
 }
-Tool.prototype.zoomIt = function(canvas, factor, success) {
+Tool.prototype.zoomIt = function (canvas, factor, success) {
     canvas.setHeight(canvas.getHeight() * factor);
     canvas.setWidth(canvas.getWidth() * factor);
     if (canvas.backgroundImage) {
         // Need to scale background images as well
         var bi = canvas.backgroundImage;
-        bi.width = bi.width * factor; bi.height = bi.height * factor;
+        bi.width = bi.width * factor;
+        bi.height = bi.height * factor;
     }
     var objects = canvas.getObjects();
     for (var i in objects) {
@@ -260,28 +261,28 @@ Tool.prototype.zoomIt = function(canvas, factor, success) {
     }
     canvas.renderAll();
     canvas.calcOffset();
-    if(success &&  typeof success == "function") {
+    if (success && typeof success == "function") {
         success();
     }
 }
 
 Tool.prototype.getBase64 = function (process, success) {
     var request, end = false, base64 = '';
-    var self= this;
+    var self = this;
     base64 = self.canvas.toDataURL("image/jpeg", 0.5);
 
-    var renderBase64 = function() {
+    var renderBase64 = function () {
         /*Process*/
         process();
 
-        if( base64 != '') {
+        if (base64 != '') {
             fabric.util.cancelAnimationFrame(renderBase64);
-            if(success && typeof success == "function") {
+            if (success && typeof success == "function") {
                 /*Success*/
                 success(base64);
             }
             return base64;
-        }else {
+        } else {
             request = fabric.util.requestAnimFrame(renderBase64);
         }
 
@@ -303,40 +304,39 @@ window.onload = function () {
     var video_frame = document.getElementById('video_frame');
 
     /*Ajax Tool*/
-
     var ajaxSettings = {
-        "url": ROOT_URL+PATH_DATA,
+        "url": ROOT_URL + PATH_DATA,
         "type": "post",
         "async": true,
         success: function (data) {
             /*get data json ajax*/
             BudWeiser.getDataBeforeAjax();
             /**/
-            var FRAMES          =  data[0].frame;
-            var MODELS          =  data[0].models;
-            var WATERMARK       = data[0].watermark;
+            var FRAMES = data[0].frame;
+            var MODELS = data[0].models;
+            var WATERMARK = data[0].watermark;
 
-            var frame_detail    = FRAMES[Frame_Index];
-            var src_frame       = frame_detail.image;
-            var model_detail    = MODELS[Model_Index] ;
-            var src_model       = model_detail.image;
+            var frame_detail = FRAMES[Frame_Index];
+            var src_frame = frame_detail.image;
+            var model_detail = MODELS[Model_Index];
+            var src_model = model_detail.image;
 
-            var watermark       = WATERMARK[Watermark_Index];
-            var src_watermark   = watermark.image;
+            var watermark = WATERMARK[Watermark_Index];
+            var src_watermark = watermark.image;
 
-            var addFrame        = 0;
-            var addModel        = 1;
+            var addFrame = 0;
+            var addModel = 1;
             // new Tool
-            var TOOL            = new Tool({});
+            var TOOL = new Tool({});
             $('.controll .form-upload').width(TOOL.max.width);
             $('.controll .form-upload').height(TOOL.max.height);
             // scale canvas
             scaleCanvas();
             function scaleCanvas() {
                 var s = 0;
-                var timeScale = setInterval(function(){
+                var timeScale = setInterval(function () {
                     s++;
-                    if(s == 2) {
+                    if (s == 2) {
                         TOOL.zoomIt(TOOL.canvas, zoom_canvs, function () {
                             $('.controll .form-upload').width(TOOL.canvas.width);
                             $('.controll .form-upload').height(TOOL.canvas.height);
@@ -346,7 +346,7 @@ window.onload = function () {
                         clearInterval(timeScale);
                     }
 
-                },0);
+                }, 0);
             }
             // add frame model
             TOOL.addPicture(src_model, addModel);
@@ -357,7 +357,7 @@ window.onload = function () {
                 $('.link-snap').addClass('disable');
                 $('.link-file').removeClass('disable');
             }
-            var capturingStream = function() {
+            var capturingStream = function () {
                 hasCamera = true;
                 $('.link-snap').removeClass('disable');
                 $('.link-file').addClass('disable');
@@ -365,7 +365,7 @@ window.onload = function () {
             TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
 
             // add load frame
-            TOOL.addPicture(src_frame,addFrame, function () {
+            TOOL.addPicture(src_frame, addFrame, function () {
                 // add hastag, playerName
                 TOOL.addText(hasTag, playerName);
 
@@ -383,8 +383,8 @@ window.onload = function () {
                 var _event = event;
                 TOOL.fileRead(_event, pos, function () {
                     $('.link-file span').text('Đổi ảnh');
-                    var new_bg = $('.link-file .img-link').attr('change_src') ;
-                    $('.link-file .img-link').attr('src', new_bg) ;
+                    var new_bg = $('.link-file .img-link').attr('change_src');
+                    $('.link-file .img-link').attr('src', new_bg);
                     $('.link-file').addClass('disable');
                     zoomEdit();
                 });
@@ -397,7 +397,7 @@ window.onload = function () {
                 // slider
                 $('#slider-zoom').slider({
                     orientation: "vertical",
-                    slide: function( event, ui ) {
+                    slide: function (event, ui) {
                         zoomRatio(ui.value, zoom_canvs);
                     }
                 });
@@ -407,42 +407,43 @@ window.onload = function () {
                     var spee_zoom = (s_zoom / 100);
 
                     console.log('spee_zoom: ', spee_zoom, s_zoom);
-                    var zoom = (precent / 100 ) * 1;
+                    var zoom = (precent / 100) * 1;
                     console.log(zoom);
-                    if(zoom < 1) {
+                    if (zoom < 1) {
                         zoom = 1 + zoom;
                     }
-                    if(precent == 100) zoom = 2;
+                    if (precent == 100)
+                        zoom = 2;
 
                     TOOL.imagesframe.scale(zoom);
                     TOOL.canvas.renderAll();
                 }
                 // controll edit
-                $('.zoom_in').on('click', function() {
-                    var current_zoom = $( "#slider-zoom" ).slider( "value");
-                    if(current_zoom == 100) {
+                $('.zoom_in').on('click', function () {
+                    var current_zoom = $("#slider-zoom").slider("value");
+                    if (current_zoom == 100) {
                         current_zoom = 100;
-                    }else {
+                    } else {
                         current_zoom++;
                     }
-                    $( "#slider-zoom" ).slider( "value", current_zoom);
+                    $("#slider-zoom").slider("value", current_zoom);
                     zoomRatio(current_zoom, zoom_canvs);
 
                 })
-                $('.zoom_out').on('click', function() {
-                    var current_zoom = $( "#slider-zoom" ).slider( "value");
-                    if(current_zoom == 0) {
+                $('.zoom_out').on('click', function () {
+                    var current_zoom = $("#slider-zoom").slider("value");
+                    if (current_zoom == 0) {
                         current_zoom = 0;
-                    }else {
+                    } else {
                         current_zoom--;
                     }
-                    $( "#slider-zoom" ).slider( "value", current_zoom);
+                    $("#slider-zoom").slider("value", current_zoom);
                     zoomRatio(current_zoom, zoom_canvs);
 
                 })
 
                 // confirm edit
-                $('.confirm_edit').on('click', function() {
+                $('.confirm_edit').on('click', function () {
                     $('.link-file, .edit-controll').addClass('disable');
                     $('.link-file').removeClass('disable');
                     // $('.link-snap').click();
@@ -455,18 +456,18 @@ window.onload = function () {
                 $('.timeCoundow').hide();
                 $('.image-output').html('');
                 $('.link-after').addClass('disable');
-                if(hasCamera == true) {
+                if (hasCamera == true) {
                     $('.link-snap').removeClass('disable');
 
-                }else {
+                } else {
                     $('.link-file').removeClass('disable');
-                    var new_bg = $('.link-file .img-link').attr('default_src') ;
-                    $('.link-file .img-link').attr('src', new_bg) ;
+                    var new_bg = $('.link-file .img-link').attr('default_src');
+                    $('.link-file .img-link').attr('src', new_bg);
                 }
             })
 
 
-            TOOL.canvas.on('object:added', function(options) {
+            TOOL.canvas.on('object:added', function (options) {
                 if (options.target) {
                     TOOL.canvas.calcOffset();
                     TOOL.canvas.renderAll();
@@ -480,7 +481,7 @@ window.onload = function () {
                 BudWeiser.beforeGetBase64();
                 TOOL.getBase64(process, sucessBase);
                 function process() {
-                    $('.loadder').css('display','table');
+                    $('.loadder').css('display', 'table');
                 }
                 function sucessBase(source) {
                     $('.link-snap').addClass('disable');
@@ -489,9 +490,9 @@ window.onload = function () {
                     var i = 4;
                     var coundow_snap = setInterval(function () {
                         i--;
-                        if(i == 0) {
+                        if (i == 0) {
                             var img_output = new Image();
-                            img_output.onload = function() {
+                            img_output.onload = function () {
                                 $('.image-output').html(img_output);
                             }
                             img_output.src = base64;
@@ -503,7 +504,7 @@ window.onload = function () {
                         }
 
                         $('.timeCoundow').show().text(i);
-                    },1200);
+                    }, 1200);
                 }
             });
             TOOL.canvas.renderAll();
