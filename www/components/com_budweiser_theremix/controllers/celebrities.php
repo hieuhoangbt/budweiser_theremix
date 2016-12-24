@@ -30,15 +30,19 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
         $itemHome = Budweiser_theremixHelpersBudweiser_theremix::getItemId('home');
         $urlHome = JRoute::_('index.php?option=com_budweiser_theremix' . $itemHome);
         
-        $name=  Budweiser_theremixHelpersBudweiser_theremix::getAlias($post['username']);
-        if(empty($name) || empty($post['celeb_id'])){
-            $app->redirect($urlHome);
+        if(empty(addslashes($post['username']))){
+            $sess->set('error', 'Vui lòng không nhập kí tự đặc biệt!');
+            $app->redirect(JUri::current().'?celeb_id='.$post['celeb_id']);
         }
-        /*$insert_id=$this->saveResult($post['username'],$post['celeb_id']);
-        if(empty($insert_id)){
-            $sess->set('error', 'Có lỗi trong quá trình lưu dữ liệu.Vui lòng thử lại sau!');
-            $app->redirect($urlHome);
-        }*/
+        if(str_replace(" ", "", $post['username'])==""){
+            $sess->set('error', 'Vui lòng nhập tên của bạn!');
+            $app->redirect(JUri::current().'?celeb_id='.$post['celeb_id']);
+        }
+        if(empty($post['celeb_id']) || $post['celeb_id']=='0'){
+            $sess->set('error', 'Vui lòng chọn ca sĩ bạn muốn chụp ảnh cùng trước khi nhập tên!');
+            $app->redirect(JUri::current());
+        }
+        $name=  Budweiser_theremixHelpersBudweiser_theremix::getAlias($post['username']);
         $itemTool = Budweiser_theremixHelpersBudweiser_theremix::getItemId('tool');
         $urlTool = JRoute::_('index.php?option=com_budweiser_theremix'. $itemTool) . "?celeb=".$post['celeb_id']."&name=".$name;
         $app->redirect($urlTool);
