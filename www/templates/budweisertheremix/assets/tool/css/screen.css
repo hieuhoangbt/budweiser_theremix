@@ -480,6 +480,17 @@ body {
   position: relative;
   z-index: 9;
 }
+.output_base {
+  float: left;
+  width: 100%;
+  min-height: 200px;
+  z-index: -1;
+  clear: both;
+  border: solid 1px blue;
+  position: fixed;
+  pointer-events: none;
+  opacity: 0;
+}
 
 /*demo*/
 .demo-frame {
