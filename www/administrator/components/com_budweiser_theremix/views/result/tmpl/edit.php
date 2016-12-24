@@ -61,7 +61,7 @@ $document->addStyleSheet(JUri::root() . 'media/com_budweiser_theremix/css/form.c
 				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 
 				<?php echo $this->form->renderField('created_by'); ?>
-				<?php echo $this->form->renderField('modified_by'); ?>				<?php echo $this->form->renderField('user_id'); ?>
+				<?php echo $this->form->renderField('modified_by'); ?>				<?php //echo $this->form->renderField('user_id'); ?>
 				<?php echo $this->form->renderField('image'); ?>
 				<?php echo $this->form->renderField('celebrity_id'); ?>
 				<?php echo $this->form->renderField('frame_id'); ?>

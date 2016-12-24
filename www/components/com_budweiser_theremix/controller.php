@@ -81,7 +81,7 @@ class Budweiser_theremixController extends JControllerLegacy {
         $url_img = $this->saveImage($image);
         $save = $this->insertImageResult($url_img, $celeb_id, $username);
         if ($save) {
-            $result = array('status' => true, 'message' => 'success');
+            $result = array('status' => true, 'message' => 'success','url_share'=>$url_img);
         } else {
             $result = array('status' => false, 'message' => 'error');
         }
