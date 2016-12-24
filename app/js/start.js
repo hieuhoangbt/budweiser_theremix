@@ -36,7 +36,7 @@ Tool.prototype.renderCanvas = function (width) {
 }
 Tool.prototype.addVideo = function (video, end, type) {
     var self = this;
-    var _left = self.canvas.width / 2 - $(video).width() / 2;
+    var _left = 0;
     var _top = 0;
     var ratio_video = $(video).width() / $(video).height();
     var _width = self.canvas.width;
