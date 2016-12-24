@@ -379,6 +379,15 @@ body {
         height: 195px;
     }
 }
+
+/*facebook*/
+.face {
+
+}
+.face .bgWelcome.bgThank img{
+    height: auto;
+}
+/*end-facebook*/
 @media (max-width: 1366px) {
     .wrapper {
         margin: 0 65px;
