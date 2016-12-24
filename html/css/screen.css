@@ -279,6 +279,7 @@ body {
     height: 100%;
     background-color: rgba(0,0,0,1);
     z-index: 10;
+    display: none;
 }
 .loading {
     position: absolute;
@@ -330,6 +331,27 @@ body {
         stroke-dashoffset: 0;
         transform: scale(.5);
     }
+}
+.bgWelcome.bgThank {
+    background: none;
+    height: 100vh;
+    overflow: hidden;
+}
+.bgWelcome.bgThank img {
+    display: block;
+    height: 100%;
+
+}
+.text-thank {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    left: 0px;
+}
+.text-thank img {
+    display: block;
+    width: 39vw;
+    margin: 0 auto;
 }
 @media screen and (max-width: 1600px) {
     .wrapper {
