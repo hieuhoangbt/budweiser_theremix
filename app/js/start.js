@@ -108,9 +108,14 @@ Tool.prototype.addPicture = function (src, type, end) {
     var canvas = self.canvas;
     fabric.Image.fromURL(src, function (img) {
         if (type == self.typePicture.file) {
+            var ratio_w = img.width / img.height;
+            var w_img = self.canvas.width;
+            var h_img = w_img / ratio_w;
             img.set({
-                top: self.canvas.height / 2 - img.height / 2,
-                left: self.canvas.width / 2 - img.width / 2,
+                width: w_img,
+                height: h_img,
+                top: 0,
+                left: 0,
                 evented: true,
                 selectable: true
             });
@@ -149,11 +154,13 @@ Tool.prototype.fileRead = function (_event, pos, sucess) {
         picReader.addEventListener("load", function (event) {
             var picFile = event.target;
             imgUpload.onload = function () {
+                var ratio_imageUp = imgUpload.width / imgUpload.height;
+
+                /*
                 var fitimg = self.fitImageOn(imgUpload, self.canvas.width, self.canvas.height);
                 self.pictureFile.width = fitimg.width;
                 self.pictureFile.height = fitimg.height;
-                self.pictureFile.top = pos.top;
-                self.pictureFile.left = pos.left - fitimg.width;
+                */
                 var type_file = 2;
                 self.canvas.remove(self.imagesUp);
                 self.addPicture(self.pictureFile.src, type_file);
