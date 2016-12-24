@@ -277,10 +277,9 @@ Tool.prototype.zoomIt = function (canvas, factor, success) {
     }
 }
 
-Tool.prototype.getBase64 = function (process, success) {
+var getBase64 = function (canvas, process, success) {
     var request, end = false, base64 = '';
-    var self = this;
-    base64 = self.canvas.toDataURL("image/jpeg", 0.5);
+    var base64 = canvas.toDataURL("image/jpeg", 0.5);
 
     var renderBase64 = function () {
         /*Process*/
@@ -532,19 +531,11 @@ window.onload = function () {
                 })
 
 
-                TOOL.canvas.on('object:added', function (options) {
-                    if (options.target) {
-                        TOOL.canvas.calcOffset();
-                        TOOL.canvas.renderAll();
-                    }
-                });
-
-
                 // get base64 images
                 $('.link-snap').on('click', function () {
 
                     BudWeiser.beforeGetBase64();
-                    TOOL.getBase64(process, sucessBase);
+                    getBase64(TOOL.canvas ,process, sucessBase);
                     function process() {
                         $('.loadder').css('display', 'table');
                     }
@@ -560,20 +551,57 @@ window.onload = function () {
                                 var img_output = new Image();
                                 img_output.onload = function () {
                                     $('.image-output').html(img_output);
+                                    // draw base 64
+                                    drawBase64(img_output, function (canvas) {
+                                        imageFacebook(canvas)
+                                    });
                                 }
                                 img_output.src = base64;
                                 $('.link-after').removeClass('disable');
                                 BudWeiser.afterGetBase64();
                                 i = 1;
-
                                 clearInterval(coundow_snap);
                             }
-
                             $('.timeCoundow').show().text(i);
                         }, 1200);
                     }
                 });
-                // TOOL.canvas.renderAll();
+                function drawBase64(src_image, complete) {
+                    var canvas_base = new fabric.Canvas('canvas_base');
+                    canvas_base.setWidth(600);
+                    canvas_base.setHeight(315);
+                    fabric.Image.fromURL(src_image.src, function (img) {
+                        var ratio_w = img.width / img.height;
+                        var w_img = canvas_base.width;
+                        var h_img = w_img / ratio_w;
+                        img.set({
+                            width: w_img,
+                            height: h_img,
+                            top: 0,
+                            left: 0,
+                            evented: true,
+                            selectable: true
+                        });
+                        canvas_base.add(img);
+                        canvas_base.renderAll();
+                        if(complete && typeof complete == "function") {
+                            complete(canvas_base);
+                        }
+                    });
+                }
+                function imageFacebook(canvas) {
+                    getBase64(canvas,
+                        function () {
+                            // process
+                        },
+                        function (base64) {
+                            // complete
+                            var soucre_face = base64;
+
+                            $('.image-facebook').attr('src', soucre_face);
+                        }
+                    )
+                }
             }
 
         }
