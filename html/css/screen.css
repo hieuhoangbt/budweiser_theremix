@@ -138,15 +138,9 @@ body {
     font-size: 42px;
     text-align: center;
     line-height: 129px;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
 }
 .btn-join a:hover {
     color: #fff;
-    -webkit-transform: scale(1.01);
-    -ms-transform: scale(1.01);
-    transform: scale(1.01);
 }
 /* FORM */
 .logo-hoaam {
@@ -191,44 +185,19 @@ body {
     display: block;
     border: none;
     background: url(../images/btn_red.png) no-repeat 0 0;
-    background: none;
     position: relative;
-    width: auto;
-    height: auto;
     font-family: 'Bud_BoldVN';
     font-size: 42px;
     color: #ff0000;
     cursor: pointer;
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
     -webkit-transition: all 0.25s linear ;
     -moz-transition: all 0.25s linear;
     -ms-transition: all 0.25s linear ;
     -o-transition: all 0.25s linear ;
     transition: all 0.25s linear ;
 }
-.form-submit .btn-start button img {
-    z-index: 1;
-    width: 18.75vw;
-    max-width: none;
-}
-.form-submit .btn-start button span {
-    display: block;
-    position: relative;
-    z-index: 2;
-    font-size: 2.1875vw;
-    position: absolute;
-    top: 47%;
-    left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-}
 .form-submit .btn-start button:hover {
     color: #fff;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
 }
 /* SINGER */
 .title h2 {
@@ -393,7 +362,7 @@ body {
         margin: 0 65px;
     }
     .form-submit {
-        bottom: 0px;
+        bottom: 10px;
     }
     .form-submit .btn-start button {
         margin: 1.6vw auto 0;
@@ -423,6 +392,7 @@ body {
         width: 150px;
         height: 165px;
     }
+    .form-submit .btn-start button,
     .btn-join a {
         width: 237px;
         height: 89px;
@@ -465,6 +435,7 @@ body {
     .bgSinger {
         background: url(../images/bgSinger_810.jpg) no-repeat 50% 50%;
     }
+    .form-submit .btn-start button,
     .btn-join a {
         width: 187px;
         height: 69px;
