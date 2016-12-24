@@ -475,7 +475,11 @@ body {
 .link-after .link-after-item span {
   display: none;
 }
-
+.snap_file {
+  /*display: none;*/
+  position: relative;
+  z-index: 9;
+}
 
 /*demo*/
 .demo-frame {

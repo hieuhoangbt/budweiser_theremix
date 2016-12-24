@@ -9,6 +9,7 @@
     <!--end-css-->
     <!--javascript-->
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/fontloader.js"></script>
     <script type="text/javascript" src="js/hook.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/fabric.min.js"></script>
@@ -36,7 +37,7 @@
                         Browers doesn't not support canvas html5
                     </canvas>
                     <div class="controll">
-                        <form class="form-upload" action="">
+                        <form id="change_img" class="form-upload" action="">
                             <div class="timeCoundow">0</div>
                             <div class="vetical-middle loadder">
                                 <div class="center-child">
@@ -58,7 +59,8 @@
                             </div>
                             <div class="btn-form link-file disable" direct="file">
                                 <span>Tải ảnh</span>
-                                <img class="img-link" src="images/bg_upload.png" default_src="images/bg_upload.png" change_src="images/bg_upload_change.png" alt=""/>
+                                <img class="img-link up_file" src="images/bg_upload.png" default_src="images/bg_upload.png" change_src="images/bg_upload_change.png" alt=""/>
+                                <img class="img-link snap_file disable" src="images/bg_snap_file.png" alt="">
                                 <input class="input_file" id="file_upload" name="file" type="file"/>
                             </div>
                             <div class="edit-controll disable">
