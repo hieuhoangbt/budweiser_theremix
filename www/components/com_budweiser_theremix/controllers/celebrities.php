@@ -29,7 +29,9 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
         $post = $jinput->get('jform', '', 'array');
         $itemHome = Budweiser_theremixHelpersBudweiser_theremix::getItemId('home');
         $urlHome = JRoute::_('index.php?option=com_budweiser_theremix' . $itemHome);
-        if(empty($post['username']) || empty($post['celeb_id'])){
+        
+        $name=  Budweiser_theremixHelpersBudweiser_theremix::getAlias($post['username']);
+        if(empty($name) || empty($post['celeb_id'])){
             $app->redirect($urlHome);
         }
         /*$insert_id=$this->saveResult($post['username'],$post['celeb_id']);
@@ -38,7 +40,7 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
             $app->redirect($urlHome);
         }*/
         $itemTool = Budweiser_theremixHelpersBudweiser_theremix::getItemId('tool');
-        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix'. $itemTool) . "?celeb=".$post['celeb_id']."&name=".$post['username'];
+        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix'. $itemTool) . "?celeb=".$post['celeb_id']."&name=".$name;
         $app->redirect($urlTool);
         
         

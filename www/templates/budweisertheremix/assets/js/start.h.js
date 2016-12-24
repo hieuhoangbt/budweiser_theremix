@@ -41,7 +41,7 @@ BudWeiser.handleShare = function (URL_IMAGE) {
         caption: TITLE_SHARE,
         description: DESC_SHARE,
         link: URL_ROOT,
-        picture: URL_IMAGE,
+        picture: URL_ROOT+URL_IMAGE,
         hashtag: HASHTAG,
         display: 'popup'
     }, function (response) {
