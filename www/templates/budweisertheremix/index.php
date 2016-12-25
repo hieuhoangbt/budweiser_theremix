@@ -85,6 +85,8 @@ $view = JRequest::getVar('view');
         FB.getLoginStatus(function (response) {
             res_status = response;
         });
+        
+        FB.Canvas.setSize({ width: 810, height: 456 });
     };
 
     (function (d, s, id) {
