@@ -17,7 +17,8 @@ jimport('joomla.application.component.controller');
  *
  * @since  1.6
  */
-class Budweiser_theremixController extends JControllerLegacy {
+class Budweiser_theremixController extends JControllerLegacy
+{
 
     /**
      * Method to display a view.
@@ -29,7 +30,8 @@ class Budweiser_theremixController extends JControllerLegacy {
      *
      * @since    1.5
      */
-    public function display($cachable = false, $urlparams = false) {
+    public function display($cachable = false, $urlparams = false)
+    {
         $app = JFactory::getApplication();
         $view = $app->input->getCmd('view', 'celebritys');
         $app->input->set('view', $view);
@@ -39,7 +41,8 @@ class Budweiser_theremixController extends JControllerLegacy {
         return $this;
     }
 
-    public function getAllData() {
+    public function getAllData()
+    {
         $frame = $this->getAllFrame();
         $celerities = $this->getAllCelebrity();
         $array = array(
@@ -50,7 +53,8 @@ class Budweiser_theremixController extends JControllerLegacy {
         exit;
     }
 
-    public function getAllCelebrity() {
+    public function getAllCelebrity()
+    {
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
         $query->select('id, image_png as image');
@@ -61,7 +65,8 @@ class Budweiser_theremixController extends JControllerLegacy {
         return (empty($result)) ? false : $result;
     }
 
-    public function getAllFrame() {
+    public function getAllFrame()
+    {
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
         $query->select('id, image');
@@ -72,7 +77,8 @@ class Budweiser_theremixController extends JControllerLegacy {
         return (empty($result)) ? false : $result;
     }
 
-    public function saveImageResult() {
+    public function saveImageResult()
+    {
         JSession::checkToken() or die('Invalid Token');
         $sess = JFactory::getSession();
         $image = JRequest::getVar('base64_image');
@@ -81,7 +87,7 @@ class Budweiser_theremixController extends JControllerLegacy {
         $url_img = $this->saveImage($image);
         $save = $this->insertImageResult($url_img, $celeb_id, $username);
         if ($save) {
-            $result = array('status' => true, 'message' => 'success','url_share'=>$url_img);
+            $result = array('status' => true, 'message' => 'success', 'url_share' => $url_img);
         } else {
             $result = array('status' => false, 'message' => 'error');
         }
@@ -89,9 +95,10 @@ class Budweiser_theremixController extends JControllerLegacy {
         exit;
     }
 
-    public function saveImage($base64_string) {
-        if(empty($base64_string)){ 
-             $result = array('status' => false, 'message' => 'error');
+    public function saveImage($base64_string)
+    {
+        if (empty($base64_string)) {
+            $result = array('status' => false, 'message' => 'error');
             echo json_encode($result);
             exit;
         }
@@ -105,21 +112,64 @@ class Budweiser_theremixController extends JControllerLegacy {
         return $url;
     }
 
-    public function insertImageResult($image_upload, $celeb_id, $username) {
+    public function insertImageResult($image_upload, $celeb_id, $username)
+    {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $now=date('Y-m-d H:i:s');
-        $columns = array('username', 'celebrity_id','image', 'state', 'created_at');
-        $values = array($db->quote($username), $db->quote($celeb_id), $db->quote($image_upload), 1, $db->quote($now));
+        $now = date('Y-m-d H:i:s');
+        $columns = array('username', 'celebrity_id', 'image', 'state', 'created_at');
+        $values = array($db->quote($username), $db->quote($celeb_id), $db->quote($image_upload), -2, $db->quote($now));
 
         $query
                 ->insert($db->quoteName('#__budweiser_theremix_result'))
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $values));
         $db->setQuery($query);
-        $result=$db->execute();
+        $result = $db->execute();
         return $result;
-        
+    }
+
+    public function updateState()
+    {
+        if ($_POST['state'] == 0) {
+            $this->hardDeleted($_POST['img']);
+            exit;
+        }
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $fields = array(
+            $db->quoteName('state') . ' = ' . $db->quote($_POST['state'])
+        );
+
+        $conditions = array(
+            $db->quoteName('image') . ' = ' . $db->quote($_POST['img'])
+        );
+
+        $query->update($db->quoteName('#__budweiser_theremix_result'))->set($fields)->where($conditions);
+
+        $db->setQuery($query);
+
+        $result = $db->execute();
+        exit;
+    }
+
+    public function hardDeleted($img)
+    {
+        $imgPath = JPATH_ROOT . DIRECTORY_SEPARATOR . $img;
+        if (file_exists($imgPath)) {
+            @unlink($imgPath);
+        }
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $conditions = array(
+            $db->quoteName('image') . ' = ' . $db->quote($_POST['img'])
+        );
+
+        $query->delete($db->quoteName('#__budweiser_theremix_result'));
+        $query->where($conditions);
+        $db->setQuery($query);
+        $result = $db->execute();
+        return true;
     }
 
 }

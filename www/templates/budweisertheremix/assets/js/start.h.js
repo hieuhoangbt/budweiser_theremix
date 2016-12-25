@@ -1,3 +1,4 @@
+var URL_IMAGE = '';
 BudWeiser.beforeStart = function () {
     ROOT_URL = URL_ROOT;
     PATH_DATA = "index.php?option=com_budweiser_theremix&task=getAllData";
@@ -13,42 +14,45 @@ BudWeiser.getDataBeforeAjax = function (data) {
 };
 BudWeiser.afterGetBase64 = function (base64) {
     $('#base64_image').val(base64);
+    BudWeiser.saveImageResult();
 };
-BudWeiser.saveImageResult = function (callback) {
+BudWeiser.saveImageResult = function () {
     $.ajax({
         type: "POST",
         url: "index.php?option=com_budweiser_theremix&task=saveImageResult",
         data: $(".form-upload").serialize(), // serializes the form's elements.
         success: function (data) {
             data = (typeof data == 'string') ? JSON.parse(data) : data;
-            var URL_IMAGE = data.url_share;
-            if (typeof callback == 'function')
-                callback(URL_IMAGE);
+            URL_IMAGE = data.url_share;
         }
     });
-
 };
 BudWeiser.shareImage = function () {
-    BudWeiser.saveImageResult(function (URL_IMAGE) {
-        BudWeiser.handleShare(URL_IMAGE);
-    });
-
-};
-BudWeiser.handleShare = function (URL_IMAGE) {
     FB.ui({
         method: 'feed',
         name: TITLE_SHARE,
         caption: TITLE_SHARE,
         description: DESC_SHARE,
         link: URL_ROOT,
-        picture: URL_ROOT+URL_IMAGE,
+        picture: URL_ROOT + URL_IMAGE,
         hashtag: HASHTAG,
         display: 'popup'
     }, function (response) {
         if (response && response.post_id) {
-           window.location="/thanks";
+            BudWeiser.handlerAfterShare(1);
+            window.location = "/thanks";
         } else {
-            console.log('error');
+            BudWeiser.handlerAfterShare(0);
+        }
+    });
+};
+BudWeiser.handlerAfterShare = function (state) {
+    $.ajax({
+        type: "POST",
+        url: "index.php?option=com_budweiser_theremix&task=updateState",
+        data: {
+            img: URL_IMAGE,
+            state: state
         }
     });
 }
