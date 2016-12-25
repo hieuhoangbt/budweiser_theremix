@@ -81,10 +81,11 @@ Tool.prototype.snapCamera = function (video, camera, err) {
     var self = this;
     var isIE = detectIE();
     var errorCallback = function (e) {
-        alert('PC không hỗ trợ Camera! :( ');
-        err();
+        // alert('PC không hỗ trợ Camera! :( ');
+        $('.up_file').addClass('ie');
+        err(isIE);
     };
-    if(isIE != false) return err();
+    if(isIE != false) return err(isIE);
 
     navigator.getUserMedia = navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
@@ -461,8 +462,12 @@ window.onload = function () {
                 TOOL.addPicture(src_model, addModel);
 
                 // live stream camera
-                var CameraNotSupport = function () {
+                var CameraNotSupport = function (ie) {
                     hasCamera = false;
+                    if(ie == false) {
+                        $('.btn-form.link-file').addClass('no_ie');
+
+                    }
                     $('.link-snap').addClass('disable');
                     $('.link-file').removeClass('disable');
                 }
@@ -470,7 +475,7 @@ window.onload = function () {
                     hasCamera = true;
 					// show edit zoom
 					zoomEdit();
-					
+					$('.btn-form.link-file').addClass('no_ie');
                     $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
@@ -595,6 +600,7 @@ window.onload = function () {
                         $('.link-snap, .edit-controll').addClass('disable');
                         $('.loadder').hide();
                         var src_base64 = source;
+                        console.log(src_base64);
                         var i = 4;
                         var coundow_snap = setInterval(function () {
                             i--;

@@ -17,7 +17,42 @@
   font-weight: normal;
   font-style: normal;
 }
-
+@keyframes zoom {
+    from {
+        -webkit-transform: translateY(-50%) scale(0.8);
+        transform: translateY(-50%) scale(0.8);
+        -ms-transform: translateY(-50%) scale(0.8);
+    }
+    to {
+        -webkit-transform: translateY(-50%) scale(0.9);
+        -ms-transform: translateY(-50%) scale(0.9);
+        transform: translateY(-50%) scale(0.9);
+    }
+}
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: translateY(-50%) scale(0.8);
+        -ms-transform: translateY(-50%) scale(0.8);
+        transform: translateY(-50%) scale(0.8);
+    }
+    to {
+        -webkit-transform: translateY(-50%) scale(0.9);
+        -ms-transform: translateY(-50%) scale(0.9);
+        transform: translateY(-50%) scale(0.9);
+    }
+}
+@-ms-keyframes zoom {
+    from {
+        -webkit-transform: translateY(-50%) scale(0.8);
+        -ms-transform: translateY(-50%) scale(0.8);
+        transform: translateY(-50%) scale(0.8);
+    }
+    to {
+        -webkit-transform: translateY(-50%) scale(0.9);
+        -ms-transform: translateY(-50%) scale(0.9);
+        transform: translateY(-50%) scale(0.9);
+    }
+}
 
 /* reset & default */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, tt, var, b, u, i, center,/*dl, dt, dd, ol, ul, li,*/
@@ -256,34 +291,24 @@ body {
   top: 50%;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
-  animation: zoom 0.6s linear alternate infinite;
-  -webkit-animation: zoom 0.6s linear alternate infinite;
+
   z-index: 4 !important;
+}
+.btn-form.link-file.no_ie {
+    animation: zoom 0.6s linear alternate infinite;
+    -webkit-animation: zoom 0.6s linear alternate infinite;
+    -ms-animation: zoom 0.6s linear alternate infinite;
+    -o-animation: zoom 0.6s linear alternate infinite;
+}
+.btn-form.link-file.ie {
+
 }
 .btn-form.link-file span {
   display: none;
 }
 
-@keyframes zoom {
-  from {
-    -webkit-transform: translateY(-50%) scale(0.8);
-    transform: translateY(-50%) scale(0.8);
-  }
-  to {
-    -webkit-transform: translateY(-50%) scale(0.9);
-    transform: translateY(-50%) scale(0.9);
-  }
-}
-@-webkit-keyframes zoom {
-  from {
-    -webkit-transform: translateY(-50%) scale(0.8);
-    transform: translateY(-50%) scale(0.8);
-  }
-  to {
-    -webkit-transform: translateY(-50%) scale(0.9);
-    transform: translateY(-50%) scale(0.9);
-  }
-}
+
+
 .timeCoundow {
   color: #fff;
   font-size: 9.3vw;
@@ -382,7 +407,7 @@ body {
   height: 1px;
 }
 .confirm_edit {
-    margin: 5px auto;
+    margin: 10px auto;
     cursor: pointer;
     clear: both;
     float: left;
