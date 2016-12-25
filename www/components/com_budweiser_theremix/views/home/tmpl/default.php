@@ -11,4 +11,4 @@ $urlCelebrities = JRoute::_('index.php?option=com_budweiser_theremix' . $itemCel
     <span class="hoaam"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt="" /></span>
 </div>
 <div class="btn-join"><a class="" href="<?php echo $urlCelebrities; ?>">THAM GIA</a></div>
-<?php $sess->clear('error'); ?>
+<?php //$sess->clear('error'); ?>
