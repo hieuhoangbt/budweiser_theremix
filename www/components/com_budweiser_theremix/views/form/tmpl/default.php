@@ -14,7 +14,7 @@ $error = $sess->get('error');
     <?php if (!empty($error)) { ?>
         <p style="text-align: center; color: white"><?php echo $error; ?></p>
     <?php } ?>
-    <div class="form-group"><input type="text" required name="jform[username]" oninvalid="this.setCustomValidity('Vui lòng nhập tên của bạn!')" value="" /></div>
+    <div class="form-group"><input type="text" name="jform[username]" /></div>
     <div class="btn-start"><button type="submit" class="hover-transition">BẮT ĐẦU</button></div>
 
     <input type="hidden" name="jform[celeb_id]" value="<?php echo $celebrity; ?>">
