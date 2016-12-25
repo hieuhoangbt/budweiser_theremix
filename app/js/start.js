@@ -446,6 +446,9 @@ window.onload = function () {
                     var timeScale = setInterval(function () {
                         s++;
                         if (s == 2) {
+                            if($('body').hasClass('fa')) {
+                                zoom_canvs = 0.6;
+                            }
                             TOOL.zoomIt(TOOL.canvas, zoom_canvs, function () {
                                 $('.controll .form-upload').width(TOOL.canvas.width);
                                 $('.controll .form-upload').height(TOOL.canvas.height);
@@ -600,7 +603,6 @@ window.onload = function () {
                         $('.link-snap, .edit-controll').addClass('disable');
                         $('.loadder').hide();
                         var src_base64 = source;
-                        console.log(src_base64);
                         var i = 4;
                         var coundow_snap = setInterval(function () {
                             i--;
