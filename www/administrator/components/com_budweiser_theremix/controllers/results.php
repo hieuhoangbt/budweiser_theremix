@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version    CVS: 1.0.0
  * @package    Com_Budweiser_theremix
@@ -6,7 +7,6 @@
  * @copyright  2016 anh
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 // No direct access.
 defined('_JEXEC') or die;
 
@@ -19,91 +19,84 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since  1.6
  */
-class Budweiser_theremixControllerResults extends JControllerAdmin
-{
-	/**
-	 * Method to clone existing Results
-	 *
-	 * @return void
-	 */
-	public function duplicate()
-	{
-		// Check for request forgeries
-		Jsession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+class Budweiser_theremixControllerResults extends JControllerAdmin {
 
-		// Get id(s)
-		$pks = $this->input->post->get('cid', array(), 'array');
+    /**
+     * Method to clone existing Results
+     *
+     * @return void
+     */
+    public function duplicate() {
+        // Check for request forgeries
+        Jsession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		try
-		{
-			if (empty($pks))
-			{
-				throw new Exception(JText::_('COM_BUDWEISER_THEREMIX_NO_ELEMENT_SELECTED'));
-			}
+        // Get id(s)
+        $pks = $this->input->post->get('cid', array(), 'array');
 
-			ArrayHelper::toInteger($pks);
-			$model = $this->getModel();
-			$model->duplicate($pks);
-			$this->setMessage(Jtext::_('COM_BUDWEISER_THEREMIX_ITEMS_SUCCESS_DUPLICATED'));
-		}
-		catch (Exception $e)
-		{
-			JFactory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
-		}
+        try {
+            if (empty($pks)) {
+                throw new Exception(JText::_('COM_BUDWEISER_THEREMIX_NO_ELEMENT_SELECTED'));
+            }
 
-		$this->setRedirect('index.php?option=com_budweiser_theremix&view=results');
-	}
+            ArrayHelper::toInteger($pks);
+            $model = $this->getModel();
+            $model->duplicate($pks);
+            $this->setMessage(Jtext::_('COM_BUDWEISER_THEREMIX_ITEMS_SUCCESS_DUPLICATED'));
+        } catch (Exception $e) {
+            JFactory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
+        }
 
-	/**
-	 * Proxy for getModel.
-	 *
-	 * @param   string  $name    Optional. Model name
-	 * @param   string  $prefix  Optional. Class prefix
-	 * @param   array   $config  Optional. Configuration array for model
-	 *
-	 * @return  object	The Model
-	 *
-	 * @since    1.6
-	 */
-	public function getModel($name = 'result', $prefix = 'Budweiser_theremixModel', $config = array())
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
+        $this->setRedirect('index.php?option=com_budweiser_theremix&view=results');
+    }
 
-		return $model;
-	}
+    /**
+     * Proxy for getModel.
+     *
+     * @param   string  $name    Optional. Model name
+     * @param   string  $prefix  Optional. Class prefix
+     * @param   array   $config  Optional. Configuration array for model
+     *
+     * @return  object	The Model
+     *
+     * @since    1.6
+     */
+    public function getModel($name = 'result', $prefix = 'Budweiser_theremixModel', $config = array()) {
+        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
 
-	/**
-	 * Method to save the submitted ordering values for records via AJAX.
-	 *
-	 * @return  void
-	 *
-	 * @since   3.0
-	 */
-	public function saveOrderAjax()
-	{
-		// Get the input
-		$input = JFactory::getApplication()->input;
-		$pks   = $input->post->get('cid', array(), 'array');
-		$order = $input->post->get('order', array(), 'array');
+        return $model;
+    }
 
-		// Sanitize the input
-		ArrayHelper::toInteger($pks);
-		ArrayHelper::toInteger($order);
+    /**
+     * Method to save the submitted ordering values for records via AJAX.
+     *
+     * @return  void
+     *
+     * @since   3.0
+     */
+    public function saveOrderAjax() {
+        // Get the input
+        $input = JFactory::getApplication()->input;
+        $pks = $input->post->get('cid', array(), 'array');
+        $order = $input->post->get('order', array(), 'array');
 
-		// Get the model
-		$model = $this->getModel();
+        // Sanitize the input
+        ArrayHelper::toInteger($pks);
+        ArrayHelper::toInteger($order);
 
-		// Save the ordering
-		$return = $model->saveorder($pks, $order);
+        // Get the model
+        $model = $this->getModel();
 
-		if ($return)
-		{
-			echo "1";
-		}
+        // Save the ordering
+        $return = $model->saveorder($pks, $order);
 
-		// Close the application
-		JFactory::getApplication()->close();
-	}
+        if ($return) {
+            echo "1";
+        }
+
+        // Close the application
+        JFactory::getApplication()->close();
+    }
+
     public function export2excel() {
         require_once JPATH_BASE . DIRECTORY_SEPARATOR . 'components/com_budweiser_theremix/helpers/PHPExcel.php';
         $start = 0;
@@ -132,7 +125,7 @@ class Budweiser_theremixControllerResults extends JControllerAdmin
                 $objPHPExcel->setActiveSheetIndex(0);
                 $worksheet = $objPHPExcel->getActiveSheet();
                 $row = 1; // 1-based index
-                $label_name = array('STT', 'Username','Image', 'Created Date');
+                $label_name = array('STT', 'Username', 'Image', 'Created Date');
                 $field_name = array('stt', 'username', 'image', 'created_at');
                 if ($row == 1) {
                     $col = 0;
@@ -158,8 +151,8 @@ class Budweiser_theremixControllerResults extends JControllerAdmin
                 foreach ($field_name as $field) {
                     if ($field == 'stt') {
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $row - 1);
-                    }else if ($field == 'image') {
-                        $image=JUri::root().$row_data->$field;
+                    } else if ($field == 'image') {
+                        $image = JUri::root() . $row_data->$field;
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $image);
                     } else {
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $row_data->$field);
@@ -186,4 +179,78 @@ class Budweiser_theremixControllerResults extends JControllerAdmin
         @unlink($filenameoutput . ".xls");
         exit;
     }
+
+    public function delete() {
+        Jsession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        $pks = $this->input->post->get('cid', array(), 'array');
+        try {
+            if (empty($pks)) {
+                throw new Exception(JText::_('No element selected'));
+            }
+
+            $pks = ArrayHelper::toInteger($pks);
+            foreach ($pks as $id) {
+                $this->delRelation($id);
+            }
+        } catch (Exception $e) {
+            JFactory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
+        }
+        parent::delete();
+    }
+
+    public function delRelation($id) {
+        $photoIds = $this->getListPhoto($id);
+        if (count($photoIds) > 0) {
+            foreach ($photoIds as $photoId) {
+                $this->deletePhoto($photoId->id);
+            }
+        }
+    }
+
+    public function deletePhoto($id) {
+        $item = $this->getPhotoById($id);
+        if ($item) {
+            $this->deletePhotoItem($item->id);
+            $photoPath = JPATH_ROOT . DIRECTORY_SEPARATOR . $item->image;
+            if (file_exists($photoPath)) {
+                @unlink($photoPath);
+            }
+        }
+    }
+
+    public function getListPhoto($id) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select("*")
+                ->from($db->quoteName('#__budweiser_theremix_result'))
+                ->where($db->quoteName('id') . " = " . $db->quote($id));
+        $db->setQuery($query);
+        $db->query();
+        return $db->loadObjectList();
+    }
+    public function getPhotoById($id) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select("*")
+                ->from($db->quoteName('#__budweiser_theremix_result'))
+                ->where($db->quoteName("id") . "=" . $db->quote($id));
+        $db->setQuery($query);
+        $item = $db->loadObject();
+        return ($item) ? $item : false;
+    }
+
+    public function deletePhotoItem($pid) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $conditions = array(
+            $db->quoteName('id') . ' = ' . $db->quote($pid)
+        );
+
+        $query->delete($db->quoteName('#__budweiser_theremix_result'));
+        $query->where($conditions);
+        $db->setQuery($query);
+        $result = $db->execute();
+    }
+    
+
 }

@@ -35,7 +35,7 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
             $sess->set('error', 'Vui lòng nhập tên của bạn!');
             $app->redirect(JUri::current() . '?celeb_id=' . $post['celeb_id']);
         }
-        if (empty($this->clean($post['username']))) {
+        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $post['username'])) {
             $sess->set('error', 'Vui lòng không nhập kí tự đặc biệt!');
             $app->redirect(JUri::current() . '?celeb_id=' . $post['celeb_id']);
         }
@@ -43,17 +43,13 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
             $sess->set('error', 'Vui lòng chọn ca sĩ bạn muốn chụp ảnh cùng trước khi nhập tên!');
             $app->redirect(JUri::current());
         }
-        $name = Budweiser_theremixHelpersBudweiser_theremix::getAlias($post['username']);
+        $name = explode(" ",Budweiser_theremixHelpersBudweiser_theremix::getAlias($post['username']));
+        $name_user=$name[count($name)-2]." ".$name[count($name)-1];
         $itemTool = Budweiser_theremixHelpersBudweiser_theremix::getItemId('tool');
-        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix' . $itemTool) . "?celeb=" . $post['celeb_id'] . "&name=" . $name;
+        $urlTool = JRoute::_('index.php?option=com_budweiser_theremix' . $itemTool) . "?celeb=" . $post['celeb_id'] . "&name=" . $name_user;
         $app->redirect($urlTool);
     }
 
-    public function clean($string) {
-        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
-    }
 
     public function saveResult($username, $celeb) {
         $db = JFactory::getDbo();
