@@ -79,10 +79,14 @@ Tool.prototype.addVideo = function (video, end, type) {
 
 Tool.prototype.snapCamera = function (video, camera, err) {
     var self = this;
+    var isIE = detectIE();
     var errorCallback = function (e) {
         // alert('PC không hỗ trợ Camera! :( ');
-        err();
+        $('.up_file').addClass('ie');
+        err(isIE);
     };
+    if(isIE != false) return err(isIE);
+
     navigator.getUserMedia = navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
@@ -337,10 +341,50 @@ function loadFont(success) {
     }, 3000);
     fontLoader.loadFonts();
 }
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    // Test values; Uncomment to check result …
+
+    // IE 10
+    // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+
+    // IE 11
+    // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
+
+    // Edge 12 (Spartan)
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+
+    // Edge 13
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+        // Edge (IE 12+) => return version number
+        return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    // other browser
+    return false;
+}
 
 /*Ready document Window*/
 
 window.onload = function () {
+
 
     BudWeiser.beforeStart();
     /*Action Page init*/
@@ -418,8 +462,12 @@ window.onload = function () {
                 TOOL.addPicture(src_model, addModel);
 
                 // live stream camera
-                var CameraNotSupport = function () {
+                var CameraNotSupport = function (ie) {
                     hasCamera = false;
+                    if(ie == false) {
+                        $('.btn-form.link-file').addClass('no_ie');
+
+                    }
                     $('.link-snap').addClass('disable');
                     $('.link-file').removeClass('disable');
                 }
@@ -427,7 +475,7 @@ window.onload = function () {
                     hasCamera = true;
 					// show edit zoom
 					zoomEdit();
-					
+					$('.btn-form.link-file').addClass('no_ie');
                     $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
@@ -549,9 +597,10 @@ window.onload = function () {
                     }
 
                     function sucessBase(source) {
-                        $('.link-snap').addClass('disable');
+                        $('.link-snap, .edit-controll').addClass('disable');
                         $('.loadder').hide();
                         var src_base64 = source;
+                        console.log(src_base64);
                         var i = 4;
                         var coundow_snap = setInterval(function () {
                             i--;
