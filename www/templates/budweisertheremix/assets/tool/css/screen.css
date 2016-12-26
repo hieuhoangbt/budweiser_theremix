@@ -518,6 +518,11 @@ body {
   pointer-events: none;
   opacity: 0;
 }
+/*facebook*/
+body.fa .edit-controll {
+  margin: 50px 6px 0px 0px;
+}
+
 
 /*demo*/
 .demo-frame {

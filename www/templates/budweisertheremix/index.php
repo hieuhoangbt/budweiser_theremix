@@ -18,8 +18,12 @@ $view = JRequest::getVar('view');
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+		<?php if($view=="tool"){ ?>
+		<meta http-equiv="X-UA-Compatible" content="IE=9;IE=10;IE=Edge;IE=11,chrome=1"/>
+		<?php }else{ ?>
+		<meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<?php } ?>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <jdoc:include type="head"/>
     <!-- Bootstrap -->
@@ -54,7 +58,7 @@ $view = JRequest::getVar('view');
     </script>
 </head>
 
-<body class="face">
+<body class="<?php if($view=='thanks'){ echo "face";}else if($view=='tool'){ echo "";} ?>">
     <?php if ($view != 'tool' && $view != 'thanks') { ?>
         <div class="bgFull"></div>
     <?php } ?>
