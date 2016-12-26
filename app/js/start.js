@@ -1,9 +1,9 @@
 /* globals Variables*/
 var ROOT_URL = 'http://localhost/budweiser_theremix/app/';
 var PATH_DATA = 'js/data.json';
-var Model_Index = 8;
+var COUNTDOWN_OPT = 10;
+var Model_Index = 11;
 var Frame_Index = 0;
-var Watermark_Index = 0;
 var base64 = '';
 var hasCamera = true;
 var hasTag = '#TEMTHIEUBAOTRAM';
@@ -16,7 +16,9 @@ var Tool = function (options) {
     this.name = 'budweiser theremix';
     this.version = '1.0';
     this.canvas = new fabric.Canvas('canvas');
-    this.max = {width: 1142, height: 599};
+    // this.max = {width: 1142, height: 599};
+    // this.max = {width: 1920, height: 1080};
+    this.max = {width: $('.frame-wrapper').width(), height: $('.frame-wrapper').height()};
     this.ratioW = this.max.width / this.max.height;
     this.ratio = {width: 600, height: 315};
 
@@ -27,9 +29,15 @@ var Tool = function (options) {
     this.renderCanvas(this.max.width);
 };
 Tool.prototype.renderCanvas = function (width) {
-    width = width || window.innerWidth;
-    var w_height = width / this.ratioW;
-    this.canvas.setWidth(width);
+    var w_width = width || window.innerWidth;
+    if($('body').hasClass('fa')) {
+        w_width = 810;
+        this.max = {width: 1920, height: 1080};
+        this.ratioW = this.max.width / this.max.height;
+    }
+    var w_height = w_width / this.ratioW;
+
+    this.canvas.setWidth(w_width);
     this.canvas.setHeight(w_height);
     this.canvas.backgroundColor = "#dfe7e9";
     this.canvas.renderAll();
@@ -48,7 +56,7 @@ Tool.prototype.addVideo = function (video, end, type) {
         height: _height
 
     });
-    videoFrame.selectable = true;
+    videoFrame.selectable = false;
     // self.canvas.add(videoFrame);
     self.canvas.insertAt(videoFrame, 0);
     videoFrame.getElement().play();
@@ -85,12 +93,13 @@ Tool.prototype.snapCamera = function (video, camera, err) {
         $('.up_file').addClass('ie');
         err(isIE);
     };
-    if(isIE != false) return err(isIE);
+    if (isIE != false)
+        return err(isIE);
 
     navigator.getUserMedia = navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia;
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
     if (navigator.getUserMedia) {
         // var video = $(video);
         navigator.getUserMedia({audio: false, video: true}, function (stream) {
@@ -114,8 +123,20 @@ Tool.prototype.addPicture = function (src, type, end) {
     var self = this;
     var canvas = self.canvas;
     fabric.Image.fromURL(src, function (img) {
+
         if (type == self.typePicture.file) {
+            var w = img.width, h = img.height;
+            var r_wh = w / h;
+            if(h > self.canvas.height) {
+                h = self.canvas.height;
+                w = h * r_wh;
+            }else if(h < self.canvas.height) {
+                w = self.canvas.width;
+                h = w / r_wh;
+            }
+            var ab = self.fitImageOn(img, self.canvas.width, self.canvas.height);
             var ratio_w = img.width / img.height;
+
             var w_img = self.canvas.width;
             var h_img = w_img / ratio_w;
             img.set({
@@ -124,19 +145,24 @@ Tool.prototype.addPicture = function (src, type, end) {
                 top: 0,
                 left: 0,
                 evented: true,
-                selectable: true
+                selectable: false,
+                centeredScaling: true
             });
             self.imagesUp = img;
             canvas.insertAt(img, 0);
 
         }
         if (type == self.typePicture.model) {
-            img.set({evented: false, selectable: false});
+            var _w = self.canvas.width, _ratio = img.width / img.height, _h = _w/_ratio;
+            img.set({width: _w, height: _h, evented: false, selectable: false});
+
             self.imagesframe = img;
             canvas.insertAt(img, 0);
 
         }
         if (type == self.typePicture.frame) {
+
+            if(img.width)
             img.set({width: self.canvas.width, height: self.canvas.height, evented: false});
             img.selectable = false;
             canvas.add(img);
@@ -164,10 +190,10 @@ Tool.prototype.fileRead = function (_event, pos, sucess) {
                 var ratio_imageUp = imgUpload.width / imgUpload.height;
 
                 /*
-                var fitimg = self.fitImageOn(imgUpload, self.canvas.width, self.canvas.height);
-                self.pictureFile.width = fitimg.width;
-                self.pictureFile.height = fitimg.height;
-                */
+                 var fitimg = self.fitImageOn(imgUpload, self.canvas.width, self.canvas.height);
+                 self.pictureFile.width = fitimg.width;
+                 self.pictureFile.height = fitimg.height;
+                 */
                 var type_file = 2;
                 self.canvas.remove(self.imagesUp);
                 self.addPicture(self.pictureFile.src, type_file);
@@ -281,27 +307,48 @@ Tool.prototype.zoomIt = function (canvas, factor, success) {
     }
 }
 
+var setCdOption = function(cd){
+    COUNTDOWN_OPT = parseInt(cd) > 3 ? parseInt(cd) : 3;
+}
+
+var getCdOption = function(){
+    return COUNTDOWN_OPT;
+};
+function isPortrait(img) {
+    var w = img.naturalWidth || img.width,
+        h = img.naturalHeight || img.height;
+    return (h > w);
+}
 var getBase64 = function (canvas, process, success) {
-    var request, end = false;
-    var base64 = canvas.toDataURL("image/jpeg", 0.5);
+    var i = getCdOption(); // default = 3
+    $('.timeCoundow').show().text(i);
+    var coundow_snap = setInterval(function () {
+        i--;
+        if (i == 0) {
+            var request, end = false;
+            var base64 = canvas.toDataURL("image/jpeg", 0.5);
 
-    var renderBase64 = function () {
-        /*Process*/
-        process();
+            var renderBase64 = function () {
+                /*Process*/
+                process();
 
-        if (base64 != '') {
-            fabric.util.cancelAnimationFrame(renderBase64);
-            if (success && typeof success == "function") {
-                /*Success*/
-                success(base64);
+                if (base64 != '') {
+                    fabric.util.cancelAnimationFrame(renderBase64);
+                    if (success && typeof success == "function") {
+                        /*Success*/
+                        success(base64);
+                    }
+                    return base64;
+                } else {
+                    request = fabric.util.requestAnimFrame(renderBase64);
+                }
+
             }
-            return base64;
-        } else {
-            request = fabric.util.requestAnimFrame(renderBase64);
+            fabric.util.requestAnimFrame(renderBase64);
+            clearInterval(coundow_snap);
         }
-
-    }
-    fabric.util.requestAnimFrame(renderBase64);
+        $('.timeCoundow').show().text(i);
+    }, 1000);
 }
 
 function ImgLoader(sources, onProgressChanged, onCompleted) {
@@ -421,24 +468,24 @@ window.onload = function () {
 
             };
             var foo = new ImgLoader(sources,
-                function (image, percent) {
+                    function (image, percent) {
 
-                },
-                function (images) {
-                    // completed
-                    // load font
-                    loadFont(function () {
-                        // init fonts
-                        initTool();
-                    })
-                }
+                    },
+                    function (images) {
+                        // completed
+                        // load font
+                        loadFont(function () {
+                            // init fonts
+                            initTool();
+                        })
+                    }
             );
 
             function initTool() {
                 // new Tool
                 var TOOL = new Tool({});
-                $('.controll .form-upload').width(TOOL.max.width);
-                $('.controll .form-upload').height(TOOL.max.height);
+                // $('.controll .form-upload').width(TOOL.max.width);
+                // $('.controll .form-upload').height(TOOL.max.height);
                 // scale canvas
                 scaleCanvas();
                 function scaleCanvas() {
@@ -446,12 +493,13 @@ window.onload = function () {
                     var timeScale = setInterval(function () {
                         s++;
                         if (s == 2) {
-                            if($('body').hasClass('fa')) {
-                                zoom_canvs = 0.6;
+                            if ($('body').hasClass('fa')) {
+
                             }
+                            zoom_canvs = 1;
                             TOOL.zoomIt(TOOL.canvas, zoom_canvs, function () {
-                                $('.controll .form-upload').width(TOOL.canvas.width);
-                                $('.controll .form-upload').height(TOOL.canvas.height);
+                                // $('.controll .form-upload').width(TOOL.canvas.width);
+                                // $('.controll .form-upload').height(TOOL.canvas.height);
                                 var h_slider = (TOOL.canvas.height * 33 / 100);
                                 $('#slider-zoom').height(h_slider);
                             });
@@ -467,7 +515,7 @@ window.onload = function () {
                 // live stream camera
                 var CameraNotSupport = function (ie) {
                     hasCamera = false;
-                    if(ie == false) {
+                    if (ie == false) {
                         $('.btn-form.link-file').addClass('no_ie');
 
                     }
@@ -476,9 +524,9 @@ window.onload = function () {
                 }
                 var capturingStream = function () {
                     hasCamera = true;
-					// show edit zoom
-					zoomEdit();
-					$('.btn-form.link-file').addClass('no_ie');
+                    // show edit zoom
+                    zoomEdit();
+                    $('.btn-form.link-file').addClass('no_ie');
                     $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
@@ -524,7 +572,7 @@ window.onload = function () {
                         }
                     });
                     function zoomRatio(precent, zoom_canvas) {
-                        var zoom = (precent / 100 ) + zoom_canvas;
+                        var zoom = (precent / 100) + zoom_canvas;
                         TOOL.imagesframe.scale(zoom);
                         TOOL.canvas.renderAll();
                     }
@@ -555,14 +603,14 @@ window.onload = function () {
 
                     // confirm edit
                     $('.confirm_edit').on('click', function () {
-						$('.link-file, .edit-controll').addClass('disable');
-						if(hasCamera == false){
-							
-							$('.link-file').removeClass('disable');
-						}else {
-							
-						}
-                        
+                        $('.link-file, .edit-controll').addClass('disable');
+                        if (hasCamera == false) {
+
+                            $('.link-file').removeClass('disable');
+                        } else {
+
+                        }
+
                     })
 
                 }
@@ -592,39 +640,44 @@ window.onload = function () {
 
                 // get base64 images
                 $('.link-snap').on('click', function () {
-
+                    $('.link-snap, .edit-controll').addClass('disable');
+                    $('.time_option').removeClass('disable');
+                });
+                // snap image
+                function snapImage() {
                     BudWeiser.beforeGetBase64();
-                    getBase64(TOOL.canvas ,process, sucessBase);
+                    getBase64(TOOL.canvas, process, sucessBase);
                     function process() {
+                        $('.timeCoundow').removeClass('disable');
                         $('.loadder').css('display', 'table');
                     }
 
                     function sucessBase(source) {
-                        $('.link-snap, .edit-controll').addClass('disable');
+                        $('.link-snap, .edit-controll, .timeCoundow').addClass('disable');
                         $('.loadder').hide();
                         var src_base64 = source;
-                        var i = 4;
-                        var coundow_snap = setInterval(function () {
-                            i--;
-                            if (i == 0) {
-                                var img_output = new Image();
-                                img_output.onload = function () {
-                                    $('.image-output').html(img_output);
-                                    // draw base 64
-                                    drawBase64(img_output, function (canvas) {
-                                        imageFacebook(canvas)
-                                    });
-                                }
-                                img_output.src = src_base64;
-                                $('.link-after').removeClass('disable');
-
-                                i = 1;
-                                clearInterval(coundow_snap);
-                            }
-                            $('.timeCoundow').show().text(i);
-                        }, 1200);
+                        var img_output = new Image();
+                        img_output.onload = function () {
+                            $('.image-output').html(img_output);
+                            // draw base 64
+                            drawBase64(img_output, function (canvas) {
+                                imageFacebook(canvas);
+                            });
+                        }
+                        img_output.src = src_base64;
+                        $('.link-after').removeClass('disable');
                     }
-                });
+                }
+
+                // time_option click time option
+                $('.icon_time').on('click', function () {
+                    $('.time_option').addClass('disable');
+                    $('.timeCoundow').removeClass('disable');
+                    var time_option = $(this).attr('option_time');
+                    setCdOption(parseInt(time_option));
+                    snapImage();
+
+                })
                 function drawBase64(src_image, complete) {
                     var canvas_base = new fabric.Canvas('canvas_base');
                     canvas_base.setWidth(600);
@@ -643,23 +696,25 @@ window.onload = function () {
                         });
                         canvas_base.add(img);
                         canvas_base.renderAll();
-                        if(complete && typeof complete == "function") {
+                        if (complete && typeof complete == "function") {
                             complete(canvas_base);
                         }
                     });
                 }
                 function imageFacebook(canvas) {
                     getBase64(canvas,
-                        function () {
-                            // process
-                        },
-                        function (base_img) {
-                            // complete
-                            var soucre_face = base_img;
-                            base64 = soucre_face;
-                            BudWeiser.afterGetBase64(base64);
-                            $('.image-facebook').attr('src', soucre_face);
-                        }
+                            function () {
+                                // process
+                                $('.timeCoundow').removeClass('disable');
+                            },
+                            function (base_img) {
+                                // complete
+                                var soucre_face = base_img;
+                                base64 = soucre_face;
+                                $('.timeCoundow').addClass('disable');
+                                BudWeiser.afterGetBase64(base64);
+                                $('.image-facebook').attr('src', soucre_face);
+                            }
                     )
                 }
             }
