@@ -18,6 +18,7 @@ var Tool = function (options) {
     this.canvas = new fabric.Canvas('canvas');
     // this.max = {width: 1142, height: 599};
     // this.max = {width: 1920, height: 1080};
+
     this.max = {width: $('.frame-wrapper').width(), height: $('.frame-wrapper').height()};
     this.ratioW = this.max.width / this.max.height;
     this.ratio = {width: 600, height: 315};
@@ -248,9 +249,26 @@ Tool.prototype.fitImageOn = function (imageObj, canvasWidth, canvasHeight) {
 }
 Tool.prototype.addText = function (hastag, playerName) {
     var self = this;
+    var fontsizePlayername = 30;
+    var fontsizeHastag = 20;
+
+    if(self.max.width >= 1600) {
+        fontsizePlayername = 50;
+        fontsizeHastag = 30;
+    }
+    if(self.max.width <= 1366 && self.max.width >= 1280) {
+        fontsizePlayername = 30;
+        fontsizeHastag = 25;
+    }
+    if(self.max.width <= 810) {
+        fontsizePlayername = 24;
+        fontsizeHastag = 14;
+    }
+
     var config_hastag = {
         fontFamily: 'BudBold',
-        fontSize: 18,
+        // fontSize: 18,
+        fontSize: fontsizeHastag,
         top: 0,
         left: 0,
         fill: '#ffffff',
@@ -261,7 +279,8 @@ Tool.prototype.addText = function (hastag, playerName) {
     };
     var config_playerName = {
         fontFamily: 'BudBold',
-        fontSize: 24,
+        // fontSize: 24,
+        fontSize: fontsizePlayername,
         top: 0,
         left: 0,
         fill: '#ffffff',
@@ -272,16 +291,18 @@ Tool.prototype.addText = function (hastag, playerName) {
     };
     var title_hastag = new fabric.Text(hastag, config_hastag);
     var title_player = new fabric.Text(playerName, config_playerName);
+    this.canvas.add(title_player);
+    this.canvas.add(title_hastag);
+
     title_player.set({
         left: self.canvas.width - title_player.width - 80,
-        top: self.canvas.height - title_player.height - 10
+        top: self.canvas.height - title_player.height - 6
     });
     title_hastag.set({
         left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
         top: self.canvas.height - title_hastag.height - 10
-    })
-    this.canvas.add(title_player);
-    this.canvas.add(title_hastag);
+    });
+    canvas.renderAll();
 }
 Tool.prototype.zoomIt = function (canvas, factor, success) {
     canvas.setHeight(canvas.getHeight() * factor);
@@ -390,6 +411,7 @@ function ImgLoader(sources, onProgressChanged, onCompleted) {
 function loadFont(success) {
     fontLoader = new FontLoader(['BudBold'], {
         fontLoaded: function (font) {
+
         },
         complete: function (error) {
             if (error == null && success && typeof success == "function") {
