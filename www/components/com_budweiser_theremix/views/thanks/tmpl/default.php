@@ -4,7 +4,7 @@ $app = JFactory::getApplication();
 $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/assets/';
 ?>
 <div id="page">
-        <div class="bgFull"></div>
+        <!--<div class="bgFull"></div>-->
         <div class="bgWelcome bgThank">
             <img src="<?php echo $tpath; ?>images/bg-thank.jpg" alt="">
         </div>

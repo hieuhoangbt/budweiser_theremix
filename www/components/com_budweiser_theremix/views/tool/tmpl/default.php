@@ -35,9 +35,14 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                 <canvas id="canvas">
                     Browers doesn't not support canvas html5
                 </canvas>
+                <div class="time_option disable">
+                    <div class="icon_time" option_time="3"><img src="<img src="<?php echo $tpath; ?>images/3s.png" alt=""></div>
+                    <div class="icon_time" option_time="10"><img src="<img src="<?php echo $tpath; ?>images/10s.png" alt=""></div>
+                </div>
+                <div class="timeCoundow">0</div>
                 <div class="controll">
                     <form id="change_img" class="form-upload" action="">
-                        <div class="timeCoundow">0</div>
+                        <!--div class="timeCoundow">0</div>-->
                         <div class="vetical-middle loadder">
                             <div class="center-child">
                                 <div class="loadding">&nbsp;</div>

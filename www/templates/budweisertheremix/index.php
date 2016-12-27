@@ -59,9 +59,6 @@ $view = JRequest::getVar('view');
 </head>
 
 <body class="<?php if($view=='thanks'){ echo "face";}else if($view=='tool'){ echo "";} ?>">
-    <?php if ($view != 'tool' && $view != 'thanks') { ?>
-        <div class="bgFull"></div>
-    <?php } ?>
     <?php if ($view == 'home') { ?>
         <div class="bgWelcome"></div>
     <?php } else if ($view == 'form') { ?>
@@ -70,7 +67,7 @@ $view = JRequest::getVar('view');
         <div class="bgSinger"></div>
     <?php } ?>
     <?php if ($view != 'thanks') { ?>
-        <div class="wrapper">
+        <div class="wrapper <?php echo ($view=='tool')?"page-tool":""; ?>">
             <!--Component-->
             <jdoc:include type="component"/>
         </div>
