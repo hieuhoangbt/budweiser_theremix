@@ -401,7 +401,7 @@ function loadFont(success) {
 }
 function detectIE() {
     var ua = window.navigator.userAgent;
-
+    var isbrowser = false;
     // Test values; Uncomment to check result …
 
     // IE 10
@@ -415,12 +415,15 @@ function detectIE() {
 
     // Edge 13
     // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
-    var is_safari = ua.indexOf("Safari");
+    var safari = ua.indexOf("Safari") > -1;
     var msie = ua.indexOf('MSIE ');
-
+    var chrome   = navigator.userAgent.indexOf('Chrome') > -1;
     var trident = ua.indexOf('Trident/');
     var edge = ua.indexOf('Edge/');
-    if (msie > 0) {
+    if (!(chrome) && (safari)) {
+        isbrowser = true;
+    }
+    if (msie > 0 || isbrowser == true || trident > 0 || edge > 0) {
         // IE 10 or older => return version number
         return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
     }
