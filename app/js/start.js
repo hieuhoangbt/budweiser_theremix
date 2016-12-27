@@ -24,8 +24,10 @@ var Tool = function (options) {
 
     this.pictureFile = {};
     this.imagesUp = {};
+    this.imgModel = {};
     this.typePicture = {frame: 0, model: 1, file: 2};
     this.typeVideo = {model: 0, capturing: 1};
+
     this.renderCanvas(this.max.width);
 };
 Tool.prototype.renderCanvas = function (width) {
@@ -53,7 +55,8 @@ Tool.prototype.addVideo = function (video, end, type) {
         top: _top,
         left: _left,
         width: _width,
-        height: _height
+        height: _height,
+        flipX: true
 
     });
     videoFrame.selectable = false;
@@ -163,7 +166,7 @@ Tool.prototype.addPicture = function (src, type, end) {
         if (type == self.typePicture.frame) {
 
             if(img.width)
-            img.set({width: self.canvas.width, height: self.canvas.height, evented: false});
+            img.set({width: self.canvas.width, height: self.canvas.height, evented: false });
             img.selectable = false;
             canvas.add(img);
             if (end && typeof end == "function") {
@@ -172,6 +175,14 @@ Tool.prototype.addPicture = function (src, type, end) {
         }
 
         canvas.renderAll();
+        canvas.on('object:selected', function(){
+            var obj = canvas.getActiveObject();
+            // canvas.bringForward(obj);
+            // canvas.sendBackwards(obj);
+
+            canvas.bringToFront(canvas.imagesframe);
+            console.log(1);
+        });
     });
 }
 Tool.prototype.fileRead = function (_event, pos, sucess) {
@@ -404,21 +415,22 @@ function detectIE() {
 
     // Edge 13
     // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
-
+    var is_safari = ua.indexOf("Safari");
     var msie = ua.indexOf('MSIE ');
+
+    var trident = ua.indexOf('Trident/');
+    var edge = ua.indexOf('Edge/');
     if (msie > 0) {
         // IE 10 or older => return version number
         return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
     }
 
-    var trident = ua.indexOf('Trident/');
     if (trident > 0) {
         // IE 11 => return version number
         var rv = ua.indexOf('rv:');
         return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
     }
 
-    var edge = ua.indexOf('Edge/');
     if (edge > 0) {
         // Edge (IE 12+) => return version number
         return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
@@ -527,7 +539,7 @@ window.onload = function () {
                     // show edit zoom
                     zoomEdit();
                     $('.btn-form.link-file').addClass('no_ie');
-                    $('.link-snap').removeClass('disable');
+                    // $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
                 TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
@@ -567,6 +579,7 @@ window.onload = function () {
                     // slider
                     $('#slider-zoom').slider({
                         orientation: "vertical",
+                        value: 50,
                         slide: function (event, ui) {
                             zoomRatio(ui.value, zoom_canvs);
                         }
@@ -574,6 +587,8 @@ window.onload = function () {
                     function zoomRatio(precent, zoom_canvas) {
                         var zoom = (precent / 100) + zoom_canvas;
                         TOOL.imagesframe.scale(zoom);
+                        TOOL.imagesframe.center();
+                        TOOL.imagesframe.setCoords();
                         TOOL.canvas.renderAll();
                     }
 
@@ -608,7 +623,7 @@ window.onload = function () {
 
                             $('.link-file').removeClass('disable');
                         } else {
-
+                            $('.link-snap').removeClass('disable');
                         }
 
                     })
@@ -629,9 +644,10 @@ window.onload = function () {
                     $('.link-after').addClass('disable');
                     if (hasCamera == true) {
                         $('.link-snap, .edit-controll').removeClass('disable');
-
+                        $('.link-snap').addClass('disable');
                     } else {
                         document.getElementById("change_img").reset();
+
                         $('.link-file, .up_file').removeClass('disable');
                         TOOL.canvas.remove(TOOL.imagesUp);
                     }
@@ -671,6 +687,7 @@ window.onload = function () {
 
                 // time_option click time option
                 $('.icon_time').on('click', function () {
+                    BudWeiser.beforeCounTime();
                     $('.time_option').addClass('disable');
                     $('.timeCoundow').removeClass('disable');
                     var time_option = $(this).attr('option_time');
@@ -717,6 +734,7 @@ window.onload = function () {
                             }
                     )
                 }
+
             }
 
         }

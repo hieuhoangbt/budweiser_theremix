@@ -441,7 +441,7 @@ body {
   top: 0px;
   left: 0px;
   z-index: 3;
-  opacity: 0;
+  /*opacity: 0;*/
 }
 .btn-form.link-snap span {
   display: none;
@@ -493,6 +493,7 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0;
+
 }
 .capturing-frame video {
   /*width: 100%;
@@ -578,6 +579,7 @@ body.fa .edit-controll {
 
 .wrapper.page-tool {
   margin: 0 !important;
+  max-width: none;
 }
 
 /*demo*/
