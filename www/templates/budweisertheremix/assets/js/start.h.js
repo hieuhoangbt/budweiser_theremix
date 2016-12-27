@@ -5,6 +5,10 @@ BudWeiser.beforeStart = function () {
     Frame_Index = 0;
     playerName = USERNAME;
 };
+BudWeiser.beforeGetBase64=function(){
+    $('.link-snap-prev').hide();
+    $('.link-share').hide();
+}
 BudWeiser.getDataBeforeAjax = function (data) {
     $.each(data, function (index, obj) {
         if (obj.id == CELEB_ID) {
@@ -23,7 +27,10 @@ BudWeiser.saveImageResult = function () {
         data: $(".form-upload").serialize(), // serializes the form's elements.
         success: function (data) {
             data = (typeof data == 'string') ? JSON.parse(data) : data;
+            console.log(data);
             URL_IMAGE = data.url_share;
+            $('.link-snap-prev').show();
+            $('.link-share').show();
         }
     });
 };
