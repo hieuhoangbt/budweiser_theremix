@@ -576,7 +576,9 @@ body.fa .edit-controll {
   cursor: pointer;
 }
 
-
+.wrapper.page-tool {
+  margin: 0 !important;
+}
 
 /*demo*/
 .demo-frame {
