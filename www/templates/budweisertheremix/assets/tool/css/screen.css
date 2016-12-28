@@ -302,7 +302,7 @@ body {
 .btn-form.link-file {
   background: none;
   position: absolute;
-  right: -5.7vw;
+  right: -3.7vw;
   top: 50%;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -425,7 +425,7 @@ body {
   height: 1px;
 }
 .confirm_edit {
-    margin: 10px auto;
+    margin: 20px auto;
     cursor: pointer;
     clear: both;
     float: left;
@@ -441,7 +441,7 @@ body {
   top: 0px;
   left: 0px;
   z-index: 3;
-  opacity: 0;
+  /*opacity: 0;*/
 }
 .btn-form.link-snap span {
   display: none;
@@ -493,6 +493,7 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0;
+
 }
 .capturing-frame video {
   /*width: 100%;
@@ -578,6 +579,7 @@ body.fa .edit-controll {
 
 .wrapper.page-tool {
   margin: 0 !important;
+  max-width: none;
 }
 
 /*demo*/

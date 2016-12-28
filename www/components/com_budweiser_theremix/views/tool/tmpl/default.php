@@ -79,9 +79,9 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                             <p class="icon-move"></p>
                             <p class="confirm_edit"><img src="<?php echo $tpath; ?>images/ok.png" alt=""/></p>
                         </div>
-                        <div class="image-output"></div>
                     </form>
                 </div>
+                <div class="image-output"></div>
                 <div class="capturing-frame">
                     <video id="capturing" autoplay></video>
                 </div>

@@ -18,14 +18,17 @@ var Tool = function (options) {
     this.canvas = new fabric.Canvas('canvas');
     // this.max = {width: 1142, height: 599};
     // this.max = {width: 1920, height: 1080};
+
     this.max = {width: $('.frame-wrapper').width(), height: $('.frame-wrapper').height()};
     this.ratioW = this.max.width / this.max.height;
     this.ratio = {width: 600, height: 315};
 
     this.pictureFile = {};
     this.imagesUp = {};
+    this.imgModel = {};
     this.typePicture = {frame: 0, model: 1, file: 2};
     this.typeVideo = {model: 0, capturing: 1};
+
     this.renderCanvas(this.max.width);
 };
 Tool.prototype.renderCanvas = function (width) {
@@ -53,7 +56,8 @@ Tool.prototype.addVideo = function (video, end, type) {
         top: _top,
         left: _left,
         width: _width,
-        height: _height
+        height: _height,
+        flipX: true
 
     });
     videoFrame.selectable = false;
@@ -163,7 +167,7 @@ Tool.prototype.addPicture = function (src, type, end) {
         if (type == self.typePicture.frame) {
 
             if(img.width)
-            img.set({width: self.canvas.width, height: self.canvas.height, evented: false});
+            img.set({width: self.canvas.width, height: self.canvas.height, evented: false });
             img.selectable = false;
             canvas.add(img);
             if (end && typeof end == "function") {
@@ -172,6 +176,14 @@ Tool.prototype.addPicture = function (src, type, end) {
         }
 
         canvas.renderAll();
+        canvas.on('object:selected', function(){
+            var obj = canvas.getActiveObject();
+            // canvas.bringForward(obj);
+            // canvas.sendBackwards(obj);
+
+            canvas.bringToFront(canvas.imagesframe);
+            console.log(1);
+        });
     });
 }
 Tool.prototype.fileRead = function (_event, pos, sucess) {
@@ -237,9 +249,26 @@ Tool.prototype.fitImageOn = function (imageObj, canvasWidth, canvasHeight) {
 }
 Tool.prototype.addText = function (hastag, playerName) {
     var self = this;
+    var fontsizePlayername = 30;
+    var fontsizeHastag = 20;
+
+    if(self.max.width >= 1600) {
+        fontsizePlayername = 50;
+        fontsizeHastag = 30;
+    }
+    if(self.max.width <= 1366 && self.max.width >= 1280) {
+        fontsizePlayername = 30;
+        fontsizeHastag = 25;
+    }
+    if(self.max.width <= 810) {
+        fontsizePlayername = 24;
+        fontsizeHastag = 14;
+    }
+
     var config_hastag = {
         fontFamily: 'BudBold',
-        fontSize: 18,
+        // fontSize: 18,
+        fontSize: fontsizeHastag,
         top: 0,
         left: 0,
         fill: '#ffffff',
@@ -250,7 +279,8 @@ Tool.prototype.addText = function (hastag, playerName) {
     };
     var config_playerName = {
         fontFamily: 'BudBold',
-        fontSize: 24,
+        // fontSize: 24,
+        fontSize: fontsizePlayername,
         top: 0,
         left: 0,
         fill: '#ffffff',
@@ -261,16 +291,18 @@ Tool.prototype.addText = function (hastag, playerName) {
     };
     var title_hastag = new fabric.Text(hastag, config_hastag);
     var title_player = new fabric.Text(playerName, config_playerName);
+    this.canvas.add(title_player);
+    this.canvas.add(title_hastag);
+
     title_player.set({
         left: self.canvas.width - title_player.width - 80,
-        top: self.canvas.height - title_player.height - 10
+        top: self.canvas.height - title_player.height - 6
     });
     title_hastag.set({
         left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
         top: self.canvas.height - title_hastag.height - 10
-    })
-    this.canvas.add(title_player);
-    this.canvas.add(title_hastag);
+    });
+    canvas.renderAll();
 }
 Tool.prototype.zoomIt = function (canvas, factor, success) {
     canvas.setHeight(canvas.getHeight() * factor);
@@ -379,6 +411,7 @@ function ImgLoader(sources, onProgressChanged, onCompleted) {
 function loadFont(success) {
     fontLoader = new FontLoader(['BudBold'], {
         fontLoaded: function (font) {
+
         },
         complete: function (error) {
             if (error == null && success && typeof success == "function") {
@@ -390,7 +423,7 @@ function loadFont(success) {
 }
 function detectIE() {
     var ua = window.navigator.userAgent;
-
+    var isbrowser = false;
     // Test values; Uncomment to check result …
 
     // IE 10
@@ -404,21 +437,25 @@ function detectIE() {
 
     // Edge 13
     // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
-
+    var safari = ua.indexOf("Safari") > -1;
     var msie = ua.indexOf('MSIE ');
-    if (msie > 0) {
+    var chrome   = navigator.userAgent.indexOf('Chrome') > -1;
+    var trident = ua.indexOf('Trident/');
+    var edge = ua.indexOf('Edge/');
+    if (!(chrome) && (safari)) {
+        isbrowser = true;
+    }
+    if (msie > 0 || isbrowser == true || trident > 0 || edge > 0) {
         // IE 10 or older => return version number
         return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
     }
 
-    var trident = ua.indexOf('Trident/');
     if (trident > 0) {
         // IE 11 => return version number
         var rv = ua.indexOf('rv:');
         return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
     }
 
-    var edge = ua.indexOf('Edge/');
     if (edge > 0) {
         // Edge (IE 12+) => return version number
         return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
@@ -527,7 +564,7 @@ window.onload = function () {
                     // show edit zoom
                     zoomEdit();
                     $('.btn-form.link-file').addClass('no_ie');
-                    $('.link-snap').removeClass('disable');
+                    // $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
                 TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
@@ -567,6 +604,7 @@ window.onload = function () {
                     // slider
                     $('#slider-zoom').slider({
                         orientation: "vertical",
+                        value: 50,
                         slide: function (event, ui) {
                             zoomRatio(ui.value, zoom_canvs);
                         }
@@ -574,6 +612,8 @@ window.onload = function () {
                     function zoomRatio(precent, zoom_canvas) {
                         var zoom = (precent / 100) + zoom_canvas;
                         TOOL.imagesframe.scale(zoom);
+                        TOOL.imagesframe.center();
+                        TOOL.imagesframe.setCoords();
                         TOOL.canvas.renderAll();
                     }
 
@@ -608,7 +648,7 @@ window.onload = function () {
 
                             $('.link-file').removeClass('disable');
                         } else {
-
+                            $('.link-snap').removeClass('disable');
                         }
 
                     })
@@ -629,9 +669,10 @@ window.onload = function () {
                     $('.link-after').addClass('disable');
                     if (hasCamera == true) {
                         $('.link-snap, .edit-controll').removeClass('disable');
-
+                        $('.link-snap').addClass('disable');
                     } else {
                         document.getElementById("change_img").reset();
+
                         $('.link-file, .up_file').removeClass('disable');
                         TOOL.canvas.remove(TOOL.imagesUp);
                     }
@@ -671,6 +712,7 @@ window.onload = function () {
 
                 // time_option click time option
                 $('.icon_time').on('click', function () {
+                    BudWeiser.beforeCounTime();
                     $('.time_option').addClass('disable');
                     $('.timeCoundow').removeClass('disable');
                     var time_option = $(this).attr('option_time');
@@ -717,6 +759,7 @@ window.onload = function () {
                             }
                     )
                 }
+
             }
 
         }
