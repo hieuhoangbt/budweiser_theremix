@@ -407,7 +407,7 @@ body {
 
 }
 .face .bgWelcome.bgThank img{
-    height: auto;
+    height: 100%;
 }
 /*end-facebook*/
 @media (max-width: 1366px) {
