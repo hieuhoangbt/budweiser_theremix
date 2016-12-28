@@ -50,20 +50,4 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
         $app->redirect($urlTool);
     }
 
-
-    public function saveResult($username, $celeb) {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $now = date('Y-m-d h:i:s');
-        $columns = array('username', 'celebrity_id', 'created_at');
-        $values = array($db->quote($username), $db->quote($celeb), $db->quote($now));
-        $query
-                ->insert($db->quoteName('#__budweiser_theremix_result'))
-                ->columns($db->quoteName($columns))
-                ->values(implode(',', $values));
-        $db->setQuery($query);
-        $db->execute();
-        return $db->insertid();
-    }
-
 }

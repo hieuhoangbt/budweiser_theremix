@@ -216,4 +216,37 @@ class Budweiser_theremixModelResult extends JModelAdmin
 			}
 		}
 	}
+    public function getListPhoto($id) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select("*")
+            ->from($db->quoteName('#__budweiser_theremix_result'))
+            ->where($db->quoteName('id') . " = " . $db->quote($id));
+        $db->setQuery($query);
+        $db->query();
+        return $db->loadObjectList();
+    }
+    public function getPhotoById($id) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select("*")
+            ->from($db->quoteName('#__budweiser_theremix_result'))
+            ->where($db->quoteName("id") . "=" . $db->quote($id));
+        $db->setQuery($query);
+        $item = $db->loadObject();
+        return ($item) ? $item : false;
+    }
+
+    public function deletePhotoItem($pid) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $conditions = array(
+            $db->quoteName('id') . ' = ' . $db->quote($pid)
+        );
+
+        $query->delete($db->quoteName('#__budweiser_theremix_result'));
+        $query->where($conditions);
+        $db->setQuery($query);
+        $result = $db->execute();
+    }
 }
