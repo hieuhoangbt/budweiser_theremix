@@ -9,7 +9,7 @@ $error = $sess->get('error');
 
 ?>
 
-<div class="logo-hoaam"><img src="<?php echo $tpath; ?>assets/images/logo_hoaamanhsang.png" alt="" /></div>
+<div class="logo-hoaam"><a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>assets/images/logo_hoaamanhsang.png" alt="" /></a></div>
 <form class="form-submit" action="" method="post">
     <?php if (!empty($error)) { ?>
         <p style="text-align: center; color: white"><?php echo $error; ?></p>

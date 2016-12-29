@@ -43,11 +43,11 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                 <div class="controll">
                     <form id="change_img" class="form-upload" action="">
                         <!--div class="timeCoundow">0</div>-->
-                        <div class="vetical-middle loadder">
+                        <!--<div class="vetical-middle loadder">
                             <div class="center-child">
                                 <div class="loadding">&nbsp;</div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="btn-form link-snap disable" direct="snap">
                             <span>chụp ảnh</span>
                         </div>
@@ -63,7 +63,8 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                         </div>
                         <div class="btn-form link-file disable" direct="file">
                             <span>Tải ảnh</span>
-                            <img class="img-link up_file" src="<?php echo $tpath; ?>images/bg_upload.png" change_src="<?php echo $tpath; ?>images/bg_upload_change.png" alt=""/>
+                            <img class="img-link up_file" src="<?php echo $tpath; ?>images/bg_upload.png"
+                                 default_src="<?php echo $tpath; ?>images/bg_upload.png" change_src="images/bg_upload_change.png" alt=""/>
                             <img class="img-link snap_file disable" src="<?php echo $tpath; ?>images/bg_snap_file.png" alt="">
                             
                             <input class="input_file" id="file_upload" type="file"/>
@@ -98,6 +99,15 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                 <canvas id="canvas_base">Browser does't not support HTML5!</canvas>
                 <img class="image-facebook" alt="">
             </div>
+        <div class="vetical-middle loadder">
+            <div class="center-child">
+                <div class="cssload-loader">
+                    <div class="cssload-inner cssload-one"></div>
+                    <div class="cssload-inner cssload-two"></div>
+                    <div class="cssload-inner cssload-three"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <?php $sess->clear('error'); ?>

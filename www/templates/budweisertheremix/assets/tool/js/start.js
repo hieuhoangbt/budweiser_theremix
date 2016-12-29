@@ -9,7 +9,7 @@ var hasCamera = true;
 var hasTag = '#TEMTHIEUBAOTRAM';
 var playerName = 'DUC VIET';
 var zoom_canvs = 0.7;
-
+var cd_face = false;
 /*TOOL Maker*/
 
 var Tool = function (options) {
@@ -19,7 +19,8 @@ var Tool = function (options) {
     // this.max = {width: 1142, height: 599};
     // this.max = {width: 1920, height: 1080};
 
-    this.max = {width: $('.frame-wrapper').width(), height: $('.frame-wrapper').height()};
+    // this.max = {width: $('.frame-wrapper').width(), height: $('.frame-wrapper').height()};
+    this.max = {width: $(window).width(), height: $(window).height()};
     this.ratioW = this.max.width / this.max.height;
     this.ratio = {width: 600, height: 315};
 
@@ -182,7 +183,6 @@ Tool.prototype.addPicture = function (src, type, end) {
             // canvas.sendBackwards(obj);
 
             canvas.bringToFront(canvas.imagesframe);
-            console.log(1);
         });
     });
 }
@@ -302,7 +302,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
         top: self.canvas.height - title_hastag.height - 10
     });
-    canvas.renderAll();
+    this.canvas.renderAll();
 }
 Tool.prototype.zoomIt = function (canvas, factor, success) {
     canvas.setHeight(canvas.getHeight() * factor);
@@ -340,7 +340,7 @@ Tool.prototype.zoomIt = function (canvas, factor, success) {
 }
 
 var setCdOption = function(cd){
-    COUNTDOWN_OPT = parseInt(cd) > 3 ? parseInt(cd) : 3;
+    COUNTDOWN_OPT = parseInt(cd) >= 3 ? parseInt(cd) : 0;
 }
 
 var getCdOption = function(){
@@ -354,16 +354,18 @@ function isPortrait(img) {
 var getBase64 = function (canvas, process, success) {
     var i = getCdOption(); // default = 3
     $('.timeCoundow').show().text(i);
+
     var coundow_snap = setInterval(function () {
         i--;
-        if (i == 0) {
+        if (i == 0 || i < 0) {
+            $('.timeCoundow').addClass('disable');
+            clearInterval(coundow_snap);
             var request, end = false;
             var base64 = canvas.toDataURL("image/jpeg", 0.5);
 
             var renderBase64 = function () {
                 /*Process*/
                 process();
-
                 if (base64 != '') {
                     fabric.util.cancelAnimationFrame(renderBase64);
                     if (success && typeof success == "function") {
@@ -371,16 +373,16 @@ var getBase64 = function (canvas, process, success) {
                         success(base64);
                     }
                     return base64;
-                } else {
-                    request = fabric.util.requestAnimFrame(renderBase64);
                 }
 
             }
             fabric.util.requestAnimFrame(renderBase64);
-            clearInterval(coundow_snap);
+
         }
+
         $('.timeCoundow').show().text(i);
     }, 1000);
+
 }
 
 function ImgLoader(sources, onProgressChanged, onCompleted) {
@@ -506,13 +508,14 @@ window.onload = function () {
             };
             var foo = new ImgLoader(sources,
                     function (image, percent) {
-
+                        $('.loadder').css('display', 'table');
                     },
                     function (images) {
                         // completed
                         // load font
                         loadFont(function () {
                             // init fonts
+                            $('.loadder').hide();
                             initTool();
                         })
                     }
@@ -609,10 +612,13 @@ window.onload = function () {
                             zoomRatio(ui.value, zoom_canvs);
                         }
                     });
+
                     function zoomRatio(precent, zoom_canvas) {
-                        var zoom = (precent / 100) + zoom_canvas;
+                        var zoom = ((precent-50) / 100) + zoom_canvas;
                         TOOL.imagesframe.scale(zoom);
                         TOOL.imagesframe.center();
+                        var topPos = TOOL.canvas.getHeight() - TOOL.imagesframe.getHeight();
+                        TOOL.imagesframe.set({"top": topPos});
                         TOOL.imagesframe.setCoords();
                         TOOL.canvas.renderAll();
                     }
@@ -690,23 +696,28 @@ window.onload = function () {
                     getBase64(TOOL.canvas, process, sucessBase);
                     function process() {
                         $('.timeCoundow').removeClass('disable');
-                        $('.loadder').css('display', 'table');
                     }
 
                     function sucessBase(source) {
+                        $('.loadder').css('display', 'table');
                         $('.link-snap, .edit-controll, .timeCoundow').addClass('disable');
-                        $('.loadder').hide();
+
                         var src_base64 = source;
                         var img_output = new Image();
                         img_output.onload = function () {
                             $('.image-output').html(img_output);
                             // draw base 64
-                            drawBase64(img_output, function (canvas) {
-                                imageFacebook(canvas);
+
+                            drawBase64(img_output, function (canvas_base) {
+                                setCdOption(0);
+                                imageFacebook(canvas_base, function () {
+                                    // success + hide loadding
+                                    $('.loadder').hide();
+                                });
                             });
                         }
                         img_output.src = src_base64;
-                        $('.link-after').removeClass('disable');
+
                     }
                 }
 
@@ -718,44 +729,45 @@ window.onload = function () {
                     var time_option = $(this).attr('option_time');
                     setCdOption(parseInt(time_option));
                     snapImage();
-
                 })
                 function drawBase64(src_image, complete) {
-                    var canvas_base = new fabric.Canvas('canvas_base');
-                    canvas_base.setWidth(600);
-                    canvas_base.setHeight(315);
-                    fabric.Image.fromURL(src_image.src, function (img) {
-                        var ratio_w = img.width / img.height;
-                        var w_img = canvas_base.width;
-                        var h_img = w_img / ratio_w;
-                        img.set({
-                            width: w_img,
-                            height: h_img,
-                            top: 0,
-                            left: 0,
-                            evented: true,
-                            selectable: true
-                        });
-                        canvas_base.add(img);
-                        canvas_base.renderAll();
+                    var canvas_base = document.getElementById("canvas_base");
+                    var ctx = canvas_base.getContext("2d");
+                    canvas_base.width = 600;
+                    canvas_base.height = 315;
+                    var imgx = new Image();
+                    imgx.onload= function () {
+                        ctx.drawImage(imgx, 0, 0, 600, 315);
                         if (complete && typeof complete == "function") {
                             complete(canvas_base);
+
                         }
-                    });
+
+
+                    }
+                    imgx.src = src_image.src;
+
                 }
-                function imageFacebook(canvas) {
+                function imageFacebook(canvas, success) {
                     getBase64(canvas,
                             function () {
-                                // process
-                                $('.timeCoundow').removeClass('disable');
+
                             },
                             function (base_img) {
                                 // complete
                                 var soucre_face = base_img;
                                 base64 = soucre_face;
-                                $('.timeCoundow').addClass('disable');
-                                BudWeiser.afterGetBase64(base64);
-                                $('.image-facebook').attr('src', soucre_face);
+                                var image_facebook = new Image();
+                                image_facebook.onload = function () {
+                                    $('.link-after').removeClass('disable');
+                                    $('.image-facebook').attr('src', base_img);
+                                    BudWeiser.afterGetBase64(base_img);
+                                    if(success && typeof success ==="function") {
+                                        success();
+                                    }
+                                }
+                                image_facebook.src = base_img;
+
                             }
                     )
                 }
