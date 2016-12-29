@@ -9,7 +9,7 @@ $urlForm = JRoute::_('index.php?option=com_budweiser_theremix' . $itemForm);
 $sess = JFactory::getSession();
 $error = $sess->get('error');
 ?>
-    <div class="logo-hoaam"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt=""/></div>
+<div class="logo-hoaam"><a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt=""/></a></div>
     <div class="title"><h2>Chọn ca sỹ bạn yêu thích nhất</h2></div>
 <?php if (!empty($error)) { ?>
     <p style="text-align: center; color: white"><?php echo $error; ?></p>
