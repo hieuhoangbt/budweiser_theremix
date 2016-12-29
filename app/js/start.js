@@ -9,27 +9,20 @@ var hasCamera = true;
 var hasTag = '#TEMTHIEUBAOTRAM';
 var playerName = 'DUC VIET';
 var zoom_canvs = 0.7;
-var cd_face = false;
+var trackCamera = false;
 /*TOOL Maker*/
 
 var Tool = function (options) {
     this.name = 'budweiser theremix';
     this.version = '1.0';
     this.canvas = new fabric.Canvas('canvas');
-    // this.max = {width: 1142, height: 599};
-    // this.max = {width: 1920, height: 1080};
-
-    // this.max = {width: $('.frame-wrapper').width(), height: $('.frame-wrapper').height()};
     this.max = {width: $(window).width(), height: $(window).height()};
     this.ratioW = this.max.width / this.max.height;
-    this.ratio = {width: 600, height: 315};
-
     this.pictureFile = {};
     this.imagesUp = {};
-    this.imgModel = {};
+    this.imagesUpNew = {};
     this.typePicture = {frame: 0, model: 1, file: 2};
     this.typeVideo = {model: 0, capturing: 1};
-
     this.renderCanvas(this.max.width);
 };
 Tool.prototype.renderCanvas = function (width) {
@@ -108,8 +101,10 @@ Tool.prototype.snapCamera = function (video, camera, err) {
     if (navigator.getUserMedia) {
         // var video = $(video);
         navigator.getUserMedia({audio: false, video: true}, function (stream) {
+            var track = stream.getTracks()[0];  // if only one media track
+
             if (camera && typeof camera == "function") {
-                camera();
+                camera(track);
             }
             var video_elm = document.querySelector(video);
             video_elm.src = window.URL.createObjectURL(stream);
@@ -117,6 +112,7 @@ Tool.prototype.snapCamera = function (video, camera, err) {
                 // Ready to go. Do some stuff.
                 self.addVideo(video_elm, self.typeVideo.capturing);
             };
+
         }, errorCallback);
     } else {
         $(video).src = ''; // fallback.
@@ -128,18 +124,7 @@ Tool.prototype.addPicture = function (src, type, end) {
     var self = this;
     var canvas = self.canvas;
     fabric.Image.fromURL(src, function (img) {
-
         if (type == self.typePicture.file) {
-            var w = img.width, h = img.height;
-            var r_wh = w / h;
-            if(h > self.canvas.height) {
-                h = self.canvas.height;
-                w = h * r_wh;
-            }else if(h < self.canvas.height) {
-                w = self.canvas.width;
-                h = w / r_wh;
-            }
-            var ab = self.fitImageOn(img, self.canvas.width, self.canvas.height);
             var ratio_w = img.width / img.height;
 
             var w_img = self.canvas.width;
@@ -150,12 +135,39 @@ Tool.prototype.addPicture = function (src, type, end) {
                 top: 0,
                 left: 0,
                 evented: true,
-                selectable: false,
-                centeredScaling: true
+                selectable: true,
+                centeredScaling: true,
+                opacity: 0,
+                cornerColor: 'rgba(255,255,255,0)',
+                hasBorders: false
             });
             self.imagesUp = img;
+            img.clone(function (obj) {
+                obj.set({
+                    opacity: 1,
+                    evented: false,
+                    selectable: false
+                });
+                self.imagesUpNew = obj;
+                canvas.insertAt(obj, 0);
+            })
             canvas.insertAt(img, 0);
-
+            img.on('moving', function (e) {
+                var top = img.getTop();
+                var left = img.getLeft();
+                var width = img.getWidth();
+                var height = img.getHeight();
+                var options = {top: top, left: left, width: width, height: height};
+                self.resetObject(self.imagesUpNew, options);
+            });
+            img.on('scaling', function (e) {
+                var top = img.getTop();
+                var left = img.getLeft();
+                var width = img.getWidth();
+                var height = img.getHeight();
+                var options = {top: top, left: left, width: width, height: height};
+                self.resetObject(self.imagesUpNew, options);
+            });
         }
         if (type == self.typePicture.model) {
             var _w = self.canvas.width, _ratio = img.width / img.height, _h = _w/_ratio;
@@ -168,8 +180,8 @@ Tool.prototype.addPicture = function (src, type, end) {
         if (type == self.typePicture.frame) {
 
             if(img.width)
-            img.set({width: self.canvas.width, height: self.canvas.height, evented: false });
-            img.selectable = false;
+            img.set({width: self.canvas.width, height: self.canvas.height, evented: false, selectable: false });
+
             canvas.add(img);
             if (end && typeof end == "function") {
                 end();
@@ -177,14 +189,9 @@ Tool.prototype.addPicture = function (src, type, end) {
         }
 
         canvas.renderAll();
-        canvas.on('object:selected', function(){
-            var obj = canvas.getActiveObject();
-            // canvas.bringForward(obj);
-            // canvas.sendBackwards(obj);
 
-            canvas.bringToFront(canvas.imagesframe);
-        });
     });
+
 }
 Tool.prototype.fileRead = function (_event, pos, sucess) {
     var self = this;
@@ -257,12 +264,12 @@ Tool.prototype.addText = function (hastag, playerName) {
         fontsizeHastag = 30;
     }
     if(self.max.width <= 1366 && self.max.width >= 1280) {
-        fontsizePlayername = 30;
+        fontsizePlayername = 40;
         fontsizeHastag = 25;
     }
     if(self.max.width <= 810) {
-        fontsizePlayername = 24;
-        fontsizeHastag = 14;
+        fontsizePlayername = 34;
+        fontsizeHastag = 17;
     }
 
     var config_hastag = {
@@ -338,7 +345,12 @@ Tool.prototype.zoomIt = function (canvas, factor, success) {
         success();
     }
 }
+Tool.prototype.resetObject = function(obj, options) {
+    if(options && typeof options === "object") {
+        obj.set(options);
+    }
 
+}
 var setCdOption = function(cd){
     COUNTDOWN_OPT = parseInt(cd) >= 3 ? parseInt(cd) : 0;
 }
@@ -346,6 +358,13 @@ var setCdOption = function(cd){
 var getCdOption = function(){
     return COUNTDOWN_OPT;
 };
+var setTrackCamera = function(track) {
+    trackCamera = track;
+}
+var getTrackCamera = function(){
+    return trackCamera;
+};
+
 function isPortrait(img) {
     var w = img.naturalWidth || img.width,
         h = img.naturalHeight || img.height;
@@ -471,7 +490,9 @@ function detectIE() {
 
 window.onload = function () {
 
-
+    if(!$('.wrapper.page-tool').length) {
+        $('.loadding-page').addClass('fade_out');
+    }
     BudWeiser.beforeStart();
     /*Action Page init*/
 
@@ -508,7 +529,7 @@ window.onload = function () {
             };
             var foo = new ImgLoader(sources,
                     function (image, percent) {
-                        $('.loadder').css('display', 'table');
+                        $('.loadding-page').addClass('fade_out');
                     },
                     function (images) {
                         // completed
@@ -524,8 +545,7 @@ window.onload = function () {
             function initTool() {
                 // new Tool
                 var TOOL = new Tool({});
-                // $('.controll .form-upload').width(TOOL.max.width);
-                // $('.controll .form-upload').height(TOOL.max.height);
+
                 // scale canvas
                 scaleCanvas();
                 function scaleCanvas() {
@@ -551,7 +571,39 @@ window.onload = function () {
 
                 // add frame model
                 TOOL.addPicture(src_model, addModel);
+                // MOUSE weel
+                $(TOOL.canvas.wrapperEl).on('mousewheel', function(e) {
+                    var target = TOOL.canvas.findTarget(e);
+                    var delta = e.originalEvent.wheelDelta / 1000;
 
+                    if (target && target == TOOL.imagesUp) {
+
+                        target.scaleX += delta;
+                        target.scaleY += delta;
+
+                        // constrain
+                        if (target.scaleX < 0.1) {
+                            target.scaleX = 0.1;
+                            target.scaleY = 0.1;
+                        }
+                        // constrain
+                        if (target.scaleX > 10) {
+                            target.scaleX = 10;
+                            target.scaleY = 10;
+                        }
+                        var top     = target.getTop();
+                        var left    = target.getLeft();
+                        var width   = target.getWidth();
+                        var height  = target.getHeight();
+                        var options = {top: top, left: left, width: width, height: height};
+                        TOOL.resetObject(TOOL.imagesUpNew, options);
+                        TOOL.imagesUpNew.center();
+                        target.center();
+                        target.setCoords();
+                        TOOL.canvas.renderAll();
+                        return false;
+                    }
+                });
                 // live stream camera
                 var CameraNotSupport = function (ie) {
                     hasCamera = false;
@@ -562,22 +614,20 @@ window.onload = function () {
                     $('.link-snap').addClass('disable');
                     $('.link-file').removeClass('disable');
                 }
-                var capturingStream = function () {
+                var capturingStream = function (track) {
+                    setTrackCamera(track);
                     hasCamera = true;
                     // show edit zoom
                     zoomEdit();
                     $('.btn-form.link-file').addClass('no_ie');
-                    // $('.link-snap').removeClass('disable');
                     $('.link-file').addClass('disable');
                 }
-                TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
 
+                TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
                 // add load frame
                 TOOL.addPicture(src_frame, addFrame, function () {
                     // add hastag, playerName
                     TOOL.addText(hasTag, playerName);
-
-
                 });
 
 
@@ -676,11 +726,12 @@ window.onload = function () {
                     if (hasCamera == true) {
                         $('.link-snap, .edit-controll').removeClass('disable');
                         $('.link-snap').addClass('disable');
+                        TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
                     } else {
                         document.getElementById("change_img").reset();
 
                         $('.link-file, .up_file').removeClass('disable');
-                        TOOL.canvas.remove(TOOL.imagesUp);
+                        TOOL.canvas.remove(TOOL.imagesUp, TOOL.imagesUpNew);
                     }
                 })
 
@@ -713,6 +764,9 @@ window.onload = function () {
                                 imageFacebook(canvas_base, function () {
                                     // success + hide loadding
                                     $('.loadder').hide();
+                                    // turn off camera
+                                    var trackingCamera = getTrackCamera();
+                                    trackingCamera.stop();
                                 });
                             });
                         }

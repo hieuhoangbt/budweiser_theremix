@@ -237,8 +237,8 @@ body {
 
 .frame-wrapper {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   /*border: solid 1px blue;*/
 }
 /*
@@ -357,12 +357,16 @@ body {
 
 .loadder {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0px;
   display: none;
+  top: 50%;
+  left: 50%;
+  display: block;
   z-index: 99999;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .loadding {
   border: 16px solid #f3f3f3; /* Light grey */
@@ -445,10 +449,11 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
-  z-index: 3;
+  z-index: 99;
   width: 100%;
   height: 100%;
   /*opacity: 0;*/
+  pointer-events: none;
 }
 .image-output img {
   width: 100%;
@@ -593,8 +598,34 @@ body.fa .edit-controll {
   margin: 0 !important;
   max-width: none;
 }
-
-/*demo*/
+.overlay-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  border: solid 1px blue;
+  top: 0px;
+  left: 0px;
+  pointer-events: none;
+}
+.overlay-frame img {
+  max-width: none;
+  width: 100%;
+  height: 100%;
+}
+.text-frame {
+  position: absolute;
+  bottom: 20px;
+  right: 100px;
+  font-family: 'BudBold';
+  color: #ffffff;
+}
+.text-frame span {
+  margin-left: 5px;
+}
+.text-frame span.text_hastag {font-size: 28px;}
+.text-frame span.text_playername {font-size: 40px;}
+  /*demo*/
 .demo-frame {
   border: solid 1px blue;
 }
@@ -618,6 +649,99 @@ body.fa .edit-controll {
     right: -10px;
   }
 }
+
+.loadding-page {
+  position: fixed;
+  z-index: 999999999999999;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #9a050b;
+}
+.loadding-page img {
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear ;
+  -ms-transition: all 0.3s linear ;
+  -o-transition: all 0.3s linear ;
+  transition: all 0.3s linear ;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+
+  animation: opc_load 0.8s linear alternate infinite;
+  -o-animation: opc_load 0.8s linear alternate infinite;
+  -ms-animation: opc_load 0.8s linear alternate infinite;
+  -webkit-animation: opc_load 0.8s linear alternate infinite;
+  -moz-animation: opc_load 0.8s linear alternate infinite;
+}
+.loadding-page.fade_out {
+  /*background-color: transparent;*/
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear ;
+  -ms-transition: all 0.3s linear ;
+  -o-transition: all 0.3s linear ;
+  transition: all 0.3s linear ;
+}
+.loadding-page.fade_out img {
+  -webkit-transform: translate(-50%,-50%) scale(0);
+  -moz-transform: translate(-50%,-50%) scale(0);
+  -ms-transform: translate(-50%,-50%) scale(0);
+  -o-transform: translate(-50%,-50%) scale(0);
+  transform: translate(-50%,-50%) scale(0);
+  -webkit-transition: all 0.8s linear;
+  -moz-transition: all 0.8s linear ;
+  -ms-transition: all 0.8s linear ;
+  -o-transition: all 0.8s linear ;
+  transition: all 0.8s linear ;
+}
+
+@-o-keyframes opc_load {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes opc_load {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes opc_load {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes opc_load {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
 @media (max-width:1280px) {
 
 }

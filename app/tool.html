@@ -14,6 +14,7 @@
 
     <script type="text/javascript" src="js/fontloader.js"></script>
     <script type="text/javascript" src="js/hook.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/fabric.min.js"></script>
     <script type="text/javascript" src="js/filereader.js"></script>
@@ -46,7 +47,6 @@
                         <div class="icon_time" option_time="10"><img src="images/10s.png" alt=""></div>
                     </div>
                     <div class="timeCoundow">0</div>
-
                     <div class="controll">
                         <form id="change_img" class="form-upload" action="">
                             <div class="btn-form link-snap disable" direct="snap">
@@ -81,6 +81,7 @@
                         </form>
                     </div>
                     <div class="image-output"></div>
+
                     <div class="capturing-frame">
                         <video id="capturing" autoplay></video>
                     </div>
@@ -97,15 +98,17 @@
                 <canvas id="canvas_base">Browser does't not support HTML5!</canvas>
                 <img class="image-facebook" alt="">
             </div>
-            <div class="vetical-middle loadder">
-                <div class="center-child">
-                    <div class="cssload-loader">
-                        <div class="cssload-inner cssload-one"></div>
-                        <div class="cssload-inner cssload-two"></div>
-                        <div class="cssload-inner cssload-three"></div>
-                    </div>
+            <div class="loadder">
+               <div class="cssload-loader">
+                    <div class="cssload-inner cssload-one"></div>
+                    <div class="cssload-inner cssload-two"></div>
+                    <div class="cssload-inner cssload-three"></div>
                 </div>
+
             </div>
+        </div>
+        <div class="loadding-page">
+            <img src="images/image_loadding.png" alt="">
         </div>
     </div>
 </div>
