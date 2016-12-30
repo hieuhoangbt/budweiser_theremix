@@ -80,7 +80,7 @@ $view = JRequest::getVar('view');
 <?php } else { ?>
     <jdoc:include type="component"/>
 <?php } ?>
-<?php if ($view != "tool" && $view != "thanks") { ?>
+<?php if ($view != "tool" && $view != "thanks") {?>
     <div class="loadding-page">
         <img src="<?php echo $tpath; ?>assets/tool/images/image_loadding.png" alt="">
     </div>

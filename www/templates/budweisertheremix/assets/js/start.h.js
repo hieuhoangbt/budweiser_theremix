@@ -70,4 +70,8 @@ window.onload = function () {
     if(!$('.wrapper.page-tool').length) {
         $('.loadding-page').addClass('fade_out');
     }
+    if($('.wrapper.page-tool').length) {
+        $('.loadding-page').addClass('fade_out');
+    }
+
 };
