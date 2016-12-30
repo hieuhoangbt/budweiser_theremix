@@ -282,6 +282,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         color: 'blue',
         textAlign: "right",
         evented: false,
+        selectable: false,
         fontWeight: 'bold'
     };
     var config_playerName = {
@@ -294,7 +295,8 @@ Tool.prototype.addText = function (hastag, playerName) {
         color: 'blue',
         textAlign: "right",
         fontWeight: 'bold',
-        evented: false
+        evented: false,
+        selectable: false
     };
     var title_hastag = new fabric.Text(hastag, config_hastag);
     var title_player = new fabric.Text(playerName, config_playerName);
@@ -493,7 +495,7 @@ window.onload = function () {
     if(!$('.wrapper.page-tool').length) {
         $('.loadding-page').addClass('fade_out');
     }
-    $('.loadding-page').addClass('fade_out');
+
     BudWeiser.beforeStart();
     /*Action Page init*/
 
@@ -538,6 +540,8 @@ window.onload = function () {
                         loadFont(function () {
                             // init fonts
                             $('.loadder').hide();
+                            $('.loadding-page').addClass('fade_out');
+
                             initTool();
                         })
                     }
@@ -702,8 +706,8 @@ window.onload = function () {
                     $('.confirm_edit').on('click', function () {
                         $('.link-file, .edit-controll').addClass('disable');
                         if (hasCamera == false) {
-
-                            $('.link-file').removeClass('disable');
+                            // $('.link-file').removeClass('disable');
+                            $('.link-snap').click();
                         } else {
                             $('.link-snap').removeClass('disable');
                         }
@@ -730,8 +734,8 @@ window.onload = function () {
                         TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
                     } else {
                         document.getElementById("change_img").reset();
-
                         $('.link-file, .up_file').removeClass('disable');
+                        $('.snap_file').addClass('disable');
                         TOOL.canvas.remove(TOOL.imagesUp, TOOL.imagesUpNew);
                     }
                 })
