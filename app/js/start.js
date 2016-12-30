@@ -493,6 +493,7 @@ window.onload = function () {
     if(!$('.wrapper.page-tool').length) {
         $('.loadding-page').addClass('fade_out');
     }
+    $('.loadding-page').addClass('fade_out');
     BudWeiser.beforeStart();
     /*Action Page init*/
 
@@ -529,7 +530,7 @@ window.onload = function () {
             };
             var foo = new ImgLoader(sources,
                     function (image, percent) {
-                        $('.loadding-page').addClass('fade_out');
+
                     },
                     function (images) {
                         // completed
@@ -750,7 +751,7 @@ window.onload = function () {
                     }
 
                     function sucessBase(source) {
-                        $('.loadder').css('display', 'table');
+                        $('.loadder').show();
                         $('.link-snap, .edit-controll, .timeCoundow').addClass('disable');
 
                         var src_base64 = source;
