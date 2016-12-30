@@ -63,8 +63,11 @@ BudWeiser.handlerAfterShare = function (state) {
         }
     });
 }
-$(document).ready(function () {
+window.onload = function () {
     $('.link-share').click(function () {
         BudWeiser.shareImage();
     });
-});
+    if(!$('.wrapper.page-tool').length) {
+        $('.loadding-page').addClass('fade_out');
+    }
+};
