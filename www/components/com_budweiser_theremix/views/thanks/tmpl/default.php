@@ -11,7 +11,7 @@ $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/assets/';
         <div class="wrapper">
             <div class="logo">								
                 <a href="<?php echo JUri::root(); ?>" class="logoBud"><img src="<?php echo $tpath; ?>images/logo_BUD.png" alt="" /></a>
-                <span class="hoaam"><img src="<?php echo $tpath; ?>images/hoaamanhsang.png" alt="" /></span>
+                <span class="hoaam"><a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>images/hoaamanhsang.png" alt="" /></a></span>
             </div>
         </div>
         <div class="text-thank">

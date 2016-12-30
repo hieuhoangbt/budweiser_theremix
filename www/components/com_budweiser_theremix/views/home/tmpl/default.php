@@ -8,7 +8,7 @@ $urlCelebrities = JRoute::_('index.php?option=com_budweiser_theremix' . $itemCel
 ?>
 <div class="logo">								
     <a href="#" class="logoBud"><img src="<?php echo $tpath; ?>assets/images/logo_BUD.png" alt="" /></a>
-    <span class="hoaam"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt="" /></span>
+    <span class="hoaam"><a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt="" /></a></span>
 </div>
 <div class="btn-join"><a class="" href="<?php echo $urlCelebrities; ?>">THAM GIA</a></div>
 <?php //$sess->clear('error'); ?>
