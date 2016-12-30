@@ -39,6 +39,7 @@ $view = JRequest::getVar('view');
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/fabric.min.js"></script>
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery-ui.js"></script>
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/hook.js"></script>
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery.mousewheel.min.js"></script>
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/filereader.js"></script>
         <script src="<?php echo $tpath; ?>assets/js/start.h.js"></script>
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/start.js"></script>

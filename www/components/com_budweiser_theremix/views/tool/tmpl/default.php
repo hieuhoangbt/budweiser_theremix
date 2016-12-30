@@ -99,15 +99,17 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                 <canvas id="canvas_base">Browser does't not support HTML5!</canvas>
                 <img class="image-facebook" alt="">
             </div>
-        <div class="vetical-middle loadder">
-            <div class="center-child">
-                <div class="cssload-loader">
-                    <div class="cssload-inner cssload-one"></div>
-                    <div class="cssload-inner cssload-two"></div>
-                    <div class="cssload-inner cssload-three"></div>
-                </div>
+        <div class="loadder">
+            <div class="cssload-loader">
+                <div class="cssload-inner cssload-one"></div>
+                <div class="cssload-inner cssload-two"></div>
+                <div class="cssload-inner cssload-three"></div>
             </div>
+
         </div>
+    </div>
+    <div class="loadding-page">
+        <img src="<?php echo $tpath; ?>images/image_loadding.png" alt="">
     </div>
 </div>
 <?php $sess->clear('error'); ?>
