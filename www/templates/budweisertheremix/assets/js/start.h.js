@@ -15,6 +15,9 @@ BudWeiser.getDataBeforeAjax = function (data) {
             Model_Index = index;
         }
     });
+    $('.link-share').click(function () {
+        BudWeiser.shareImage();
+    });
 };
 BudWeiser.afterGetBase64 = function (base64) {
     $('#base64_image').val(base64);
@@ -63,15 +66,8 @@ BudWeiser.handlerAfterShare = function (state) {
         }
     });
 }
-window.onload = function () {
-    $('.link-share').click(function () {
-        BudWeiser.shareImage();
-    });
+$(document).ready(function () {
     if(!$('.wrapper.page-tool').length) {
         $('.loadding-page').addClass('fade_out');
     }
-    if($('.wrapper.page-tool').length) {
-        $('.loadding-page').addClass('fade_out');
-    }
-
-};
+});
