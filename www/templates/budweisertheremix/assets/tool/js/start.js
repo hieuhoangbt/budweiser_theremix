@@ -282,6 +282,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         color: 'blue',
         textAlign: "right",
         evented: false,
+        selectable: false,
         fontWeight: 'bold'
     };
     var config_playerName = {
@@ -294,7 +295,8 @@ Tool.prototype.addText = function (hastag, playerName) {
         color: 'blue',
         textAlign: "right",
         fontWeight: 'bold',
-        evented: false
+        evented: false,
+        selectable: false
     };
     var title_hastag = new fabric.Text(hastag, config_hastag);
     var title_player = new fabric.Text(playerName, config_playerName);
@@ -372,7 +374,9 @@ function isPortrait(img) {
 }
 var getBase64 = function (canvas, process, success) {
     var i = getCdOption(); // default = 3
-    $('.timeCoundow').show().text(i);
+    if(hasCamera == true) {
+        $('.timeCoundow').show().text(i);
+    }
 
     var coundow_snap = setInterval(function () {
         i--;
@@ -398,8 +402,9 @@ var getBase64 = function (canvas, process, success) {
             fabric.util.requestAnimFrame(renderBase64);
 
         }
-
-        $('.timeCoundow').show().text(i);
+        if(hasCamera == true) {
+            $('.timeCoundow').show().text(i);
+        }
     }, 1000);
 
 }
@@ -493,7 +498,7 @@ window.onload = function () {
     if(!$('.wrapper.page-tool').length) {
         $('.loadding-page').addClass('fade_out');
     }
-    $('.loadding-page').addClass('fade_out');
+
     BudWeiser.beforeStart();
     /*Action Page init*/
 
@@ -538,6 +543,8 @@ window.onload = function () {
                         loadFont(function () {
                             // init fonts
                             $('.loadder').hide();
+                            $('.loadding-page').addClass('fade_out');
+
                             initTool();
                         })
                     }
@@ -576,7 +583,7 @@ window.onload = function () {
                 $(TOOL.canvas.wrapperEl).on('mousewheel', function(e) {
                     var target = TOOL.canvas.findTarget(e);
                     var delta = e.originalEvent.wheelDelta / 1000;
-
+                    console.log(e.originalEvent.wheelDelta);
                     if (target && target == TOOL.imagesUp) {
 
                         target.scaleX += delta;
@@ -702,8 +709,8 @@ window.onload = function () {
                     $('.confirm_edit').on('click', function () {
                         $('.link-file, .edit-controll').addClass('disable');
                         if (hasCamera == false) {
-
-                            $('.link-file').removeClass('disable');
+                            // $('.link-file').removeClass('disable');
+                            $('.link-snap').click();
                         } else {
                             $('.link-snap').removeClass('disable');
                         }
@@ -730,8 +737,8 @@ window.onload = function () {
                         TOOL.snapCamera("#capturing", capturingStream, CameraNotSupport);
                     } else {
                         document.getElementById("change_img").reset();
-
                         $('.link-file, .up_file').removeClass('disable');
+                        $('.snap_file').addClass('disable');
                         TOOL.canvas.remove(TOOL.imagesUp, TOOL.imagesUpNew);
                     }
                 })
@@ -740,7 +747,14 @@ window.onload = function () {
                 // get base64 images
                 $('.link-snap').on('click', function () {
                     $('.link-snap, .edit-controll').addClass('disable');
-                    $('.time_option').removeClass('disable');
+                    if(hasCamera == false) {
+                        $('.time_option').addClass('disable');
+                        $('.loadder').show();
+                        setCdOption(0);
+                        snapImage();
+                    }else {
+                        $('.time_option').removeClass('disable');
+                    }
                 });
                 // snap image
                 function snapImage() {
@@ -748,10 +762,11 @@ window.onload = function () {
                     getBase64(TOOL.canvas, process, sucessBase);
                     function process() {
                         $('.timeCoundow').removeClass('disable');
+                        $('.loadder').show();
                     }
 
                     function sucessBase(source) {
-                        $('.loadder').show();
+
                         $('.link-snap, .edit-controll, .timeCoundow').addClass('disable');
 
                         var src_base64 = source;
