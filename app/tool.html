@@ -1,48 +1,88 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
     <title>budweiser</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+    <meta http-equiv="X-UA-Compatible" content="IE=9;IE=10;IE=Edge;IE=11,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--css-->
-    <link href="css/screen.css" type="text/css" rel="stylesheet" />
+    <link href="css/jquery-ui.min.css" type="text/css" rel="stylesheet"/>
+    <link href="css/screen.css" type="text/css" rel="stylesheet"/>
+    <link href="css/loadding.css" type="text/css" rel="stylesheet"/>
     <!--end-css-->
     <!--javascript-->
     <script type="text/javascript" src="js/jquery.js"></script>
+
+    <script type="text/javascript" src="js/fontloader.js"></script>
     <script type="text/javascript" src="js/hook.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/fabric.min.js"></script>
     <script type="text/javascript" src="js/filereader.js"></script>
     <script type="text/javascript" src="js/start.js"></script>
-	
+
     <!--end-javascript-->
-	
+
 </head>
+<!--<body class="fa"> &lt;!&ndash;if facebook Iframe&ndash;&gt;-->
 <body>
+<div class="wrapper page-tool">
     <div id="page">
         <div class="content">
+            <div class="bg-tool"></div>
             <div class="tool">
+                <div class="img-top">
+                    <div class="logo-tool">
+                        <a href=""><img src="images/logo-tool.png" alt=""></a>
+                    </div>
+                    <div class="slogan-tool">
+                        <img src="images/slogan-tool.png" alt="">
+                    </div>
+                </div>
                 <div class="frame-wrapper">
-                    <canvas id="tool-canvas">
+                    <canvas id="canvas">
                         Browers doesn't not support canvas html5
                     </canvas>
+                    <div class="time_option disable">
+                        <div class="icon_time" option_time="3"><img src="images/3s.png" alt=""></div>
+                        <div class="icon_time" option_time="10"><img src="images/10s.png" alt=""></div>
+                    </div>
+                    <div class="timeCoundow">0</div>
                     <div class="controll">
-                        <form class="form-upload" action="">
-                            <div class="timeCoundow">0</div>
-                            <div class="vetical-middle loadder">
-                                <div class="center-child">
-                                    <div class="loadding">&nbsp;</div>
-                                </div>
-                            </div>
-                            <div class="btn-form link-snap" direct="snap">
+                        <form id="change_img" class="form-upload" action="">
+                            <div class="btn-form link-snap disable" direct="snap">
                                 <span>chụp ảnh</span>
-                                <!--<input class="input_file" id="file_snap" type="file">-->
+                            </div>
+                            <div class="link-after disable">
+                                <div class="link-after-item link-snap-prev">
+                                    <span>chụp lại</span>
+                                    <img class="img-link" src="images/bg_snap_prev.png" alt=""/>
+                                </div>
+                                <div class="link-after-item link-share">
+                                    <span>chia sẻ</span>
+                                    <img class="img-link" src="images/bg_share_face.png" alt=""/>
+                                </div>
                             </div>
                             <div class="btn-form link-file disable" direct="file">
                                 <span>Tải ảnh</span>
-                                <input class="input_file" id="file_upload" type="file">
+                                <img class="img-link up_file" src="images/bg_upload.png"
+                                     default_src="images/bg_upload.png" change_src="images/bg_upload_change.png"
+                                     alt=""/>
+                                <img class="img-link snap_file disable" src="images/bg_snap_file.png" alt="">
+                                <input class="input_file" id="file_upload" name="file" type="file"/>
                             </div>
-                            <div class="image-output"></div>
+                            <div class="edit-controll disable">
+                                <p class="zoom-icon zoom_in"><img src="images/plus.png" alt=""/></p>
+                                <div id="slider-zoom"></div>
+                                <p class="zoom-icon zoom_out"><img src="images/tru.png" alt=""/></p>
+                                <p class="icon-move"></p>
+                                <p class="confirm_edit"><img src="images/ok.png" alt=""/></p>
+                            </div>
+
                         </form>
                     </div>
+                    <div class="image-output"></div>
+
                     <div class="capturing-frame">
                         <video id="capturing" autoplay></video>
                     </div>
@@ -55,7 +95,22 @@
                     <!--<div class="btn-form dow"><span>dowload</span></div>-->
                 </div>
             </div>
+            <div class="output_base">
+                <canvas id="canvas_base">Browser does't not support HTML5!</canvas>
+                <img class="image-facebook" alt="">
+            </div>
+            <div class="loadder">
+               <div class="cssload-loader">
+                    <img src="images/ring-alt.svg" alt=""/>
+                </div>
+
+            </div>
+        </div>
+        <div class="loadding-page">
+            <img src="images/image_loadding.png" alt="">
         </div>
     </div>
+</div>
+
 </body>
 </html>
