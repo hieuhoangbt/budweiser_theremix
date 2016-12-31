@@ -43,7 +43,7 @@ $view = JRequest::getVar('view');
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/fabric.min.js"></script>
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery-ui.js"></script>
         <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery.mousewheel.min.js"></script>
-        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/filereader.js"></script>sss
+        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/filereader.js"></script>
     <?php } ?>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
