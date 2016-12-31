@@ -171,7 +171,8 @@ Tool.prototype.addPicture = function (src, type, end) {
         }
         if (type == self.typePicture.model) {
             var _w = self.canvas.width, _ratio = img.width / img.height, _h = _w/_ratio;
-            img.set({width: _w, height: _h, evented: false, selectable: false});
+            var topPos = (self.canvas.height - _h)/2;
+            img.set({width: _w, height: _h, top: topPos, evented: false, selectable: false});
 
             self.imagesframe = img;
             canvas.insertAt(img, 0);
