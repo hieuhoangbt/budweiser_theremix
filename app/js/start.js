@@ -804,11 +804,11 @@ window.onload = function () {
                 function drawBase64(src_image, complete) {
                     var canvas_base = document.getElementById("canvas_base");
                     var ctx = canvas_base.getContext("2d");
-                    canvas_base.width = 600;
-                    canvas_base.height = 315;
+                    canvas_base.width = 1200;
+                    canvas_base.height = 600;
                     var imgx = new Image();
                     imgx.onload= function () {
-                        ctx.drawImage(imgx, 0, 0, 600, 315);
+                        ctx.drawImage(imgx, 0, 0, 1200, 600);
                         if (complete && typeof complete == "function") {
                             complete(canvas_base);
 
