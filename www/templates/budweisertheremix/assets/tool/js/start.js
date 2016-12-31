@@ -171,7 +171,8 @@ Tool.prototype.addPicture = function (src, type, end) {
         }
         if (type == self.typePicture.model) {
             var _w = self.canvas.width, _ratio = img.width / img.height, _h = _w/_ratio;
-            img.set({width: _w, height: _h, evented: false, selectable: false});
+            var topPos = (self.canvas.height - _h)/2;
+            img.set({width: _w, height: _h, top: topPos, evented: false, selectable: false});
 
             self.imagesframe = img;
             canvas.insertAt(img, 0);
@@ -803,11 +804,11 @@ window.onload = function () {
                 function drawBase64(src_image, complete) {
                     var canvas_base = document.getElementById("canvas_base");
                     var ctx = canvas_base.getContext("2d");
-                    canvas_base.width = 600;
-                    canvas_base.height = 315;
+                    canvas_base.width = 1200;
+                    canvas_base.height = 600;
                     var imgx = new Image();
                     imgx.onload= function () {
-                        ctx.drawImage(imgx, 0, 0, 600, 315);
+                        ctx.drawImage(imgx, 0, 0, 1200, 600);
                         if (complete && typeof complete == "function") {
                             complete(canvas_base);
 
