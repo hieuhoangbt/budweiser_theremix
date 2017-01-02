@@ -581,12 +581,12 @@ window.onload = function () {
                 // add frame model
                 TOOL.addPicture(src_model, addModel);
                 // MOUSE weel
-                $(TOOL.canvas.wrapperEl).on('mousewheel', function(e) {
-                    var target = TOOL.canvas.findTarget(e);
-                    var delta = e.originalEvent.wheelDelta / 1000;
-                    console.log(e.originalEvent.wheelDelta);
-                    if (target && target == TOOL.imagesUp) {
 
+
+                $(TOOL.canvas.wrapperEl).on('mousewheel', function(event) {
+                    var target = TOOL.canvas.findTarget(event);
+                    var delta = event.originalEvent.wheelDelta / 1000;
+                    if (target && target == TOOL.imagesUp) {
                         target.scaleX += delta;
                         target.scaleY += delta;
 
@@ -613,6 +613,7 @@ window.onload = function () {
                         return false;
                     }
                 });
+
                 // live stream camera
                 var CameraNotSupport = function (ie) {
                     hasCamera = false;

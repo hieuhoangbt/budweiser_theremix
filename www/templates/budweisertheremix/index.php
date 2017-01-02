@@ -33,17 +33,10 @@ $view = JRequest::getVar('view');
 
     <!--end-css-->
     <!--javascript-->
-    <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery.js"></script>
-    <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/hook.js"></script>
-    <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/start.js"></script>
+    <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/start.min.js"></script>
     <script src="<?php echo $tpath; ?>assets/js/start.h.js"></script>
     <?php if ($view == 'tool') { ?>
-        <link href="<?php echo $tpath . 'assets/tool/' ?>css/screen.css" type="text/css" rel="stylesheet"/>
-        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/fontloader.js"></script>
-        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/fabric.min.js"></script>
-        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery-ui.js"></script>
-        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/jquery.mousewheel.min.js"></script>
-        <script type="text/javascript" src="<?php echo $tpath . 'assets/tool/' ?>js/filereader.js"></script>
+        <link href="<?php echo $tpath . 'assets/tool/' ?>css/screen.min.css" type="text/css" rel="stylesheet"/>
     <?php } ?>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
