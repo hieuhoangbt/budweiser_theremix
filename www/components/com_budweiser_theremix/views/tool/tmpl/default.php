@@ -4,7 +4,7 @@ $app = JFactory::getApplication();
 $tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/assets/tool/';
 $sess = JFactory::getSession();
 
-$name = htmlentities(JRequest::getVar('name'));
+$name = htmlentities(strip_tags(JRequest::getVar('name')));
 $celeb = JRequest::getInt('celeb');
 if (empty($name) || empty($celeb)) {
     $itemHome = Budweiser_theremixHelpersBudweiser_theremix::getItemId('home');
