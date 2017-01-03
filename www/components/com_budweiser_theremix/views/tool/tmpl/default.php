@@ -1,7 +1,8 @@
 <?php
 defined('_JEXEC') or die;
 $app = JFactory::getApplication();
-$tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/assets/tool/';
+$base_url=Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
+$tpath = $base_url . 'templates/' . $app->getTemplate() . '/assets/tool/';
 $sess = JFactory::getSession();
 
 $name = htmlentities(strip_tags(JRequest::getVar('name')));
@@ -25,7 +26,7 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
         <div class="tool">
             <div class="img-top">
                 <div class="logo-tool">
-                    <a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>images/logo-tool.png" alt=""></a>
+                    <a href="<?php echo $base_url; ?>"><img src="<?php echo $tpath; ?>images/logo-tool.png" alt=""></a>
                 </div>
                 <div class="slogan-tool">
                     <img src="<?php echo $tpath; ?>images/slogan-tool.png" alt="">

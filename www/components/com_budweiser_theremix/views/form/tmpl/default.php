@@ -1,7 +1,8 @@
 <?php
 defined('_JEXEC') or die;
 $app = JFactory::getApplication();
-$tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/';
+$base_url=Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
+$tpath = $base_url . 'templates/' . $app->getTemplate() . '/';
 $celebrity = JRequest::getInt('celeb_id');
 $sess = JFactory::getSession();
 $error = $sess->get('error');
@@ -9,7 +10,7 @@ $error = $sess->get('error');
 
 ?>
 
-<div class="logo-hoaam"><a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>assets/images/logo_hoaamanhsang.png" alt="" /></a></div>
+<div class="logo-hoaam"><a href="<?php echo $base_url; ?>"><img src="<?php echo $tpath; ?>assets/images/logo_hoaamanhsang.png" alt="" /></a></div>
 <form class="form-submit" action="" method="post">
     <?php if (!empty($error)) { ?>
         <p style="text-align: center; color: white"><?php echo $error; ?></p>

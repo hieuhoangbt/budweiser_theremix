@@ -2,7 +2,8 @@
 defined('_JEXEC') or die;
 jimport('joomla.html.parameter');
 $app = JFactory::getApplication();
-$tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/';
+$base_url=Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
+$tpath = $base_url . 'templates/' . $app->getTemplate() . '/';
 
 //Get facebook app
 $params = JComponentHelper::getParams('com_budweiser_theremix');
@@ -13,6 +14,7 @@ $title_share = $params->get('title_share');
 $desc_share = $params->get('desc_share');
 $hashtag = $params->get('hashtag');
 $view = JRequest::getVar('view');
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +45,7 @@ $view = JRequest::getVar('view');
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-        var URL_ROOT = '<?php echo JURI::root(); ?>';
+        var URL_ROOT = '<?php echo $base_url; ?>';
         var TPATH = '<?php echo $tpath; ?>';
         var SLOGAN = "<?php echo $slogan ?>";
         var LOGO = "<?php echo $logo ?>";

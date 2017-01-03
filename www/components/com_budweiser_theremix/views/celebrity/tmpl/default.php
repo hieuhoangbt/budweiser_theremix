@@ -1,7 +1,8 @@
 <?php
 defined('_JEXEC') or die;
 $app = JFactory::getApplication();
-$tpath = JURI::root() . 'templates/' . $app->getTemplate() . '/';
+$base_url=Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
+$tpath = $base_url . 'templates/' . $app->getTemplate() . '/';
 
 $itemForm = Budweiser_theremixHelpersBudweiser_theremix::getItemId('form');
 $urlForm = JRoute::_('index.php?option=com_budweiser_theremix' . $itemForm);
@@ -9,7 +10,7 @@ $urlForm = JRoute::_('index.php?option=com_budweiser_theremix' . $itemForm);
 $sess = JFactory::getSession();
 $error = $sess->get('error');
 ?>
-<div class="logo-hoaam"><a href="<?php echo JUri::root(); ?>"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt=""/></a></div>
+<div class="logo-hoaam"><a href="<?php echo base_url; ?>"><img src="<?php echo $tpath; ?>assets/images/hoaamanhsang.png" alt=""/></a></div>
     <div class="title"><h2>Chọn ca sỹ bạn yêu thích nhất</h2></div>
 <?php if (!empty($error)) { ?>
     <p style="text-align: center; color: white"><?php echo $error; ?></p>

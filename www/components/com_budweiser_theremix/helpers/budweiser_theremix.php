@@ -174,4 +174,7 @@ class Budweiser_theremixHelpersBudweiser_theremix
         $result = $db->loadResult();
         return (empty($result)) ? false : $result;
     }
+	public static function getBaseUrl(){
+		return $_SERVER['SERVER_NAME'];
+	}
 }
