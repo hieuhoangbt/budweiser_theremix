@@ -175,7 +175,7 @@ class Budweiser_theremixHelpersBudweiser_theremix
 
     public static function getBaseUrl()
     {
-        $method = ($_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
+        $method = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
         return $method.$_SERVER['SERVER_NAME']."/";
     }
 

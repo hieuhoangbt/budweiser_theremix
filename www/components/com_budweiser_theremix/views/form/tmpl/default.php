@@ -1,13 +1,18 @@
 <?php
 defined('_JEXEC') or die;
 $app = JFactory::getApplication();
-$base_url=Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
+$base_url = Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
 $tpath = $base_url . 'templates/' . $app->getTemplate() . '/';
 $celebrity = JRequest::getInt('celeb_id');
 $sess = JFactory::getSession();
 $error = $sess->get('error');
 
-
+if (JRequest::getInt("celeb_id") == 0) {
+    $itemHome = Budweiser_theremixHelpersBudweiser_theremix::getItemId('home');
+    $urlHome = JRoute::_('index.php?option=com_budweiser_theremix' . $itemHome);
+    $error = $sess->set('error', 'Vui lòng chọn ca sĩ và điền thông tin trước khi chụp ảnh!');
+    $app->redirect($urlHome);
+}
 ?>
 
 <div class="logo-hoaam"><a href="<?php echo $base_url; ?>"><img src="<?php echo $tpath; ?>assets/images/logo_hoaamanhsang.png" alt="" /></a></div>

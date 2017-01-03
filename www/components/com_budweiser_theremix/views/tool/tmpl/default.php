@@ -1,12 +1,25 @@
 <?php
 defined('_JEXEC') or die;
 $app = JFactory::getApplication();
-$base_url=Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
+$base_url = Budweiser_theremixHelpersBudweiser_theremix::getBaseUrl();
 $tpath = $base_url . 'templates/' . $app->getTemplate() . '/assets/tool/';
 $sess = JFactory::getSession();
 
-$name = htmlentities(strip_tags(JRequest::getVar('name')));
 $celeb = JRequest::getInt('celeb');
+$name = strip_tags(JRequest::getVar('name'));
+$name = Budweiser_theremixHelpersBudweiser_theremix::getAlias($name);
+if (preg_match('/[\'"^£$%&*()}{@#~?><>,|=_+¬-]/', $name)) {
+    $itemForm = Budweiser_theremixHelpersBudweiser_theremix::getItemId('form');
+    $urlForm = JRoute::_('index.php?option=com_budweiser_theremix' . $itemForm) . "?celeb_id=" . $celeb;
+    $sess->set('error', 'Vui lòng không nhập kí tự đặc biệt!');
+    $app->redirect($urlForm);
+    exit;
+}
+$exname = explode(" ", $name);
+if (count($exname) >= 2) {
+    $name = $exname[count($exname) - 2] . " " . $exname[count($exname) - 1];
+}
+
 if (empty($name) || empty($celeb)) {
     $itemHome = Budweiser_theremixHelpersBudweiser_theremix::getItemId('home');
     $urlHome = JRoute::_('index.php?option=com_budweiser_theremix' . $itemHome);
@@ -67,12 +80,12 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
                             <img class="img-link up_file" src="<?php echo $tpath; ?>images/bg_upload.png"
                                  default_src="<?php echo $tpath; ?>images/bg_upload.png" change_src="images/bg_upload_change.png" alt=""/>
                             <img class="img-link snap_file disable" src="<?php echo $tpath; ?>images/bg_snap_file.png" alt="">
-                            
+
                             <input class="input_file" id="file_upload" type="file"/>
                             <input type="hidden" name="username" value="<?php echo $name; ?>">
                             <input type="hidden" name="celeb_id" id="celeb_id" value="<?php echo $celeb; ?>">
                             <input type="hidden" name="base64_image" id="base64_image" value="">
-                            <?php echo JHtml::_('form.token'); ?>
+<?php echo JHtml::_('form.token'); ?>
                         </div>
                         <div class="edit-controll disable">
                             <p class="zoom-icon zoom_in"><img src="<?php echo $tpath; ?>images/plus.png" alt=""/></p>
@@ -97,9 +110,9 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
             </div>
         </div>
         <div class="output_base">
-                <canvas id="canvas_base">Browser does't not support HTML5!</canvas>
-                <img class="image-facebook" alt="">
-            </div>
+            <canvas id="canvas_base">Browser does't not support HTML5!</canvas>
+            <img class="image-facebook" alt="">
+        </div>
         <div class="loadder">
             <div class="cssload-loader">
                 <img src="<?php echo $tpath; ?>images/ring-alt.svg" />
@@ -107,10 +120,10 @@ $name_celeb = Budweiser_theremixHelpersBudweiser_theremix::getNameCeleb($celeb);
 
         </div>
 
-        </div>
     </div>
-    <div class="loadding-page">
-        <img src="<?php echo $tpath; ?>images/image_loadding.png" alt="">
-    </div>
+</div>
+<div class="loadding-page">
+    <img src="<?php echo $tpath; ?>images/image_loadding.png" alt="">
+</div>
 </div>
 <?php $sess->clear('error'); ?>

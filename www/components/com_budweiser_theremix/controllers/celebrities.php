@@ -35,7 +35,8 @@ class Budweiser_theremixControllerCelebrities extends Budweiser_theremixControll
             $sess->set('error', 'Vui lòng nhập tên của bạn!');
             $app->redirect(JUri::current() . '?celeb_id=' . $post['celeb_id']);
         }
-        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $post['username'])) {
+        $nameInput = Budweiser_theremixHelpersBudweiser_theremix::getAlias($post['username']);
+        if (preg_match('/[\'"^£$%&*()}{@#~?><>,|=_+¬-]/', $nameInput)) {
             $sess->set('error', 'Vui lòng không nhập kí tự đặc biệt!');
             $app->redirect(JUri::current() . '?celeb_id=' . $post['celeb_id']);
         }

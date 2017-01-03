@@ -14,7 +14,8 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Biore records.
  */
-class Budweiser_theremixModelCelebrity extends JModelList {
+class Budweiser_theremixModelCelebrity extends JModelList
+{
 
     /**
      * Constructor.
@@ -23,7 +24,8 @@ class Budweiser_theremixModelCelebrity extends JModelList {
      * @see        JController
      * @since    1.6
      */
-    public function __construct($config = array()) {
+    public function __construct($config = array())
+    {
         parent::__construct($config);
     }
 
@@ -34,7 +36,8 @@ class Budweiser_theremixModelCelebrity extends JModelList {
      *
      * @since    1.6
      */
-    protected function populateState($ordering = null, $direction = null) {
+    protected function populateState($ordering = null, $direction = null)
+    {
 
         // Initialise variables.
         $app = JFactory::getApplication();
@@ -61,7 +64,8 @@ class Budweiser_theremixModelCelebrity extends JModelList {
      * @return    JDatabaseQuery
      * @since    1.6
      */
-    protected function getListQuery() {
+    protected function getListQuery()
+    {
         // Create a new query object.
         $db = $this->getDbo();
         $query = $db->getQuery(true);
@@ -78,20 +82,20 @@ class Budweiser_theremixModelCelebrity extends JModelList {
         return $query;
     }
 
-    public function getItems() {
+    public function getItems()
+    {
         return parent::getItems();
     }
-    public function getCelebrities(){
+
+    public function getCelebrities()
+    {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select("*")
-            ->from($db->quoteName('#__budweiser_theremix_celebrity'));
+                ->from($db->quoteName('#__budweiser_theremix_celebrity'))->where('state=1');
         $db->setQuery($query);
         $item = $db->loadObjectList();
         return ($item) ? $item : false;
     }
-
-
-
 
 }
