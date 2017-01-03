@@ -3,16 +3,22 @@ BudWeiser.beforeStart = function () {
     ROOT_URL = URL_ROOT;
     PATH_DATA = "index.php?option=com_budweiser_theremix&task=getAllData";
     Frame_Index = 0;
-    playerName = USERNAME;
+    if (typeof USERNAME != 'undefined') {
+        playerName = USERNAME;
+    } else {
+        playerName = '';
+    }
 };
 //BudWeiser.beforeGetBase64=function(){
-    //$('.link-snap-prev').hide();
-    //$('.link-share').hide();
+//$('.link-snap-prev').hide();
+//$('.link-share').hide();
 //}
 BudWeiser.getDataBeforeAjax = function (data) {
     $.each(data, function (index, obj) {
-        if (obj.id == CELEB_ID) {
-            Model_Index = index;
+        if (typeof CELEB_ID != 'undefined') {
+            if (obj.id == CELEB_ID) {
+                Model_Index = index;
+            }
         }
     });
     $('.link-share').click(function () {
@@ -67,7 +73,7 @@ BudWeiser.handlerAfterShare = function (state) {
     });
 }
 $(document).ready(function () {
-    if(!$('.wrapper.page-tool').length) {
+    if (!$('.wrapper.page-tool').length) {
         $('.loadding-page').addClass('fade_out');
     }
 });

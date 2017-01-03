@@ -16,52 +16,52 @@ defined('_JEXEC') or die;
  */
 class Budweiser_theremixHelpersBudweiser_theremix
 {
-	/**
-	 * Get an instance of the named model
-	 *
-	 * @param   string  $name  Model name
-	 *
-	 * @return null|object
-	 */
-	public static function getModel($name)
-	{
-		$model = null;
 
-		// If the file exists, let's
-		if (file_exists(JPATH_SITE . '/components/com_budweiser_theremix/models/' . strtolower($name) . '.php'))
-		{
-			require_once JPATH_SITE . '/components/com_budweiser_theremix/models/' . strtolower($name) . '.php';
-			$model = JModelLegacy::getInstance($name, 'Budweiser_theremixModel');
-		}
+    /**
+     * Get an instance of the named model
+     *
+     * @param   string  $name  Model name
+     *
+     * @return null|object
+     */
+    public static function getModel($name)
+    {
+        $model = null;
 
-		return $model;
-	}
+        // If the file exists, let's
+        if (file_exists(JPATH_SITE . '/components/com_budweiser_theremix/models/' . strtolower($name) . '.php')) {
+            require_once JPATH_SITE . '/components/com_budweiser_theremix/models/' . strtolower($name) . '.php';
+            $model = JModelLegacy::getInstance($name, 'Budweiser_theremixModel');
+        }
 
-	/**
-	 * Gets the files attached to an item
-	 *
-	 * @param   int     $pk     The item's id
-	 *
-	 * @param   string  $table  The table's name
-	 *
-	 * @param   string  $field  The field's name
-	 *
-	 * @return  array  The files
-	 */
-	public static function getFiles($pk, $table, $field)
-	{
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
+        return $model;
+    }
 
-		$query
-			->select($field)
-			->from($table)
-			->where('id = ' . (int) $pk);
+    /**
+     * Gets the files attached to an item
+     *
+     * @param   int     $pk     The item's id
+     *
+     * @param   string  $table  The table's name
+     *
+     * @param   string  $field  The field's name
+     *
+     * @return  array  The files
+     */
+    public static function getFiles($pk, $table, $field)
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
 
-		$db->setQuery($query);
+        $query
+                ->select($field)
+                ->from($table)
+                ->where('id = ' . (int) $pk);
 
-		return explode(',', $db->loadResult());
-	}
+        $db->setQuery($query);
+
+        return explode(',', $db->loadResult());
+    }
 
     /**
      * Gets the edit permission for an user
@@ -73,30 +73,25 @@ class Budweiser_theremixHelpersBudweiser_theremix
     public static function canUserEdit($item)
     {
         $permission = false;
-        $user       = JFactory::getUser();
+        $user = JFactory::getUser();
 
-        if ($user->authorise('core.edit', 'com_budweiser_theremix'))
-        {
+        if ($user->authorise('core.edit', 'com_budweiser_theremix')) {
             $permission = true;
-        }
-        else
-        {
-            if (isset($item->created_by))
-            {
-                if ($user->authorise('core.edit.own', 'com_budweiser_theremix') && $item->created_by == $user->id)
-                {
+        } else {
+            if (isset($item->created_by)) {
+                if ($user->authorise('core.edit.own', 'com_budweiser_theremix') && $item->created_by == $user->id) {
                     $permission = true;
                 }
-            }
-            else
-            {
+            } else {
                 $permission = true;
             }
         }
 
         return $permission;
     }
-    public static function getAlias($string) {
+
+    public static function getAlias($string)
+    {
         $trans = array(
             "đ" => "d", "ă" => "a", "â" => "a", "á" => "a", "à" => "a",
             "ả" => "a", "ã" => "a", "ạ" => "a",
@@ -142,13 +137,14 @@ class Budweiser_theremixHelpersBudweiser_theremix
 
         // remove any duplicate whitespace, and ensure all characters are alphanumeric
         //$str = preg_replace(array('/\s+/', '/[^A-Za-z0-9\-]/'), array('-', ''), $str);
-
         // lowercase and trim
         $str = trim(strtolower($str));
 
         return $str;
     }
-    public static function getItemId($view) {
+
+    public static function getItemId($view)
+    {
         $component = JComponentHelper::getComponent('com_budweiser_theremix');
         $menus = JApplication::getMenu('site', array());
         $menu_items = $menus->getItems('component_id', $component->id);
@@ -163,18 +159,24 @@ class Budweiser_theremixHelpersBudweiser_theremix
         }
         return $itemid;
     }
-    public static function getNameCeleb($id){
+
+    public static function getNameCeleb($id)
+    {
         $db = & JFactory::getDBO();
         $query = $db->getQuery(true);
         $query->select('name');
         $query->from('#__budweiser_theremix_celebrity');
-        $query->where('id='.$id);
+        $query->where('id=' . $id);
         $query->where('state=1');
         $db->setQuery($query);
         $result = $db->loadResult();
         return (empty($result)) ? false : $result;
     }
-	public static function getBaseUrl(){
-		return $_SERVER['SERVER_NAME'];
-	}
+
+    public static function getBaseUrl()
+    {
+        $method = ($_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
+        return $method.$_SERVER['SERVER_NAME']."/";
+    }
+
 }
