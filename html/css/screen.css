@@ -486,9 +486,22 @@ body {
     }
 
 }
+@media screen and (max-width: 1200px) {
+    .item-choose {
+        width: 180px;
+    }
+    .choose-singer {
+        padding-top: 20px;
+    }
+}
 @media screen and (max-width: 810px) {
     .wrapper {
         margin: 0 40px;
+        padding: 0px 0px 20px 0px;
+        height: 100%;
+    }
+    .logo-hoaam {
+        padding-top: 20px;
     }
     .bgWelcome {
         background: url(../images/bgWelcome_810.jpg) no-repeat 50% 50%;
@@ -507,11 +520,15 @@ body {
         font-size: 20px;
         line-height: 69px;
     }
-    .item-choose {
+    .choose-singer {
+        padding-top: 0px;
+    }
+    .choose-singer .item-choose {
         margin: 10px -9px;
+        width: 120px;
     }
     .item-choose {
-        width: 120px;
+
     }
     .item-choose .shine {
         left: 16px;
@@ -523,14 +540,6 @@ body {
         height: 95px;
     }
     .logo {
-        padding-top: 20px;
-    }
-}
-@media screen and (max-width: 1200px) {
-    .item-choose {
-        width: 180px;
-    }
-    .choose-singer {
         padding-top: 20px;
     }
 }
