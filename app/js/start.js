@@ -2,12 +2,14 @@
 var ROOT_URL = 'http://localhost/budweiser_theremix/app/';
 var PATH_DATA = 'js/data.json';
 var COUNTDOWN_OPT = 10;
-var Model_Index = 11;
+var Model_Index = 10;
 var Frame_Index = 0;
 var base64 = '';
 var hasCamera = true;
 var hasTag = '#TEMTHIEUBAOTRAM';
 var playerName = 'DUC VIET';
+var title_hastag = {};
+var title_player = {};
 var zoom_canvs = 0.7;
 var trackCamera = false;
 /*TOOL Maker*/
@@ -31,9 +33,10 @@ Tool.prototype.renderCanvas = function (width) {
         w_width = 810;
         this.max = {width: 1920, height: 1080};
         this.ratioW = this.max.width / this.max.height;
+
     }
     var w_height = w_width / this.ratioW;
-
+    this.max = {width: w_width, height: w_height};
     this.canvas.setWidth(w_width);
     this.canvas.setHeight(w_height);
     this.canvas.backgroundColor = "#dfe7e9";
@@ -299,8 +302,8 @@ Tool.prototype.addText = function (hastag, playerName) {
         evented: false,
         selectable: false
     };
-    var title_hastag = new fabric.Text(hastag, config_hastag);
-    var title_player = new fabric.Text(playerName, config_playerName);
+    title_hastag = new fabric.Text(hastag, config_hastag);
+    title_player = new fabric.Text(playerName, config_playerName);
     this.canvas.add(title_player);
     this.canvas.add(title_hastag);
 
@@ -385,7 +388,7 @@ var getBase64 = function (canvas, process, success) {
             $('.timeCoundow').addClass('disable');
             clearInterval(coundow_snap);
             var request, end = false;
-            var base64 = canvas.toDataURL("image/jpeg", 0.5);
+            var base64 = canvas.toDataURL("image/jpeg", 1);
 
             var renderBase64 = function () {
                 /*Process*/
@@ -783,8 +786,11 @@ window.onload = function () {
                                     // success + hide loadding
                                     $('.loadder').hide();
                                     // turn off camera
-                                    var trackingCamera = getTrackCamera();
-                                    trackingCamera.stop();
+                                    if(hasCamera == true) {
+                                        var trackingCamera = getTrackCamera();
+                                        trackingCamera.stop();
+                                    }
+
                                 });
                             });
                         }
@@ -803,13 +809,13 @@ window.onload = function () {
                     snapImage();
                 })
                 function drawBase64(src_image, complete) {
-                    var canvas_base = document.getElementById("canvas_base");
+                     var canvas_base = document.getElementById("canvas_base");
                     var ctx = canvas_base.getContext("2d");
-                    canvas_base.width = 1200;
-                    canvas_base.height = 600;
+                    canvas_base.width = 600;
+                    canvas_base.height = 315;
                     var imgx = new Image();
                     imgx.onload= function () {
-                        ctx.drawImage(imgx, 0, 0, 1200, 600);
+                        ctx.drawImage(imgx, 0, 0, 600, 315);
                         if (complete && typeof complete == "function") {
                             complete(canvas_base);
 
@@ -818,6 +824,28 @@ window.onload = function () {
 
                     }
                     imgx.src = src_image.src;
+
+                    /*clone*/
+                    /*var canvas = TOOL.canvas;
+                    var canvas_base = new fabric.Canvas('canvas_base');
+                    canvas_base.loadFromJSON(JSON.stringify(canvas), function(){
+                        canvas_base.setWidth(canvas.width);
+                        canvas_base.setHeight(canvas.height);
+                        canvas_base.renderAll();
+                        var objects = canvas_base.getObjects();
+                        for (var i in objects) {
+
+                            if(i == objects.length - 1) {
+                                TOOL.zoomIt(canvas_base,0.45);
+                            }
+                        }
+
+
+
+                        complete(canvas_base);
+
+                    });*/
+
 
                 }
                 function imageFacebook(canvas, success) {

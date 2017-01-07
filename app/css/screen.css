@@ -241,6 +241,10 @@ body {
   height: 100%;
   /*border: solid 1px blue;*/
 }
+body.fa .frame-wrapper {
+  width: 810px;
+  height: 456px;
+}
 /*
 .frame-wrapper {
   !*width: 600px;
