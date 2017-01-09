@@ -29,9 +29,7 @@ $view = JRequest::getVar('view');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <jdoc:include type="head"/>
     <!-- Bootstrap -->
-    <link href="<?php echo $tpath; ?>assets/css/screen.css" rel="stylesheet">
-    <link href="<?php echo $tpath . 'assets/tool/' ?>css/jquery-ui.min.css" type="text/css" rel="stylesheet"/>
-    <link href="<?php echo $tpath . 'assets/tool/' ?>css/loadding.css" type="text/css" rel="stylesheet"/>
+    <link href="<?php echo $tpath; ?>assets/css/screen.min.css" rel="stylesheet">
 
     <!--end-css-->
     <!--javascript-->
@@ -55,11 +53,7 @@ $view = JRequest::getVar('view');
     </script>
 </head>
 
-<body class="<?php if ($view == 'thanks') {
-    echo "face";
-} else if ($view == 'tool') {
-    echo "";
-} ?>">
+<body class="<?php echo ($view !== 'tool') ? "fa" : ""; ?>">
 <?php if ($view == 'home') { ?>
     <div class="bgWelcome"></div>
 <?php } else if ($view == 'form') { ?>
