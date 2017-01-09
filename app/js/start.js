@@ -7,7 +7,7 @@ var Frame_Index = 0;
 var base64 = '';
 var hasCamera = true;
 var hasTag = '#TEMTHIEUBAOTRAM';
-var playerName = 'DUC VIET';
+var playerName = 'TRANG MOON';
 var title_hastag = {};
 var title_player = {};
 var zoom_canvs = 0.7;
@@ -34,6 +34,7 @@ Tool.prototype.renderCanvas = function (width) {
         this.max = {width: 1920, height: 1080};
         this.ratioW = this.max.width / this.max.height;
 
+    }else {
     }
     var w_height = w_width / this.ratioW;
     this.max = {width: w_width, height: w_height};
@@ -262,18 +263,24 @@ Tool.prototype.addText = function (hastag, playerName) {
     var self = this;
     var fontsizePlayername = 30;
     var fontsizeHastag = 20;
+    var text_left = 80;
+    var text_top = 0;
 
     if(self.max.width >= 1600) {
+        fontsizePlayername = 80;
+        fontsizeHastag = 40;
+        text_top = 5;
+    }
+    if(self.max.width <= 1366 && self.max.width >= 1280) {
+        /*fontsizePlayername = 40;
+        fontsizeHastag = 25;*/
         fontsizePlayername = 50;
         fontsizeHastag = 30;
     }
-    if(self.max.width <= 1366 && self.max.width >= 1280) {
-        fontsizePlayername = 40;
-        fontsizeHastag = 25;
-    }
     if(self.max.width <= 810) {
         fontsizePlayername = 34;
-        fontsizeHastag = 17;
+        fontsizeHastag = 20;
+        text_left = 30;
     }
 
     var config_hastag = {
@@ -287,6 +294,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         textAlign: "right",
         evented: false,
         selectable: false,
+        shadow: 'rgba(255,255,255,1) 0 0 5px',
         fontWeight: 'bold'
     };
     var config_playerName = {
@@ -300,6 +308,7 @@ Tool.prototype.addText = function (hastag, playerName) {
         textAlign: "right",
         fontWeight: 'bold',
         evented: false,
+        shadow: 'rgba(255,255,255,1) 0 0 5px',
         selectable: false
     };
     title_hastag = new fabric.Text(hastag, config_hastag);
@@ -307,12 +316,14 @@ Tool.prototype.addText = function (hastag, playerName) {
     this.canvas.add(title_player);
     this.canvas.add(title_hastag);
 
+
+
     title_player.set({
-        left: self.canvas.width - title_player.width - 80,
-        top: self.canvas.height - title_player.height - 6
+        left: self.canvas.width - title_player.width - text_left,
+        top: self.canvas.height - title_player.height - 6 + text_top
     });
     title_hastag.set({
-        left: self.canvas.width - title_hastag.width - title_player.width - 80 - 10,
+        left: self.canvas.width - title_hastag.width - title_player.width - text_left - 10,
         top: self.canvas.height - title_hastag.height - 10
     });
     this.canvas.renderAll();
@@ -588,7 +599,7 @@ window.onload = function () {
 
                 $(TOOL.canvas.wrapperEl).on('mousewheel', function(event) {
                     var target = TOOL.canvas.findTarget(event);
-                    var delta = event.originalEvent.wheelDelta / 1000;
+                    var delta = event.originalEvent.wheelDelta / 1500;
                     if (target && target == TOOL.imagesUp) {
                         target.scaleX += delta;
                         target.scaleY += delta;

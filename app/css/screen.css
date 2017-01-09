@@ -241,10 +241,6 @@ body {
   height: 100%;
   /*border: solid 1px blue;*/
 }
-body.fa .frame-wrapper {
-  width: 810px;
-  height: 456px;
-}
 /*
 .frame-wrapper {
   !*width: 600px;
@@ -528,11 +524,12 @@ body.fa .frame-wrapper {
   float: left;
   width: 100%;
   min-height: 200px;
-  z-index: -1;
   clear: both;
   border: solid 1px blue;
   position: fixed;
   pointer-events: none;
+  z-index: 99999;
+  z-index: -1;
   opacity: 0;
 }
 /*facebook*/
